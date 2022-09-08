@@ -3,9 +3,9 @@ import Link from 'next/link'
 import styles from '../styles/Login.module.css'
 import { ROLES } from '../config/roles'
 import { useRouter } from 'next/router'
-import { useAddNewUserMutation } from '../features/users/usersApiSlice'
+import { useAddNewUserMutation } from '../api/usersApiSlice'
 
-const USER_REGEX = /^[A-z]{3,20}$/
+const USER_REGEX = /^[A-z0-9]{3,20}$/
 const PASSWORD_REGEX = /^[\S]{8,30}$/
 
 const signup = () => {

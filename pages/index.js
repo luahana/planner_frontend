@@ -1,12 +1,25 @@
 import Head from 'next/head'
+import { useState, useEffect } from 'react'
 import styles from '../styles/Index.module.css'
 
 export default function Home() {
-  // const date = new Date()
-  // const today = new Intl.DateTimeFormat('en-US', {
-  //   dateStyle: 'full',
-  //   timeStyle: 'long',
-  // }).format(date)
+  const [time, setTime] = useState()
+  const date = new Date()
+  useEffect(() => {
+    const timer = setInterval(
+      () =>
+        setTime(
+          new Intl.DateTimeFormat('en-US', {
+            dateStyle: 'full',
+            timeStyle: 'long',
+          }).format(date)
+        ),
+      1000
+    )
+    return () => {
+      clearInterval(timer)
+    }
+  }, [time])
 
   return (
     <div className={styles.container}>
@@ -17,8 +30,8 @@ export default function Home() {
       </Head>
 
       <h1>Welcome!</h1>
-      {/* <p></p>
-      <div className={styles.block}></div> */}
+      <p>{time}</p>
+      <div className={styles.block}></div>
     </div>
   )
 }
