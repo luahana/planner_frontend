@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import styles from '../styles/Index.module.css'
+import Link from 'next/link'
 
 export default function Home() {
   const [time, setTime] = useState()
@@ -32,6 +33,11 @@ export default function Home() {
       <h1>Welcome!</h1>
       <p>{time}</p>
       <div className={styles.block}></div>
+      <div>
+        <Link href='/users'>
+          <a>users</a>
+        </Link>
+      </div>
     </div>
   )
 }

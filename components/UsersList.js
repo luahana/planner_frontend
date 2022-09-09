@@ -1,4 +1,7 @@
 import { useGetUsersQuery } from '../api/usersApiSlice'
+import React, { useEffect } from 'react'
+import { store } from '../store'
+import { usersApiSlice } from '../api/usersApiSlice'
 
 const UsersList = () => {
   const {
@@ -7,7 +10,21 @@ const UsersList = () => {
     isSuccess,
     isError,
     error,
-  } = useGetUsersQuery()
+  } = useGetUsersQuery('usersList', {
+    pollingInterval: 15000,
+    refetchOnFocus: true,
+    refetchOnMountOrrArgChange: true,
+  })
+  useEffect(() => {
+    console.log('subscribing users')
+    const users = store.dispatch(usersApiSlice.endpoints.getUsers.initiate())
+
+    return () => {
+      console.log('unsubscribing users')
+      users.unsubscribe()
+    }
+  }, [])
+
   return (
     <>
       {isLoading && <p>Loading</p>}
