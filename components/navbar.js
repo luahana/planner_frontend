@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useSendLogoutMutation } from '../api/authApiSlice'
+import { useSendLogoutMutation } from '../redux/slice/api/authApiSlice'
 import useAuth from '../hooks/useAuth'
 
 const navbar = () => {

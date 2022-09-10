@@ -1,7 +1,9 @@
-import { useGetUsersQuery } from '../api/usersApiSlice'
 import React, { useEffect } from 'react'
-import { store } from '../store'
-import { usersApiSlice } from '../api/usersApiSlice'
+import { store } from '../redux/store'
+import {
+  usersApiSlice,
+  useGetUsersQuery,
+} from '../redux/slice/api/usersApiSlice'
 
 const UsersList = () => {
   const {

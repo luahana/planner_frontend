@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { selectCurrentToken } from '../api/authSlice'
-import { useRefreshMutation } from '../api/authApiSlice'
+import { selectCurrentToken } from '../redux/slice/authSlice'
+import { useRefreshMutation } from '../redux/slice/api/authApiSlice'
 import usePersist from './usePersist'
 
 const PersistLogin = (initialPersistValue) => {

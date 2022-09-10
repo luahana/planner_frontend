@@ -6,7 +6,9 @@ import usePersistLogin from '../hooks/usePersistLogin'
 const users = ({ initialPersistValue }) => {
   const persisLogin = usePersistLogin(initialPersistValue)
 
-  return <>{persisLogin(<UsersList />)}</>
+  const content = <>{persisLogin(<UsersList />)}</>
+
+  return content
 }
 
 users.getInitialProps = ({ req }) => {
