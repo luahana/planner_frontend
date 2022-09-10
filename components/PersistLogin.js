@@ -6,7 +6,7 @@ import { useRefreshMutation } from '../api/authApiSlice'
 import usePersist from '../hooks/usePersist'
 import { parseCookies } from '../lib/parseCookies'
 
-const users = ({ initialPersistValue }) => {
+const PersistLogin = () => {
   const [persist] = usePersist(initialPersistValue)
   const token = useSelector(selectCurrentToken)
   const effectRan = useRef(false)
@@ -53,4 +53,4 @@ users.getInitialProps = ({ req }) => {
   }
 }
 
-export default users
+export default PersistLogin

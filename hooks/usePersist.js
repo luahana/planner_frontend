@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react'
 import Cookie from 'js-cookie'
 
-const usePersist = () => {
-  const [persist, setPersist] = useState(false)
+const usePersist = (initialPersistValue) => {
+  const [persist, setPersist] = useState(() => {
+    if (initialPersistValue) {
+      return JSON.parse(initialPersistValue)
+    }
+    return false
+  })
 
   useEffect(() => {
-    Cookiie.set('persist', persist)
+    Cookie.set('persist', persist)
   }, [persist])
-
-  // useEffect(() => {
-  //   setPersist(JSON.parse(localStorage.getItem('persist')))
-
-  //   localStorage.setItem('persist', JSON.stringify(persist))
-  // }, [persist])
 
   return [persist, setPersist]
 }

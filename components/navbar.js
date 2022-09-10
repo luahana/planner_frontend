@@ -2,9 +2,11 @@ import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useSendLogoutMutation } from '../api/authApiSlice'
+import useAuth from '../hooks/useAuth'
 
 const navbar = () => {
   const router = useRouter()
+  const { email, isAdmin } = useAuth()
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation()
 
@@ -25,6 +27,7 @@ const navbar = () => {
         <li>home</li>
         <li>about</li>
       </ul>
+      {email && <p>{email}</p>}
       <Link href='/login'>
         <a>log in</a>
       </Link>

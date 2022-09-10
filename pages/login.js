@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useDispatch } from 'react-redux'
 import { useLoginMutation } from '../api/authApiSlice'
 import { setCredentials } from '../api/authSlice'
-// import usePersist from '../hooks/usePersist'
+import usePersist from '../hooks/usePersist'
 import Cookie from 'js-cookie'
 import { parseCookies } from '../lib/parseCookies'
 
@@ -17,15 +17,8 @@ const login = ({ initialPersistValue }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errMsg, setErrMsg] = useState('')
-  const [persist, setPersist] = useState(
-    () => JSON.parse(initialPersistValue) || false
-  )
-
+  const [persist, setPersist] = usePersist(initialPersistValue)
   const [login, { isLoading }] = useLoginMutation()
-
-  useEffect(() => {
-    Cookie.set('persist', persist)
-  }, [persist])
 
   useEffect(() => {
     userRef.current.focus()
