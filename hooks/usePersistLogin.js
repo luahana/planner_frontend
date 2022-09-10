@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectCurrentToken } from '../api/authSlice'
 import { useRefreshMutation } from '../api/authApiSlice'
-import usePersist from '../hooks/usePersist'
+import usePersist from './usePersist'
 
 const PersistLogin = (initialPersistValue) => {
   const [persist] = usePersist(initialPersistValue)
@@ -40,7 +40,7 @@ const PersistLogin = (initialPersistValue) => {
         {isError && <p>{error}</p>}
         {(!persist ||
           (isSuccess && trueSuccess) ||
-          (token && isUninitialized)) && <p>{a}</p>}
+          (token && isUninitialized)) && <>{a}</>}
       </>
     )
   }
