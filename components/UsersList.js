@@ -15,7 +15,7 @@ const UsersList = () => {
   } = useGetUsersQuery('usersList', {
     pollingInterval: 15000,
     refetchOnFocus: true,
-    refetchOnMountOrrArgChange: true,
+    refetchOnMountOrArgChange: true,
   })
   useEffect(() => {
     console.log('subscribing users')

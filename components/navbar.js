@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useSendLogoutMutation } from '../redux/slice/api/authApiSlice'
 import useAuth from '../hooks/useAuth'
 
-const navbar = () => {
+const Navbar = () => {
   const router = useRouter()
   const { email, isAdmin } = useAuth()
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
@@ -36,4 +36,4 @@ const navbar = () => {
   )
 }
 
-export default navbar
+export default Navbar
