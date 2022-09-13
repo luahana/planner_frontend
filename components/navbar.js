@@ -24,8 +24,16 @@ const Navbar = () => {
         <a>logo</a>
       </Link>
       <ul className='nav-menu'>
-        <li>home</li>
-        <li>about</li>
+        <li>
+          <Link href='/dash'>
+            <a>Dashboard</a>
+          </Link>
+        </li>
+        <li>
+          <Link href='/notes'>
+            <a>Notes</a>
+          </Link>
+        </li>
       </ul>
       {email && <p>{email}</p>}
       <Link href='/login'>

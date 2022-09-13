@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
-import UsersList from '../components/UsersList'
 import { parseCookies } from '../lib/parseCookies'
 import usePersistLogin from '../hooks/usePersistLogin'
+import NotesPage from '../components/NotesPage'
 
 const users = ({ initialPersistValue }) => {
   const persisLogin = usePersistLogin(initialPersistValue)
