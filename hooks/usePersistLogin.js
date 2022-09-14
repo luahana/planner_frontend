@@ -33,14 +33,14 @@ const PersistLogin = (initialPersistValue) => {
     return () => (effectRan.current = true)
   }, [])
 
-  const result = function (a) {
+  const result = function (page) {
     return (
       <>
         {isLoading && <p>loading...</p>}
-        {isError && <p>{error}</p>}
+        {isError && <p>{page}</p>}
         {(!persist ||
           (isSuccess && trueSuccess) ||
-          (token && isUninitialized)) && <>{a}</>}
+          (token && isUninitialized)) && <>{page}</>}
       </>
     )
   }

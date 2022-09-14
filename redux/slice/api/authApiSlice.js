@@ -20,9 +20,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
           method: 'POST',
         }
       },
-      async onQueryStarted(arg, { dispatch, queryFullfilled }) {
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
-          const { data } = await queryFullfilled
+          const { data } = await queryFulfilled
           console.log(data)
           dispatch(logOut())
           setTimeout(() => {

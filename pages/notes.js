@@ -1,6 +1,6 @@
 import { parseCookies } from '../lib/parseCookies'
 import usePersistLogin from '../hooks/usePersistLogin'
-import NotesPage from '../components/NotesPage'
+import NotesPage from '../components/pages/NotesPage'
 
 const users = ({ initialPersistValue }) => {
   const persisLogin = usePersistLogin(initialPersistValue)

@@ -25,17 +25,17 @@ export const notesApiSlice = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => {
         if (result?.ids) {
           return [
-            { type: 'Note', id: 'LIST' },
-            ...result.ids.map((id) => ({ type: 'Note', id })),
+            { type: 'Notes', id: 'LIST' },
+            ...result.ids.map((id) => ({ type: 'Notes', id })),
           ]
-        } else return [{ type: 'Note', id: 'LIST' }]
+        } else return [{ type: 'Notes', id: 'LIST' }]
       },
     }),
     addNewNote: builder.mutation({
       query(body) {
         return { url: '/notes', method: 'POST', body }
       },
-      invalidatesTags: [{ type: 'Note', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
     }),
   }),
 })

@@ -6,7 +6,7 @@ import useAuth from '../hooks/useAuth'
 
 const Navbar = () => {
   const router = useRouter()
-  const { email, isAdmin } = useAuth()
+  const { user_id, email, isAdmin } = useAuth()
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation()
 
@@ -36,10 +36,16 @@ const Navbar = () => {
         </li>
       </ul>
       {email && <p>{email}</p>}
-      <Link href='/login'>
-        <a>log in</a>
-      </Link>
-      <button onClick={onLogoutClicked}>log out</button>
+      {user_id && (
+        <div className='logout' onClick={onLogoutClicked}>
+          log out
+        </div>
+      )}
+      {!user_id && (
+        <Link href='/login'>
+          <a>log in</a>
+        </Link>
+      )}
     </nav>
   )
 }

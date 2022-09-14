@@ -4,16 +4,14 @@ import jwtDecode from 'jwt-decode'
 
 const useAuth = () => {
   const token = useSelector(selectCurrentToken)
-  let isAdmin = false
-
+  console.log(token)
   if (token) {
     const decoded = jwtDecode(token)
-    console.log(decoded)
     const { _id, email, name, isAdmin } = decoded
 
-    return { _id, email, name, isAdmin }
+    return { user_id: _id, email, name, isAdmin }
   }
 
-  return { _id: '', email: '', name: '', isAdmin: false }
+  return {}
 }
 export default useAuth

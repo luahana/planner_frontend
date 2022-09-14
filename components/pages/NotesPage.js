@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import useAuth from '../hooks/useAuth'
-import { useGetNotesQuery } from '../redux/slice/api/notesApiSlice'
-import Modal from './Modal'
-import Note from './Note'
-import { useRouter } from 'next/router'
+import { useGetNotesQuery } from '../../redux/slice/api/notesApiSlice'
+import Modal from '../Modal'
+import Note from '../Note'
+import useUserAuth from '../../hooks/useUserAuth'
 
 const ModalWrapper = styled.div`
   width: 100%;
@@ -30,11 +29,9 @@ const TitleDiv = styled.div``
 const NewNoteBtnDiv = styled.div``
 
 const NotesPage = () => {
-  const { _id: user_id } = useAuth()
-  const router = useRouter()
-  if (!user_id) router.push('/')
-  const [openModal, setOpenModal] = useState(false)
+  const user_id = useUserAuth()
 
+  const [openModal, setOpenModal] = useState(false)
   const {
     data: notes,
     isLoading,
@@ -50,10 +47,9 @@ const NotesPage = () => {
   let content
 
   if (isLoading) content = <p>Loading...</p>
-  if (isError) content = <p>Error {error}</p>
+  if (isError) content = <p>Error {error?.data?.message}</p>
   if (!isLoading && isSuccess) {
     const { ids, entities } = notes
-    console.log(entities)
     const filteredIds = [...ids].filter(
       (id) => entities[id].user._id === user_id
     )

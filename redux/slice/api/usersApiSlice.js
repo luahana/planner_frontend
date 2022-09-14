@@ -24,17 +24,17 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => {
         if (result?.ids) {
           return [
-            { type: 'User', id: 'LIST' },
-            ...result.ids.map((id) => ({ type: 'User', id })),
+            { type: 'Users', id: 'LIST' },
+            ...result.ids.map((id) => ({ type: 'Users', id })),
           ]
-        } else return [{ type: 'User', id: 'LIST' }]
+        } else return [{ type: 'Users', id: 'LIST' }]
       },
     }),
     addNewUser: builder.mutation({
       query(body) {
         return { url: '/users', method: 'POST', body }
       },
-      invalidatesTags: [{ type: 'User', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Users', id: 'LIST' }],
     }),
     updateUser: builder.mutation({
       query(data) {
@@ -45,7 +45,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           body,
         }
       },
-      invalidatesTags: (result, error, arg) => [{ type: 'User', id: arg.id }],
+      invalidatesTags: (result, error, arg) => [{ type: 'Users', id: arg.id }],
     }),
     deleteUser: builder.mutation({
       query({ id }) {
@@ -55,7 +55,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           body: { id },
         }
       },
-      invalidatesTags: (result, error, arg) => [{ type: 'User', id: arg.id }],
+      invalidatesTags: (result, error, arg) => [{ type: 'Users', id: arg.id }],
     }),
   }),
 })
