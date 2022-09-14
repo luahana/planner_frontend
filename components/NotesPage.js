@@ -4,6 +4,7 @@ import useAuth from '../hooks/useAuth'
 import { useGetNotesQuery } from '../redux/slice/api/notesApiSlice'
 import Modal from './Modal'
 import Note from './Note'
+import { useRouter } from 'next/router'
 
 const ModalWrapper = styled.div`
   width: 100%;
@@ -29,7 +30,9 @@ const TitleDiv = styled.div``
 const NewNoteBtnDiv = styled.div``
 
 const NotesPage = () => {
-  const { username, isManager, isAdmin } = useAuth()
+  const { _id: user_id } = useAuth()
+  const router = useRouter()
+  if (!user_id) router.push('/')
   const [openModal, setOpenModal] = useState(false)
 
   const {
@@ -50,13 +53,21 @@ const NotesPage = () => {
   if (isError) content = <p>Error {error}</p>
   if (!isLoading && isSuccess) {
     const { ids, entities } = notes
-    content = ids.map((id) => <Note key={ids} noteId={id} />)
+    console.log(entities)
+    const filteredIds = [...ids].filter(
+      (id) => entities[id].user._id === user_id
+    )
+    content = filteredIds.map((id) => <Note key={id} noteId={id} />)
   }
 
   return (
     <>
       <ModalWrapper>
-        <Modal open={openModal} onClose={() => setOpenModal(false)} />
+        <Modal
+          user_id={user_id}
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+        />
         <Wrapper>
           <Header>
             <TitleDiv> header</TitleDiv>

@@ -56,18 +56,18 @@ const SaveDiv = styled.div`
   justify-content: flex-end;
 `
 
-const Modal = ({ open, onClose }) => {
+const Modal = ({ user_id, open, onClose }) => {
   const [addNewNote, { isLoading, isSuccess, isError, error }] =
     useAddNewNoteMutation()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [userId, setUserId] = useState(users[0].id)
+  // const [userId, setUserId] = useState(user_id)
 
   useEffect(() => {
     if (isSuccess) {
       setTitle('')
       setContent('')
-      setUserId('')
+      // setUserId('')
     }
   }, [isSuccess])
 
@@ -82,7 +82,7 @@ const Modal = ({ open, onClose }) => {
       return
     }
 
-    await addNewNote({ user: userId, title, content })
+    await addNewNote({ user: user_id, title, content, completed: false })
     onClose()
   }
 
