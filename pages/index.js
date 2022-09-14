@@ -6,7 +6,7 @@ import styles from '../styles/Index.module.css'
 import Link from 'next/link'
 
 export default function Home({ initialPersistValue }) {
-  const persisLogin = usePersistLogin(initialPersistValue)
+  const persistLogin = usePersistLogin(initialPersistValue)
   const [time, setTime] = useState()
 
   const date = new Date()
@@ -29,7 +29,7 @@ export default function Home({ initialPersistValue }) {
 
   return (
     <div className={styles.container}>
-      {persisLogin(
+      {persistLogin(
         <>
           <Head>
             <title>Planner App</title>

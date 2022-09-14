@@ -3,9 +3,9 @@ import usePersistLogin from '../hooks/usePersistLogin'
 import NotesPage from '../components/pages/NotesPage'
 
 const users = ({ initialPersistValue }) => {
-  const persisLogin = usePersistLogin(initialPersistValue)
+  const persistLogin = usePersistLogin(initialPersistValue)
 
-  return <>{persisLogin(<NotesPage />)}</>
+  return <>{persistLogin(<NotesPage />)}</>
 }
 
 users.getInitialProps = ({ req }) => {
