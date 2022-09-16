@@ -7,25 +7,6 @@ import Link from 'next/link'
 
 export default function Home({ initialPersistValue }) {
   const persistLogin = usePersistLogin(initialPersistValue)
-  const [time, setTime] = useState()
-
-  const date = new Date()
-
-  useEffect(() => {
-    const timer = setInterval(
-      () =>
-        setTime(
-          new Intl.DateTimeFormat('en-US', {
-            dateStyle: 'full',
-            timeStyle: 'long',
-          }).format(date)
-        ),
-      1000
-    )
-    return () => {
-      clearInterval(timer)
-    }
-  }, [time])
 
   return (
     <div className={styles.container}>
@@ -38,7 +19,6 @@ export default function Home({ initialPersistValue }) {
           </Head>
           <div className={styles.block}>
             <h1>Welcome!</h1>
-            <p>{time}</p>
           </div>
           <div>
             <Link href='/users'>

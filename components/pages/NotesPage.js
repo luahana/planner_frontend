@@ -4,6 +4,7 @@ import { useGetNotesQuery } from '../../redux/slice/api/notesApiSlice'
 import Modal from '../Modal'
 import Note from '../Note'
 import useUserAuth from '../../hooks/useUserAuth'
+import Time from '../Time'
 
 const ModalWrapper = styled.div`
   width: 100%;
@@ -18,23 +19,27 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.div`
-  margin: 2rem;
+  margin-top: 1rem;
   padding: 1rem;
   border-bottom: 2px solid black;
   display: flex;
   justify-content: space-between;
 `
-const TitleDiv = styled.div``
 
 const NewNoteBtnDiv = styled.div``
 
+const Main = styled.div`
+  padding: 1rem;
+`
+
 const NotesPage = () => {
   const user_id = useUserAuth()
-
   const [openModal, setOpenModal] = useState(false)
+
   const {
     data: notes,
     isLoading,
+    isFetching,
     isSuccess,
     isError,
     error,
@@ -53,7 +58,19 @@ const NotesPage = () => {
     const filteredIds = [...ids].filter(
       (id) => entities[id].user._id === user_id
     )
-    content = filteredIds.map((id) => <Note key={id} noteId={id} />)
+    content = filteredIds.map((id) => {
+      return (
+        <Note
+          key={id}
+          noteId={id}
+          userId={user_id}
+          noteTitle={entities[id].title}
+          noteContent={entities[id].content}
+          noteCompleted={entities[id].completed}
+          isFetching={isFetching}
+        />
+      )
+    })
   }
 
   return (
@@ -66,12 +83,12 @@ const NotesPage = () => {
         />
         <Wrapper>
           <Header>
-            <TitleDiv> header</TitleDiv>
+            <Time />
             <NewNoteBtnDiv>
               <button onClick={() => setOpenModal(true)}>New Note</button>
             </NewNoteBtnDiv>
           </Header>
-          <div>{content}</div>
+          <Main>{content}</Main>
         </Wrapper>
       </ModalWrapper>
     </>

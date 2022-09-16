@@ -14,7 +14,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
           return response.status === 200 && !result.isError
         },
       }),
-      keepUnusedDataFor: 5, //5sec for dev might change to 60 for prod
+      // keepUnusedDataFor: 5, //5sec for dev might change to 60 for prod
       transformResponse: (responseData) => {
         const loadedNotes = responseData.map((user) => {
           user.id = user._id
@@ -37,10 +37,24 @@ export const notesApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
     }),
+    updateNote: builder.mutation({
+      query(data) {
+        return {
+          url: `/notes`,
+          method: 'PUT',
+          body: data,
+        }
+      },
+      invalidatesTags: (result, error, arg) => [{ type: 'Notes', id: arg.id }],
+    }),
   }),
 })
 
-export const { useGetNotesQuery, useAddNewNoteMutation } = notesApiSlice
+export const {
+  useGetNotesQuery,
+  useAddNewNoteMutation,
+  useUpdateNoteMutation,
+} = notesApiSlice
 
 export const selectNotesResult = notesApiSlice.endpoints.getNotes.select()
 
@@ -51,6 +65,6 @@ const selectNotesData = createSelector(
 
 export const {
   selectAll: selectAllNotes,
-  selectById: selectUserById,
-  selectIds: selectUserIds,
+  selectById: selectNoteById,
+  selectIds: selectNoteIds,
 } = notesAdapter.getSelectors((state) => selectNotesData(state) ?? initialState)

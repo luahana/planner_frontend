@@ -6,6 +6,7 @@ const Overlay = styled.div`
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
+  top: 0;
   height: 100%;
 `
 
