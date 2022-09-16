@@ -58,19 +58,27 @@ const NotesPage = () => {
     const filteredIds = [...ids].filter(
       (id) => entities[id].user._id === user_id
     )
-    content = filteredIds.map((id) => {
-      return (
-        <Note
-          key={id}
-          noteId={id}
-          userId={user_id}
-          noteTitle={entities[id].title}
-          noteContent={entities[id].content}
-          noteCompleted={entities[id].completed}
-          isFetching={isFetching}
-        />
-      )
-    })
+    content = filteredIds
+      .sort((a, b) => {
+        return entities[a].completed === entities[b].completed
+          ? 0
+          : entities[a].completed
+          ? 1
+          : -1
+      })
+      .map((id) => {
+        return (
+          <Note
+            key={id}
+            noteId={id}
+            userId={user_id}
+            noteTitle={entities[id].title}
+            noteContent={entities[id].content}
+            noteCompleted={entities[id].completed}
+            isFetching={isFetching}
+          />
+        )
+      })
   }
 
   return (

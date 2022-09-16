@@ -3,9 +3,11 @@ import styled from 'styled-components'
 import { useUpdateNoteMutation } from '../redux/slice/api/notesApiSlice'
 import ElementMaker from './ElementMaker'
 import TextareaMaker from './TextareaMaker'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCircle } from '@fortawesome/free-regular-svg-icons'
 
 const NoteDiv = styled.div`
-  border: 1px solid black;
   margin: 1rem auto;
   margin-bottom: 2rem;
   width: 100%;
@@ -16,7 +18,6 @@ const NoteDiv = styled.div`
 `
 
 const TitleDiv = styled.div`
-  border-bottom: 1px solid black;
   display: flex;
   width: 100%;
 `
@@ -27,10 +28,18 @@ const ContentDiv = styled.div`
 `
 
 const CompletedDiv = styled.div`
-  width: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 10%;
 `
 const DeleteDiv = styled.div`
-  width: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 10%;
 `
 
 const Note = ({
@@ -69,10 +78,27 @@ const Note = ({
     setShowContentInputEle(false)
   }
 
+  const handleOnClickCompleted = async () => {
+    await updateNote({
+      _id: noteId,
+      user: userId,
+      title,
+      content,
+      completed: !completed,
+    })
+  }
+
   return (
     <NoteDiv>
       <TitleDiv>
-        <DeleteDiv>x</DeleteDiv>
+        <CompletedDiv onClick={handleOnClickCompleted}>
+          {noteCompleted ? (
+            <FontAwesomeIcon icon={faCheck} />
+          ) : (
+            <FontAwesomeIcon icon={faCircle} />
+          )}
+        </CompletedDiv>
+
         <ElementMaker
           value={title}
           handleChange={(e) => setTitle(e.target.value)}
@@ -80,7 +106,9 @@ const Note = ({
           handleBlur={handleBlur}
           showInputEle={showInputEle}
         />
-        <CompletedDiv>{noteCompleted.toString()}</CompletedDiv>
+        <DeleteDiv>
+          <FontAwesomeIcon icon={faTrash} />
+        </DeleteDiv>
       </TitleDiv>
       <ContentDiv>
         <TextareaMaker
