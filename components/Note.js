@@ -6,6 +6,7 @@ import TextareaMaker from './TextareaMaker'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
+import { device } from '../config/deviceBreakpoint'
 
 const NoteDiv = styled.div`
   margin: 1rem auto;
@@ -15,16 +16,22 @@ const NoteDiv = styled.div`
   background-color: AntiqueWhite;
   display: flex;
   flex-direction: column;
+  @media ${device.tablet} {
+  }
 `
 
 const TitleDiv = styled.div`
   display: flex;
   width: 100%;
+  @media ${device.tablet} {
+  }
 `
 const ContentDiv = styled.div`
   width: 100%;
   flex-grow: 1;
   overflow: auto;
+  @media ${device.tablet} {
+  }
 `
 
 const CompletedDiv = styled.div`
@@ -33,6 +40,8 @@ const CompletedDiv = styled.div`
   align-items: center;
   cursor: pointer;
   width: 10%;
+  @media ${device.tablet} {
+  }
 `
 const DeleteDiv = styled.div`
   display: flex;
@@ -40,6 +49,8 @@ const DeleteDiv = styled.div`
   align-items: center;
   cursor: pointer;
   width: 10%;
+  @media ${device.tablet} {
+  }
 `
 
 const Note = ({
@@ -62,6 +73,7 @@ const Note = ({
     if (!showInputEle && !showContentInputEle) {
       setTitle(noteTitle)
       setContent(noteContent)
+      setCompleted(noteCompleted)
     }
   }, [isError, isFetching])
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { device } from '../config/deviceBreakpoint'
 import { useAddNewNoteMutation } from '../redux/slice/api/notesApiSlice'
 
 const Overlay = styled.div`
@@ -8,6 +9,8 @@ const Overlay = styled.div`
   width: 100%;
   top: 0;
   height: 100%;
+  @media ${device.tablet} {
+  }
 `
 
 const ModalContainer = styled.div`
@@ -24,6 +27,8 @@ const ModalContainer = styled.div`
   background-color: #ffffff;
   box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.75);
   border-radius: 8px;
+  @media ${device.tablet} {
+  }
 `
 
 const Wrapper = styled.div`
@@ -31,6 +36,8 @@ const Wrapper = styled.div`
   height: 90%;
   margin: auto;
   position: relative;
+  @media ${device.tablet} {
+  }
 `
 
 const ButtonClose = styled.div`
@@ -39,22 +46,43 @@ const ButtonClose = styled.div`
   cursor: pointer;
   margin-bottom: 0.5rem;
   padding-right: 0.5rem;
+  @media ${device.tablet} {
+  }
 `
 
 const TitleDiv = styled.div`
   margin-bottom: 1em;
   min-width: 100%;
+  @media ${device.tablet} {
+  }
 `
 const ContentDiv = styled.div`
   margin-top: 1em;
   margin-bottom: 1em;
   min-width: 100%;
+  @media ${device.tablet} {
+  }
 `
 
 const SaveDiv = styled.div`
   min-width: 100%;
   display: flex;
   justify-content: flex-end;
+  @media ${device.tablet} {
+  }
+`
+
+const TitleInput = styled.input`
+  width: 100%;
+  @media ${device.tablet} {
+  }
+`
+
+const ContentTextarea = styled.textarea`
+  width: 100%;
+  height: 250px;
+  @media ${device.tablet} {
+  }
 `
 
 const Modal = ({ user_id, open, onClose }) => {
@@ -102,8 +130,7 @@ const Modal = ({ user_id, open, onClose }) => {
             </p>
           </ButtonClose>
           <TitleDiv>
-            <input
-              style={{ width: '100%' }}
+            <TitleInput
               type='text'
               value={title}
               placeholder='title'
@@ -111,8 +138,7 @@ const Modal = ({ user_id, open, onClose }) => {
             />
           </TitleDiv>
           <ContentDiv>
-            <input
-              style={{ width: '100%', height: '250px' }}
+            <ContentTextarea
               type='textarea'
               value={content}
               placeholder='content'

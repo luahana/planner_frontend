@@ -5,17 +5,22 @@ import Modal from '../Modal'
 import Note from '../Note'
 import useUserAuth from '../../hooks/useUserAuth'
 import Time from '../Time'
+import { device } from '../../config/deviceBreakpoint'
 
 const ModalWrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  @media ${device.tablet} {
+  }
 `
 
 const Wrapper = styled.div`
   width: 90%;
   margin: 0 auto;
   overflow: hidden;
+  @media ${device.tablet} {
+  }
 `
 
 const Header = styled.div`
@@ -24,12 +29,16 @@ const Header = styled.div`
   border-bottom: 2px solid black;
   display: flex;
   justify-content: space-between;
+  @media ${device.tablet} {
+  }
 `
 
 const NewNoteBtnDiv = styled.div``
 
 const Main = styled.div`
   padding: 1rem;
+  @media ${device.tablet} {
+  }
 `
 
 const NotesPage = () => {

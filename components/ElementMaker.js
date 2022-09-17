@@ -1,4 +1,24 @@
 import React, { memo } from 'react'
+import styled from 'styled-components'
+import { device } from '../config/deviceBreakpoint'
+
+const TitleInput = styled.input`
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  @media ${device.tablet} {
+  }
+`
+
+const TitleDiv = styled.div`
+  padding: 1rem;
+  display: inline-block;
+  width: 100%;
+  overflow: auto;
+  @media ${device.tablet} {
+  }
+`
 
 const ElementMaker = ({
   type,
@@ -13,32 +33,16 @@ const ElementMaker = ({
       {
         // Use JavaScript's ternary operator to specify <span>'s inner content
         showInputEle ? (
-          <input
+          <TitleInput
             type={type}
             value={value}
             onChange={handleChange}
             onBlur={handleBlur}
             maxlength='50'
-            style={{
-              padding: '1rem',
-              width: '100%',
-              height: '100%',
-              overflow: 'auto',
-            }}
             autoFocus
           />
         ) : (
-          <span
-            onDoubleClick={handleDoubleClick}
-            style={{
-              padding: '1rem',
-              display: 'inline-block',
-              width: '100%',
-              overflow: 'auto',
-            }}
-          >
-            {value}
-          </span>
+          <TitleDiv onDoubleClick={handleDoubleClick}>{value}</TitleDiv>
         )
       }
     </>

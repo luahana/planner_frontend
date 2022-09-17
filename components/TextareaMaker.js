@@ -1,4 +1,25 @@
 import React from 'react'
+import styled from 'styled-components'
+import { device } from '../config/deviceBreakpoint'
+
+const ContentTextarea = styled.textarea`
+  padding: 1rem calc(5% + 1rem);
+  width: 100%;
+  height: 10.5rem;
+  overflow: auto;
+  whitespace: pre-wrap;
+  @media ${device.tablet} {
+  }
+`
+
+const ContentDiv = styled.div`
+  padding: 1rem calc(5% + 1rem);
+  width: 100%;
+  overflow: auto;
+  whitespace: pre-wrap;
+  @media ${device.tablet} {
+  }
+`
 
 const ElementMaker = ({
   value,
@@ -12,31 +33,16 @@ const ElementMaker = ({
       {
         // Use JavaScript's ternary operator to specify <span>'s inner content
         showContentInputEle ? (
-          <textarea
+          <ContentTextarea
             value={value}
             onChange={handleChange}
             onBlur={handleBlur}
-            style={{
-              padding: '1rem calc(5% + 1rem)',
-              width: '100%',
-              height: '10.5rem',
-              overflow: 'auto',
-              whiteSpace: 'pre-wrap',
-            }}
             autoFocus
           />
         ) : (
-          <div
-            onDoubleClick={handleDoubleClick}
-            style={{
-              padding: '1rem calc(5% + 1rem)',
-              width: '100%',
-              overflow: 'auto',
-              whiteSpace: 'pre-wrap',
-            }}
-          >
+          <ContentDiv onDoubleClick={handleDoubleClick} style={{}}>
             {value}
-          </div>
+          </ContentDiv>
         )
       }
     </>
