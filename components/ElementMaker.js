@@ -13,7 +13,6 @@ const TitleInput = styled.input`
 
 const TitleDiv = styled.div`
   padding: 1rem;
-  display: inline-block;
   width: 100%;
   overflow: auto;
   @media ${device.tablet} {

@@ -82,28 +82,3 @@ h6 {
 
 /* -----------------------------------------------------
 css reset end */
-
-.nav {
-  background-color: black;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  padding: 1em;
-  height: 5vh;
-}
-
-.nav-menu {
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  width: 20%;
-}
-
-.main {
-  width: 100%;
-  overflow: hidden;
-}
-
-.logout {
-  cursor: pointer;
-}

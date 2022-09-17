@@ -8,9 +8,7 @@ import { faTrash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import { device } from '../config/deviceBreakpoint'
 
-const NoteDiv = styled.div`
-  margin: 1rem auto;
-  margin-bottom: 2rem;
+const Wrapper = styled.div`
   width: 100%;
   max-height: 16.3rem;
   background-color: AntiqueWhite;
@@ -23,13 +21,6 @@ const NoteDiv = styled.div`
 const TitleDiv = styled.div`
   display: flex;
   width: 100%;
-  @media ${device.tablet} {
-  }
-`
-const ContentDiv = styled.div`
-  width: 100%;
-  flex-grow: 1;
-  overflow: auto;
   @media ${device.tablet} {
   }
 `
@@ -49,6 +40,14 @@ const DeleteDiv = styled.div`
   align-items: center;
   cursor: pointer;
   width: 10%;
+  @media ${device.tablet} {
+  }
+`
+
+const ContentDiv = styled.div`
+  width: 100%;
+  flex-grow: 1;
+  overflow: auto;
   @media ${device.tablet} {
   }
 `
@@ -101,7 +100,7 @@ const Note = ({
   }
 
   return (
-    <NoteDiv>
+    <Wrapper>
       <TitleDiv>
         <CompletedDiv onClick={handleOnClickCompleted}>
           {noteCompleted ? (
@@ -131,7 +130,7 @@ const Note = ({
           showContentInputEle={showContentInputEle}
         />
       </ContentDiv>
-    </NoteDiv>
+    </Wrapper>
   )
 }
 

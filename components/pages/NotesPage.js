@@ -7,25 +7,15 @@ import useUserAuth from '../../hooks/useUserAuth'
 import Time from '../Time'
 import { device } from '../../config/deviceBreakpoint'
 
-const ModalWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  @media ${device.tablet} {
-  }
-`
-
 const Wrapper = styled.div`
-  width: 90%;
-  margin: 0 auto;
-  overflow: hidden;
+  width: 100%;
   @media ${device.tablet} {
   }
 `
 
 const Header = styled.div`
-  margin-top: 1rem;
   padding: 1rem;
+  padding-bottom: 0.5rem;
   border-bottom: 2px solid black;
   display: flex;
   justify-content: space-between;
@@ -37,6 +27,9 @@ const NewNoteBtnDiv = styled.div``
 
 const Main = styled.div`
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   @media ${device.tablet} {
   }
 `
@@ -92,22 +85,20 @@ const NotesPage = () => {
 
   return (
     <>
-      <ModalWrapper>
-        <Modal
-          user_id={user_id}
-          open={openModal}
-          onClose={() => setOpenModal(false)}
-        />
-        <Wrapper>
-          <Header>
-            <Time />
-            <NewNoteBtnDiv>
-              <button onClick={() => setOpenModal(true)}>New Note</button>
-            </NewNoteBtnDiv>
-          </Header>
-          <Main>{content}</Main>
-        </Wrapper>
-      </ModalWrapper>
+      <Modal
+        user_id={user_id}
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+      />
+      <Wrapper>
+        <Header>
+          <Time />
+          <NewNoteBtnDiv>
+            <button onClick={() => setOpenModal(true)}>New Note</button>
+          </NewNoteBtnDiv>
+        </Header>
+        <Main>{content}</Main>
+      </Wrapper>
     </>
   )
 }

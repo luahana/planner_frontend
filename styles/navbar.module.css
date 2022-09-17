@@ -1,0 +1,23 @@
+.nav {
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  height: 5vh;
+}
+
+.navMenu {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  width: 20%;
+}
+
+.main {
+  width: 100%;
+}
+
+.logout {
+  cursor: pointer;
+}
