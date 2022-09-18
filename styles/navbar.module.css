@@ -5,19 +5,102 @@
   justify-content: space-between;
   padding: 1em;
   height: 5vh;
+  position: relative;
 }
 
-.navMenu {
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  width: 20%;
-}
-
-.main {
+.overlayOpen {
+  z-index: 1000;
+  right: 0;
+  position: fixed;
   width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
-.logout {
+.overlayClose {
+  z-index: 1000;
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+  transition: opacity 0.3s, transform 0s 0.3s;
+}
+
+.menuOpen {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  padding: 2rem;
+  top: 5%;
+  right: 0;
+  z-index: 1100;
+  width: 35%;
+  height: 27rem;
+  background-color: black;
+  color: white;
+  transition: all 0.5s;
+}
+
+.menuClose {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  padding: 2rem;
+  top: 5%;
+  right: 0;
+  z-index: 1100;
+  width: 35%;
+  height: 27rem;
+  transform: translate3d(100%, 0, 0);
+  background-color: dimgrey;
+  transition: all 0.5s;
+}
+
+.logoutMenu {
+  text-align: right;
+}
+.pointer {
   cursor: pointer;
+}
+
+.menuUl {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  float: right;
+}
+
+.menuUl li {
+  text-align: right;
+}
+
+.hamburger {
+  display: block;
+  border: 0;
+  padding-top: 1rem;
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  right: 1rem;
+  transform: translateY(-50%);
+}
+
+.navUlWrapper {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hamburger {
+    display: none;
+  }
+  .navUlWrapper {
+    display: block;
+    width: 50%;
+  }
+  .navUlWrapper ul {
+    display: flex;
+    justify-content: space-between;
+  }
 }

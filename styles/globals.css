@@ -32,6 +32,7 @@ body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 /*
   6. Improve media defaults
@@ -80,5 +81,15 @@ h6 {
   isolation: isolate;
 }
 
+ul,
+li {
+  list-style: none;
+}
+
 /* -----------------------------------------------------
 css reset end */
+
+.main {
+  max-width: 1024px;
+  margin: 0 auto;
+}
