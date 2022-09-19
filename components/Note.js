@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useUpdateNoteMutation } from '../redux/slice/api/notesApiSlice'
+import {
+  useUpdateNoteMutation,
+  useDeleteNoteMutation,
+} from '../redux/slice/api/notesApiSlice'
 import ElementMaker from './ElementMaker'
 import TextareaMaker from './TextareaMaker'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -14,6 +17,7 @@ const Wrapper = styled.div`
   background-color: AntiqueWhite;
   display: flex;
   flex-direction: column;
+  margin-bottom: 0.5rem;
   @media ${device.tablet} {
   }
 `
@@ -63,6 +67,12 @@ const Note = ({
 }) => {
   const [updateNote, { isLoading, isSuccess, isError, error }] =
     useUpdateNoteMutation()
+
+  const [
+    deleteNote,
+    { isSuccess: isDelSuccess, isError: isDelError, error: delerror },
+  ] = useDeleteNoteMutation()
+
   const [showInputEle, setShowInputEle] = useState(false)
   const [showContentInputEle, setShowContentInputEle] = useState(false)
   const [title, setTitle] = useState(noteTitle)
@@ -75,7 +85,7 @@ const Note = ({
       setContent(noteContent)
       setCompleted(noteCompleted)
     }
-  }, [isError, isFetching])
+  }, [isError, isDelError, isFetching])
 
   const handleBlur = async () => {
     if (noteTitle !== title) {
@@ -115,6 +125,10 @@ const Note = ({
     })
   }
 
+  const handleDelete = async () => {
+    await deleteNote({ id: noteId })
+  }
+
   return (
     <Wrapper>
       <TitleDiv>
@@ -133,7 +147,7 @@ const Note = ({
           handleBlur={handleBlur}
           showInputEle={showInputEle}
         />
-        <DeleteDiv>
+        <DeleteDiv onClick={handleDelete}>
           <FontAwesomeIcon icon={faTrash} />
         </DeleteDiv>
       </TitleDiv>

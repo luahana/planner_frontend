@@ -47,6 +47,16 @@ export const notesApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: (result, error, arg) => [{ type: 'Notes', id: arg.id }],
     }),
+    deleteNote: builder.mutation({
+      query(data) {
+        return {
+          url: '/notes',
+          method: 'DELETE',
+          body: data,
+        }
+      },
+      invalidatesTags: (result, error, arg) => [{ type: 'Notes', id: arg.id }],
+    }),
   }),
 })
 
@@ -54,6 +64,7 @@ export const {
   useGetNotesQuery,
   useAddNewNoteMutation,
   useUpdateNoteMutation,
+  useDeleteNoteMutation,
 } = notesApiSlice
 
 export const selectNotesResult = notesApiSlice.endpoints.getNotes.select()

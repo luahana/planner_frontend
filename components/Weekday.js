@@ -7,7 +7,15 @@ import { useGetNotesQuery } from '../redux/slice/api/notesApiSlice'
 const Wrapper = styled.div`
   display: flex;
   margin-bottom: 2rem;
-  background-color: yellow;
+  border-top: 1px solid black;
+  width: 100%;
+`
+const DateWrapper = styled.div`
+  width: 20%;
+`
+
+const NoteWrapper = styled.div`
+  width: 100%;
 `
 
 const Weekday = ({ user_id, month, day, weekday, year }) => {
@@ -28,7 +36,6 @@ const Weekday = ({ user_id, month, day, weekday, year }) => {
   if (isError) content = <p>Error {error?.data?.message}</p>
   if (!isLoading && isSuccess) {
     const { ids, entities } = notes
-    console.log(ids)
     const filteredIds = [...ids].filter((id) => {
       let assignedDate = entities[id].createdAt
 
@@ -36,18 +43,10 @@ const Weekday = ({ user_id, month, day, weekday, year }) => {
         assignedDate = entities[id].assignedDate
       }
       const [assignedDateMonth, assignedDateDay, assignedDateYear] = [
-        new Date(assignedDate).getMonth(),
+        new Date(assignedDate).getMonth() + 1,
         new Date(assignedDate).getDate(),
         new Date(assignedDate).getFullYear(),
       ]
-      console.log(user_id)
-      console.log(month)
-      console.log(day)
-      console.log(year)
-      console.log(entities[id].user._id)
-      console.log(assignedDateMonth)
-      console.log(assignedDateDay)
-      console.log(assignedDateYear)
       return (
         entities[id].user._id === user_id &&
         assignedDateMonth === month &&
@@ -55,8 +54,6 @@ const Weekday = ({ user_id, month, day, weekday, year }) => {
         assignedDateYear === year
       )
     })
-    console.log('filteredIds')
-    console.log(filteredIds)
     content = filteredIds
       .sort((a, b) => {
         return entities[a].completed === entities[b].completed
@@ -87,14 +84,14 @@ const Weekday = ({ user_id, month, day, weekday, year }) => {
 
   return (
     <Wrapper>
-      <div>
+      <DateWrapper>
         <div>{WEEKDAY[weekday]}</div>
         <div>
           {MONTH[month]} {day}
         </div>
-      </div>
+      </DateWrapper>
 
-      <div>{content}</div>
+      <NoteWrapper>{content}</NoteWrapper>
     </Wrapper>
   )
 }

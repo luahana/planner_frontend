@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { parseCookies } from '../lib/parseCookies'
 import usePersistLogin from '../hooks/usePersistLogin'
 import styles from '../styles/Index.module.css'
-import Link from 'next/link'
 
 export default function Home({ initialPersistValue }) {
   const persistLogin = usePersistLogin(initialPersistValue)
@@ -20,11 +19,7 @@ export default function Home({ initialPersistValue }) {
           <div className={styles.block}>
             <h1>Welcome!</h1>
           </div>
-          <div>
-            <Link href='/users'>
-              <a>users</a>
-            </Link>
-          </div>
+          <div></div>
         </>
       )}
     </div>

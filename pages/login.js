@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux'
 import { useLoginMutation } from '../redux/slice/api/authApiSlice'
 import { setCredentials } from '../redux/slice/authSlice'
 import usePersist from '../hooks/usePersist'
-import Cookie from 'js-cookie'
 import { parseCookies } from '../lib/parseCookies'
 
 const login = ({ initialPersistValue }) => {
@@ -39,7 +38,7 @@ const login = ({ initialPersistValue }) => {
       dispath(setCredentials({ accessToken }))
       setEmail('')
       setPassword('')
-      router.push('/')
+      router.push('/notes')
     } catch (err) {
       if (!err.status) {
         setErrMsg('No Server Response')

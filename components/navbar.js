@@ -100,13 +100,7 @@ const Navbar = () => {
             <FontAwesomeIcon icon={faBars} size='xl' />
           </div>
         )}
-        {!user_id && (
-          <Link href='/login'>
-            <div className={styles.pointer} onClick={close}>
-              <a>log in</a>
-            </div>
-          </Link>
-        )}
+
         <div className={styles.navUlWrapper}>
           <ul>
             {user_id && (
@@ -151,15 +145,15 @@ const Navbar = () => {
                 </li>
               </>
             )}
-            {!user_id && (
-              <li>
-                <Link href='/login'>
-                  <a>log in</a>
-                </Link>
-              </li>
-            )}
           </ul>
         </div>
+        {!user_id && (
+          <Link href='/login'>
+            <div className={styles.pointer} onClick={close}>
+              <a>log in</a>
+            </div>
+          </Link>
+        )}
       </nav>
     </>
   )

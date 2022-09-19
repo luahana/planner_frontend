@@ -29,7 +29,6 @@ const Main = styled.div`
   padding: 1rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
   @media ${device.tablet} {
     display: grid;
     grid-template-columns: 1fr 1fr;

@@ -3,6 +3,7 @@
   color: white;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1em;
   height: 5vh;
   position: relative;
@@ -79,12 +80,7 @@
 .hamburger {
   display: block;
   border: 0;
-  padding-top: 1rem;
   cursor: pointer;
-  position: absolute;
-  top: 40%;
-  right: 1rem;
-  transform: translateY(-50%);
 }
 
 .navUlWrapper {
