@@ -6,7 +6,7 @@ import Weekday from '../Weekday'
 
 const WeeklyPage = ({ wid }) => {
   const today = new Date()
-  useUserAuth()
+  const user_id = useUserAuth()
   const {
     data: calendar,
     isLoading,
@@ -20,10 +20,20 @@ const WeeklyPage = ({ wid }) => {
   if (isLoading) content = <p>Loading...</p>
   if (isError) content = <p>Error {error?.data?.message}</p>
   if (!isLoading && isSuccess) {
-    const curWeekDays = calendar.filter((day) => day.week === parseInt(wid))
+    const curWeekDays = calendar.filter(
+      (day) =>
+        day.week === parseInt(wid.slice(-2)) &&
+        day.year === parseInt(wid.slice(0, 4))
+    )
     console.log(curWeekDays)
-    content = curWeekDays.map(({ month, day, weekday }) => (
-      <Weekday month={month} day={day} weekday={weekday} />
+    content = curWeekDays.map(({ month, day, weekday, year }) => (
+      <Weekday
+        user_id={user_id}
+        month={month}
+        day={day}
+        weekday={weekday}
+        year={year}
+      />
     ))
   }
   return (

@@ -55,12 +55,16 @@ const Navbar = () => {
                   <a>Today</a>
                 </li>
               </Link>
-              <Link href={`/weekly/${currentWeekNumber()}`}>
+              <Link
+                href={`/weekly/${new Date().getFullYear()}${currentWeekNumber()}`}
+              >
                 <li className={styles.pointer} onClick={close}>
                   <a>Weekly</a>
                 </li>
               </Link>
-              <Link href={`/monthly/${d.getMonth() + 1}`}>
+              <Link
+                href={`/monthly/${new Date().getFullYear()}${d.getMonth() + 1}`}
+              >
                 <li className={styles.pointer} onClick={close}>
                   <a>Monthly</a>
                 </li>
@@ -118,12 +122,18 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href='/weekly'>
+                  <Link
+                    href={`/weekly/${new Date().getFullYear()}${currentWeekNumber()}`}
+                  >
                     <a>Weekly</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href='/monthly'>
+                  <Link
+                    href={`/monthly/${new Date().getFullYear()}${
+                      d.getMonth() + 1
+                    }`}
+                  >
                     <a>Monthly</a>
                   </Link>
                 </li>
