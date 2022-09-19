@@ -32,6 +32,7 @@ const Main = styled.div`
   @media ${device.tablet} {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
 `
 

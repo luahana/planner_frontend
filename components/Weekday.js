@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { MONTH, WEEKDAY } from '../config/calendar'
 import Note from './Note'
 import { useGetNotesQuery } from '../redux/slice/api/notesApiSlice'
+import { device } from '../config/deviceBreakpoint'
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,6 +17,11 @@ const DateWrapper = styled.div`
 
 const NoteWrapper = styled.div`
   width: 100%;
+  @media ${device.tablet} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
 `
 
 const Weekday = ({ user_id, month, day, weekday, year }) => {
@@ -31,6 +37,9 @@ const Weekday = ({ user_id, month, day, weekday, year }) => {
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   })
+
+  const handleDragEnter = () => {}
+
   let content
   if (isLoading) content = <p>Loading...</p>
   if (isError) content = <p>Error {error?.data?.message}</p>
@@ -83,7 +92,7 @@ const Weekday = ({ user_id, month, day, weekday, year }) => {
   }
 
   return (
-    <Wrapper>
+    <Wrapper onDragEnter={handleDragEnter}>
       <DateWrapper>
         <div>{WEEKDAY[weekday]}</div>
         <div>
