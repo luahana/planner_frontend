@@ -14,7 +14,6 @@ export const notesApiSlice = apiSlice.injectEndpoints({
           return response.status === 200 && !result.isError
         },
       }),
-      // keepUnusedDataFor: 5, //5sec for dev might change to 60 for prod
       transformResponse: (responseData) => {
         const loadedNotes = responseData.map((user) => {
           user.id = user._id
@@ -38,21 +37,21 @@ export const notesApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
     }),
     updateNote: builder.mutation({
-      query(data) {
+      query(body) {
         return {
           url: `/notes`,
           method: 'PUT',
-          body: data,
+          body,
         }
       },
       invalidatesTags: (result, error, arg) => [{ type: 'Notes', id: arg.id }],
     }),
     deleteNote: builder.mutation({
-      query(data) {
+      query(body) {
         return {
           url: '/notes',
           method: 'DELETE',
-          body: data,
+          body,
         }
       },
       invalidatesTags: (result, error, arg) => [{ type: 'Notes', id: arg.id }],

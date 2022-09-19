@@ -56,12 +56,17 @@ const ContentDiv = styled.div`
   }
 `
 
+const SetCompleted = styled.div`
+  cursor: pointer;
+`
+
 const Note = ({
   noteId,
   userId,
   noteTitle,
   noteContent,
   noteCompleted,
+  noteSets,
   noteAssignedDate,
   isFetching,
 }) => {
@@ -78,6 +83,7 @@ const Note = ({
   const [title, setTitle] = useState(noteTitle)
   const [content, setContent] = useState(noteContent)
   const [completed, setCompleted] = useState(noteCompleted)
+  const [sets, setSets] = useState(noteSets)
 
   useEffect(() => {
     if (!showInputEle && !showContentInputEle) {
@@ -96,6 +102,7 @@ const Note = ({
         content,
         completed,
         assignedDate: noteAssignedDate,
+        sets,
       })
     }
     setShowInputEle(false)
@@ -109,19 +116,51 @@ const Note = ({
         content,
         completed,
         assignedDate: noteAssignedDate,
+        sets,
       })
     }
     setShowContentInputEle(false)
   }
 
-  const handleOnClickCompleted = async () => {
+  const handleCompletedOnClick = async () => {
+    const newCompleted = !completed
+    setCompleted(newCompleted)
+    const newSets = new Array()
+    newSets.length = sets.length
+    if (!newCompleted) {
+      newSets.fill(false)
+      setSets(newSets)
+    } else {
+      newSets.fill(true)
+      setSets(newSets)
+    }
+
     await updateNote({
       _id: noteId,
       user: userId,
       title,
       content,
-      completed: !completed,
+      completed: newCompleted,
       assignedDate: noteAssignedDate,
+      sets: newSets,
+    })
+  }
+
+  const handleSetOnClick = async (i) => {
+    const newSets = sets.slice()
+    newSets[i] = !sets[i]
+    setSets(newSets)
+    const allCompleted = newSets.every((set) => set === true)
+    if (allCompleted) setCompleted(allCompleted)
+
+    await updateNote({
+      _id: noteId,
+      user: userId,
+      title,
+      content,
+      completed: allCompleted,
+      assignedDate: noteAssignedDate,
+      sets: newSets,
     })
   }
 
@@ -132,7 +171,7 @@ const Note = ({
   return (
     <Wrapper>
       <TitleDiv>
-        <CompletedDiv onClick={handleOnClickCompleted}>
+        <CompletedDiv onClick={handleCompletedOnClick}>
           {noteCompleted ? (
             <FontAwesomeIcon icon={faCheck} />
           ) : (
@@ -160,6 +199,18 @@ const Note = ({
           showContentInputEle={showContentInputEle}
         />
       </ContentDiv>
+      <div>
+        {sets &&
+          sets.map((set, i) => (
+            <SetCompleted key={i} onClick={() => handleSetOnClick(i)}>
+              {set ? (
+                <FontAwesomeIcon icon={faCheck} />
+              ) : (
+                <FontAwesomeIcon icon={faCircle} />
+              )}
+            </SetCompleted>
+          ))}
+      </div>
     </Wrapper>
   )
 }

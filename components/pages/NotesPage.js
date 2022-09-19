@@ -100,6 +100,7 @@ const NotesPage = () => {
             noteTitle={entities[id].title}
             noteContent={entities[id].content}
             noteCompleted={entities[id].completed}
+            noteSets={entities[id].sets ? entities[id].sets : []}
             noteAssignedDate={
               entities[id].addignedDate
                 ? entities[id].addignedDate

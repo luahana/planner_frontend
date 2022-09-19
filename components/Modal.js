@@ -80,18 +80,25 @@ const TitleInput = styled.input`
 
 const ContentTextarea = styled.textarea`
   width: 100%;
-  height: 250px;
+  height: 150px;
   @media ${device.tablet} {
   }
 `
+
+const AssignedDateSets = styled.div`
+  width: 100%;
+`
+
+const AssignedDateDiv = styled.div``
+const SetsDiv = styled.div``
 
 const Modal = ({ user_id, open, onClose }) => {
   const [addNewNote, { isLoading, isSuccess, isError, error }] =
     useAddNewNoteMutation()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [setsNum, setSetsNum] = useState(0)
   const [assignedDate, setAssignedDate] = useState(new Date())
-  // const [userId, setUserId] = useState(user_id)
 
   useEffect(() => {
     if (isSuccess) {
@@ -102,6 +109,7 @@ const Modal = ({ user_id, open, onClose }) => {
 
   const onTitleChanged = (e) => setTitle(e.target.value)
   const onContentChanged = (e) => setContent(e.target.value)
+  const onSetsInputChanged = (e) => setSetsNum(e.target.value)
 
   const onSaveClicked = async (e) => {
     e.preventDefault()
@@ -110,12 +118,17 @@ const Modal = ({ user_id, open, onClose }) => {
       onClose()
       return
     }
+    const sets = new Array()
+    sets.length = setsNum
+    sets.fill(false)
+
     await addNewNote({
       user: user_id,
       title,
       content,
       completed: false,
       assignedDate,
+      sets,
     })
     onClose()
   }
@@ -150,6 +163,13 @@ const Modal = ({ user_id, open, onClose }) => {
               onChange={onContentChanged}
             />
           </ContentDiv>
+          <AssignedDateSets>
+            <AssignedDateDiv>Assigned Date</AssignedDateDiv>
+            <SetsDiv>
+              Number of Sets
+              <input type='number' min='0' onChange={onSetsInputChanged} />
+            </SetsDiv>
+          </AssignedDateSets>
           <SaveDiv>
             <button onClick={onSaveClicked}>Save</button>
           </SaveDiv>
