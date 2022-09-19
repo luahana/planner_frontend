@@ -1,18 +1,18 @@
 import { parseCookies } from '../lib/parseCookies'
 import usePersistLogin from '../hooks/usePersistLogin'
-import UsersPage from '../components/pages/UsersPage'
+import AdminPage from '../components/pages/AdminPage'
 
-const users = ({ initialPersistValue }) => {
+const admin = ({ initialPersistValue }) => {
   const persistLogin = usePersistLogin(initialPersistValue)
 
-  return <>{persistLogin(<UsersPage />)}</>
+  return <>{persistLogin(<AdminPage />)}</>
 }
 
-users.getInitialProps = ({ req }) => {
+admin.getInitialProps = ({ req }) => {
   const cookies = parseCookies(req)
   return {
     initialPersistValue: cookies.persist,
   }
 }
 
-export default users
+export default admin

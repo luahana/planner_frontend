@@ -10,7 +10,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 const Navbar = () => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
-  const { user_id, email, isAdmin } = useAuth()
+  const { user_id, isAdmin } = useAuth()
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation()
 
@@ -63,6 +63,13 @@ const Navbar = () => {
                 </li>
               </Link>
             </>
+          )}
+          {isAdmin && (
+            <li className={styles.pointer} onClick={close}>
+              <Link href='/admin'>
+                <a>Admin</a>
+              </Link>
+            </li>
           )}
         </ul>
         {user_id && (
@@ -117,6 +124,13 @@ const Navbar = () => {
                     <a>Monthly</a>
                   </Link>
                 </li>
+                {isAdmin && (
+                  <li>
+                    <Link href='/admin'>
+                      <a>Admin</a>
+                    </Link>
+                  </li>
+                )}
                 <li>
                   <div className={styles.pointer} onClick={onLogoutClicked}>
                     log out
