@@ -39,6 +39,12 @@ const Main = styled.div`
 const NotesPage = () => {
   const user_id = useUserAuth()
   const [openModal, setOpenModal] = useState(false)
+  const today = new Date()
+  const [month, day, year] = [
+    today.getMonth(),
+    today.getDate(),
+    today.getFullYear(),
+  ]
 
   const {
     data: notes,
@@ -59,9 +65,24 @@ const NotesPage = () => {
   if (isError) content = <p>Error {error?.data?.message}</p>
   if (!isLoading && isSuccess) {
     const { ids, entities } = notes
-    const filteredIds = [...ids].filter(
-      (id) => entities[id].user._id === user_id
-    )
+    const filteredIds = [...ids].filter((id) => {
+      let assignedDate = entities[id].createdAt
+
+      if (entities[id].assignedDate) {
+        assignedDate = entities[id].assignedDate
+      }
+      const [assignedDateMonth, assignedDateDay, assignedDateYear] = [
+        new Date(assignedDate).getMonth(),
+        new Date(assignedDate).getDate(),
+        new Date(assignedDate).getFullYear(),
+      ]
+      return (
+        entities[id].user._id === user_id &&
+        assignedDateMonth === month &&
+        assignedDateDay === day &&
+        assignedDateYear === year
+      )
+    })
     content = filteredIds
       .sort((a, b) => {
         return entities[a].completed === entities[b].completed
@@ -79,6 +100,11 @@ const NotesPage = () => {
             noteTitle={entities[id].title}
             noteContent={entities[id].content}
             noteCompleted={entities[id].completed}
+            noteAssignedDate={
+              entities[id].addignedDate
+                ? entities[id].addignedDate
+                : entities[id].createdAt
+            }
             isFetching={isFetching}
           />
         )

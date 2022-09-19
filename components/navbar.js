@@ -6,6 +6,7 @@ import useAuth from '../hooks/useAuth'
 import styles from '../styles/navbar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
+import currentWeekNumber from 'current-week-number'
 
 const Navbar = () => {
   const router = useRouter()
@@ -13,6 +14,8 @@ const Navbar = () => {
   const { user_id, isAdmin } = useAuth()
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation()
+
+  const d = new Date()
 
   useEffect(() => {
     if (isSuccess) router.push('/')
@@ -52,12 +55,12 @@ const Navbar = () => {
                   <a>Today</a>
                 </li>
               </Link>
-              <Link href='/notes'>
+              <Link href={`/weekly/${currentWeekNumber()}`}>
                 <li className={styles.pointer} onClick={close}>
                   <a>Weekly</a>
                 </li>
               </Link>
-              <Link href='/notes'>
+              <Link href={`/monthly/${d.getMonth() + 1}`}>
                 <li className={styles.pointer} onClick={close}>
                   <a>Monthly</a>
                 </li>
@@ -115,12 +118,12 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href='/notes'>
+                  <Link href='/weekly'>
                     <a>Weekly</a>
                   </Link>
                 </li>
                 <li>
-                  <Link href='/notes'>
+                  <Link href='/monthly'>
                     <a>Monthly</a>
                   </Link>
                 </li>

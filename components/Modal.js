@@ -90,13 +90,13 @@ const Modal = ({ user_id, open, onClose }) => {
     useAddNewNoteMutation()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [assignedDate, setAssignedDate] = useState(new Date())
   // const [userId, setUserId] = useState(user_id)
 
   useEffect(() => {
     if (isSuccess) {
       setTitle('')
       setContent('')
-      // setUserId('')
     }
   }, [isSuccess])
 
@@ -110,8 +110,13 @@ const Modal = ({ user_id, open, onClose }) => {
       onClose()
       return
     }
-
-    await addNewNote({ user: user_id, title, content, completed: false })
+    await addNewNote({
+      user: user_id,
+      title,
+      content,
+      completed: false,
+      assignedDate,
+    })
     onClose()
   }
 

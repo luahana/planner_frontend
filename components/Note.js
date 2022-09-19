@@ -58,6 +58,7 @@ const Note = ({
   noteTitle,
   noteContent,
   noteCompleted,
+  noteAssignedDate,
   isFetching,
 }) => {
   const [updateNote, { isLoading, isSuccess, isError, error }] =
@@ -78,13 +79,27 @@ const Note = ({
 
   const handleBlur = async () => {
     if (noteTitle !== title) {
-      await updateNote({ _id: noteId, user: userId, title, content, completed })
+      await updateNote({
+        _id: noteId,
+        user: userId,
+        title,
+        content,
+        completed,
+        assignedDate: noteAssignedDate,
+      })
     }
     setShowInputEle(false)
   }
   const handleBlurContent = async () => {
     if (noteContent !== content) {
-      await updateNote({ _id: noteId, user: userId, title, content, completed })
+      await updateNote({
+        _id: noteId,
+        user: userId,
+        title,
+        content,
+        completed,
+        assignedDate: noteAssignedDate,
+      })
     }
     setShowContentInputEle(false)
   }
@@ -96,6 +111,7 @@ const Note = ({
       title,
       content,
       completed: !completed,
+      assignedDate: noteAssignedDate,
     })
   }
 
