@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import styles from '../styles/Login.module.css'
+import styles from '../styles/login.module.css'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useDispatch } from 'react-redux'

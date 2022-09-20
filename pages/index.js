@@ -1,11 +1,15 @@
 import Head from 'next/head'
-import { useState, useEffect } from 'react'
 import { parseCookies } from '../lib/parseCookies'
 import usePersistLogin from '../hooks/usePersistLogin'
 import styles from '../styles/Index.module.css'
+import useUserAuth from '../hooks/useUserAuth'
+import { useRouter } from 'next/router'
 
 export default function Home({ initialPersistValue }) {
   const persistLogin = usePersistLogin(initialPersistValue)
+  const user_id = useUserAuth()
+  const router = useRouter()
+  if (user_id) router.push('/notes')
 
   return (
     <div className={styles.container}>

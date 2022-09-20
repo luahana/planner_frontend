@@ -22,6 +22,18 @@ const Wrapper = styled.div`
   }
 `
 
+const FeatureDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  padding-top: 1rem;
+`
+
+const SetsDiv = styled.div`
+  display: flex;
+  gap: 1rem;
+`
+
 const TitleDiv = styled.div`
   display: flex;
   width: 100%;
@@ -170,7 +182,7 @@ const Note = ({
 
   return (
     <Wrapper>
-      <TitleDiv>
+      <FeatureDiv>
         <CompletedDiv onClick={handleCompletedOnClick}>
           {noteCompleted ? (
             <FontAwesomeIcon icon={faCheck} />
@@ -178,7 +190,23 @@ const Note = ({
             <FontAwesomeIcon icon={faCircle} />
           )}
         </CompletedDiv>
-
+        <SetsDiv>
+          {sets &&
+            sets.map((set, i) => (
+              <SetCompleted key={i} onClick={() => handleSetOnClick(i)}>
+                {set ? (
+                  <FontAwesomeIcon icon={faCheck} />
+                ) : (
+                  <FontAwesomeIcon icon={faCircle} />
+                )}
+              </SetCompleted>
+            ))}
+        </SetsDiv>
+        <DeleteDiv onClick={handleDelete}>
+          <FontAwesomeIcon icon={faTrash} />
+        </DeleteDiv>
+      </FeatureDiv>
+      <TitleDiv>
         <ElementMaker
           value={title}
           handleChange={(e) => setTitle(e.target.value)}
@@ -186,9 +214,6 @@ const Note = ({
           handleBlur={handleBlur}
           showInputEle={showInputEle}
         />
-        <DeleteDiv onClick={handleDelete}>
-          <FontAwesomeIcon icon={faTrash} />
-        </DeleteDiv>
       </TitleDiv>
       <ContentDiv>
         <TextareaMaker
@@ -199,18 +224,6 @@ const Note = ({
           showContentInputEle={showContentInputEle}
         />
       </ContentDiv>
-      <div>
-        {sets &&
-          sets.map((set, i) => (
-            <SetCompleted key={i} onClick={() => handleSetOnClick(i)}>
-              {set ? (
-                <FontAwesomeIcon icon={faCheck} />
-              ) : (
-                <FontAwesomeIcon icon={faCircle} />
-              )}
-            </SetCompleted>
-          ))}
-      </div>
     </Wrapper>
   )
 }
