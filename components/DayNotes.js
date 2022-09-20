@@ -7,6 +7,7 @@ import Note from './Note'
 import Time from './Time'
 import { device } from '../config/deviceBreakpoint'
 
+// Day View styled component start
 const DayWrapper = styled.div`
   width: 100%;
   @media ${device.tablet} {
@@ -35,7 +36,9 @@ const DayMain = styled.div`
     gap: 1rem;
   }
 `
+// Day View styled component end
 
+// Week View styled component start
 const WeekWrapper = styled.div`
   display: flex;
   margin-bottom: 2rem;
@@ -54,6 +57,7 @@ const WeekNoteWrapper = styled.div`
     gap: 1rem;
   }
 `
+// Week View styled component end
 
 const DayNotes = ({ view, user_id, month, day, weekday, year }) => {
   const {

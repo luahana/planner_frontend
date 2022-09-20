@@ -20,7 +20,7 @@ const Time = () => {
     }
   }, [time])
 
-  return <div>{time}</div>
+  return <h2>{time}</h2>
 }
 
 export default Time
