@@ -15,9 +15,9 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         },
       }),
       transformResponse: (responseData) => {
-        const loadedNotes = responseData.map((user) => {
-          user.id = user._id
-          return user
+        const loadedNotes = responseData.map((note) => {
+          note.id = note._id
+          return note
         })
         return notesAdapter.setAll(initialState, loadedNotes)
       },
@@ -37,11 +37,11 @@ export const notesApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
     }),
     updateNote: builder.mutation({
-      query(body) {
+      query({ _id, user, title, content, completed, assignedDate, sets }) {
         return {
-          url: `/notes`,
+          url: '/notes',
           method: 'PUT',
-          body,
+          body: { _id, user, title, content, completed, assignedDate, sets },
         }
       },
       invalidatesTags: (result, error, arg) => [{ type: 'Notes', id: arg.id }],

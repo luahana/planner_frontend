@@ -73,7 +73,7 @@ const SetCompleted = styled.div`
   cursor: pointer;
 `
 
-const Note = ({ noteId, noteAssignedDate }) => {
+const Note = ({ noteId }) => {
   const { note } = useGetNotesQuery('notesList', {
     selectFromResult: ({ data }) => ({
       note: data?.entities[noteId],
@@ -101,44 +101,33 @@ const Note = ({ noteId, noteAssignedDate }) => {
   const [sets, setSets] = useState(note.sets)
 
   useEffect(() => {
-    if (!showInputEle && !showContentInputEle) {
-      setTitle(note.title)
-      setContent(note.content)
-      setCompleted(note.completed)
-      setSets(note.sets)
-    }
+    setTitle(note.title)
+    setContent(note.content)
+    setCompleted(note.completed)
+    setSets(note.sets)
   }, [isError, isDelError])
 
   const handleBlur = async () => {
     setShowInputEle(false)
     if (note.title !== title) {
       await updateNote({
-        _id: noteId,
-        user: note.user._id,
-        title,
-        content,
-        completed,
-        assignedDate: noteAssignedDate,
-        sets,
-      })
-    }
-  }
-  const handleBlurContent = async () => {
-    setShowContentInputEle(false)
-    if (note.content !== content) {
-      await updateNote({
-        _id: noteId,
-        user: note.user._id,
-        title,
-        content,
-        completed,
-        assignedDate: noteAssignedDate,
-        sets,
+        ...note,
+        title: title,
       })
     }
   }
 
-  const handleCompletedOnClick = async () => {
+  const handleBlurContent = async () => {
+    setShowContentInputEle(false)
+    if (note.content !== content) {
+      await updateNote({
+        ...note,
+        content: content,
+      })
+    }
+  }
+
+  const handleOnClickCompleted = async () => {
     const newCompleted = !completed
     setCompleted(newCompleted)
     const newSets = new Array()
@@ -152,12 +141,8 @@ const Note = ({ noteId, noteAssignedDate }) => {
     }
 
     await updateNote({
-      _id: noteId,
-      user: note.user._id,
-      title,
-      content,
+      ...note,
       completed: newCompleted,
-      assignedDate: noteAssignedDate,
       sets: newSets,
     })
   }
@@ -170,12 +155,8 @@ const Note = ({ noteId, noteAssignedDate }) => {
     if (allCompleted) setCompleted(allCompleted)
 
     await updateNote({
-      _id: noteId,
-      user: note.user._id,
-      title,
-      content,
+      ...note,
       completed: allCompleted,
-      assignedDate: noteAssignedDate,
       sets: newSets,
     })
   }
@@ -187,7 +168,7 @@ const Note = ({ noteId, noteAssignedDate }) => {
   return (
     <Wrapper>
       <FeatureDiv>
-        <CompletedDiv onClick={handleCompletedOnClick}>
+        <CompletedDiv onClick={handleOnClickCompleted}>
           {note.completed ? (
             <FontAwesomeIcon icon={faCheck} />
           ) : (

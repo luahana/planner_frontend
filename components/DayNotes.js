@@ -91,7 +91,7 @@ const DayNotes = ({ view, user_id, month, day, weekday, year }) => {
         new Date(assignedDate).getFullYear(),
       ]
       return (
-        entities[id].user._id === user_id &&
+        entities[id].user === user_id &&
         assignedDateMonth === month &&
         assignedDateDay === day &&
         assignedDateYear === year
@@ -106,17 +106,7 @@ const DayNotes = ({ view, user_id, month, day, weekday, year }) => {
           : -1
       })
       .map((id) => {
-        return (
-          <MemoizedNote
-            key={id}
-            noteId={id}
-            noteAssignedDate={
-              entities[id].addignedDate
-                ? entities[id].addignedDate
-                : entities[id].createdAt
-            }
-          />
-        )
+        return <MemoizedNote key={id} noteId={id} />
       })
   }
   return (
