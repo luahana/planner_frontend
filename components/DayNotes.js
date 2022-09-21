@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { MONTH, WEEKDAY } from '../config/calendar'
 import { useGetNotesQuery } from '../redux/slice/api/notesApiSlice'
 // import Modal from '../Modal'
-import Note from './Note'
+import MemoizedNote from './Note'
 import Time from './Time'
 import { device } from '../config/deviceBreakpoint'
 
@@ -107,20 +107,14 @@ const DayNotes = ({ view, user_id, month, day, weekday, year }) => {
       })
       .map((id) => {
         return (
-          <Note
+          <MemoizedNote
             key={id}
             noteId={id}
-            userId={user_id}
-            noteTitle={entities[id].title}
-            noteContent={entities[id].content}
-            noteCompleted={entities[id].completed}
-            noteSets={entities[id].sets}
             noteAssignedDate={
               entities[id].addignedDate
                 ? entities[id].addignedDate
                 : entities[id].createdAt
             }
-            isFetching={isFetching}
           />
         )
       })

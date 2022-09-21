@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import styled from 'styled-components'
 import {
   useUpdateNoteMutation,
   useDeleteNoteMutation,
+  useGetNotesQuery,
 } from '../redux/slice/api/notesApiSlice'
 import ElementMaker from './ElementMaker'
 import TextareaMaker from './TextareaMaker'
@@ -72,44 +73,48 @@ const SetCompleted = styled.div`
   cursor: pointer;
 `
 
-const Note = ({
-  noteId,
-  userId,
-  noteTitle,
-  noteContent,
-  noteCompleted,
-  noteSets,
-  noteAssignedDate,
-  isFetching,
-}) => {
+const Note = ({ noteId, noteAssignedDate }) => {
+  const { note } = useGetNotesQuery('notesList', {
+    selectFromResult: ({ data }) => ({
+      note: data?.entities[noteId],
+    }),
+  })
+
   const [updateNote, { isLoading, isSuccess, isError, error }] =
     useUpdateNoteMutation()
 
   const [
     deleteNote,
-    { isSuccess: isDelSuccess, isError: isDelError, error: delerror },
+    {
+      isLoading: isDelLoading,
+      isSuccess: isDelSuccess,
+      isError: isDelError,
+      error: delerror,
+    },
   ] = useDeleteNoteMutation()
 
   const [showInputEle, setShowInputEle] = useState(false)
   const [showContentInputEle, setShowContentInputEle] = useState(false)
-  const [title, setTitle] = useState(noteTitle)
-  const [content, setContent] = useState(noteContent)
-  const [completed, setCompleted] = useState(noteCompleted)
-  const [sets, setSets] = useState(noteSets)
+  const [title, setTitle] = useState(note.title)
+  const [content, setContent] = useState(note.content)
+  const [completed, setCompleted] = useState(note.completed)
+  const [sets, setSets] = useState(note.sets)
 
   useEffect(() => {
     if (!showInputEle && !showContentInputEle) {
-      setTitle(noteTitle)
-      setContent(noteContent)
-      setCompleted(noteCompleted)
+      setTitle(note.title)
+      setContent(note.content)
+      setCompleted(note.completed)
+      setSets(note.sets)
     }
-  }, [isError, isDelError, isFetching])
+  }, [isError, isDelError])
 
   const handleBlur = async () => {
-    if (noteTitle !== title) {
+    setShowInputEle(false)
+    if (note.title !== title) {
       await updateNote({
         _id: noteId,
-        user: userId,
+        user: note.user._id,
         title,
         content,
         completed,
@@ -117,13 +122,13 @@ const Note = ({
         sets,
       })
     }
-    setShowInputEle(false)
   }
   const handleBlurContent = async () => {
-    if (noteContent !== content) {
+    setShowContentInputEle(false)
+    if (note.content !== content) {
       await updateNote({
         _id: noteId,
-        user: userId,
+        user: note.user._id,
         title,
         content,
         completed,
@@ -131,7 +136,6 @@ const Note = ({
         sets,
       })
     }
-    setShowContentInputEle(false)
   }
 
   const handleCompletedOnClick = async () => {
@@ -149,7 +153,7 @@ const Note = ({
 
     await updateNote({
       _id: noteId,
-      user: userId,
+      user: note.user._id,
       title,
       content,
       completed: newCompleted,
@@ -167,7 +171,7 @@ const Note = ({
 
     await updateNote({
       _id: noteId,
-      user: userId,
+      user: note.user._id,
       title,
       content,
       completed: allCompleted,
@@ -184,7 +188,7 @@ const Note = ({
     <Wrapper>
       <FeatureDiv>
         <CompletedDiv onClick={handleCompletedOnClick}>
-          {noteCompleted ? (
+          {note.completed ? (
             <FontAwesomeIcon icon={faCheck} />
           ) : (
             <FontAwesomeIcon icon={faCircle} />
@@ -228,4 +232,6 @@ const Note = ({
   )
 }
 
-export default Note
+const MemoizedNote = memo(Note)
+
+export default MemoizedNote
