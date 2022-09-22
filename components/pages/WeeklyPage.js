@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import useUserAuth from '../../hooks/useUserAuth'
 import { useGetCalendarQuery } from '../../redux/slice/api/calendarApiSlice'
-import Weekday from '../Weekday'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
+import MemoizedDayNotes from '../DayNotes'
+import calcWeekid from '../../lib/calcWeekid'
 
 const Header = styled.div`
   display: flex;
@@ -33,49 +34,30 @@ const WeeklyPage = ({ wid }) => {
     isError,
     error,
   } = useGetCalendarQuery()
-
   let content
   if (isLoading) content = <p>Loading...</p>
   if (isError) content = <p>Error {error?.data?.message}</p>
-  if (!isLoading && isSuccess) {
+
+  if (!isLoading && isSuccess && user_id) {
     const curWeekDays = calendar.filter(
       (day) =>
         day.week === parseInt(wid.slice(-2)) &&
         day.year === parseInt(wid.slice(0, 4))
     )
-    content = curWeekDays.map(({ month, day, weekday, year }) => (
-      <Weekday
-        key={day}
+
+    content = curWeekDays.map((curWeekDay) => (
+      <MemoizedDayNotes
+        key={curWeekDay.day}
+        view='week'
         user_id={user_id}
-        month={month}
-        day={day}
-        weekday={weekday}
-        year={year}
+        year={curWeekDay.year}
+        month={curWeekDay.month}
+        day={curWeekDay.day}
+        weekday={curWeekDay.weekday}
       />
     ))
   }
 
-  const calcWeekid = (curWeekid, adder) => {
-    const week = curWeekid.slice(-2)
-    const year = curWeekid.slice(0, 4)
-    let resWeek = parseInt(week) + adder
-    let resYear = parseInt(year)
-    if (resWeek > 52) {
-      resYear += 1
-      resWeek -= 52
-    }
-    if (resWeek < 1) {
-      resYear -= 1
-      resWeek += 52
-    }
-
-    return (
-      resYear.toString() +
-      resWeek.toLocaleString('en-US', {
-        minimumIntegerDigits: 2,
-      })
-    )
-  }
   return (
     <div>
       <Header>
@@ -100,4 +82,6 @@ const WeeklyPage = ({ wid }) => {
   )
 }
 
-export default WeeklyPage
+const MemoizedWeeklyPage = memo(WeeklyPage)
+
+export default MemoizedWeeklyPage

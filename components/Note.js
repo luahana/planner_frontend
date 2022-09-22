@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {
   useUpdateNoteMutation,
   useDeleteNoteMutation,
-  useGetNotesQuery,
+  useGetNoteByUserDayQuery,
 } from '../redux/slice/api/notesApiSlice'
 import ElementMaker from './ElementMaker'
 import TextareaMaker from './TextareaMaker'
@@ -73,13 +73,14 @@ const SetCompleted = styled.div`
   cursor: pointer;
 `
 
-const Note = ({ noteId }) => {
-  const { note } = useGetNotesQuery('notesList', {
-    selectFromResult: ({ data }) => ({
-      note: data?.entities[noteId],
-    }),
+const Note = ({ noteId, queryStr }) => {
+  const { note } = useGetNoteByUserDayQuery(queryStr, {
+    selectFromResult: ({ data }) => {
+      return {
+        note: data?.entities[noteId],
+      }
+    },
   })
-
   const [updateNote, { isLoading, isSuccess, isError, error }] =
     useUpdateNoteMutation()
 
@@ -129,17 +130,15 @@ const Note = ({ noteId }) => {
 
   const handleOnClickCompleted = async () => {
     const newCompleted = !completed
-    setCompleted(newCompleted)
     const newSets = new Array()
     newSets.length = sets.length
     if (!newCompleted) {
       newSets.fill(false)
-      setSets(newSets)
     } else {
       newSets.fill(true)
-      setSets(newSets)
     }
-
+    setCompleted(newCompleted)
+    setSets(newSets)
     await updateNote({
       ...note,
       completed: newCompleted,
@@ -147,7 +146,7 @@ const Note = ({ noteId }) => {
     })
   }
 
-  const handleSetOnClick = async (i) => {
+  const handleOnClickSet = async (i) => {
     const newSets = sets.slice()
     newSets[i] = !sets[i]
     setSets(newSets)
@@ -169,7 +168,7 @@ const Note = ({ noteId }) => {
     <Wrapper>
       <FeatureDiv>
         <CompletedDiv onClick={handleOnClickCompleted}>
-          {note.completed ? (
+          {note?.completed ? (
             <FontAwesomeIcon icon={faCheck} />
           ) : (
             <FontAwesomeIcon icon={faCircle} />
@@ -178,7 +177,7 @@ const Note = ({ noteId }) => {
         <SetsDiv>
           {sets &&
             sets.map((set, i) => (
-              <SetCompleted key={i} onClick={() => handleSetOnClick(i)}>
+              <SetCompleted key={i} onClick={() => handleOnClickSet(i)}>
                 {set ? (
                   <FontAwesomeIcon icon={faCheck} />
                 ) : (

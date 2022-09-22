@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import { MONTH, WEEKDAY } from '../config/calendar'
-import { useGetNotesQuery } from '../redux/slice/api/notesApiSlice'
+import { useGetNoteByUserDayQuery } from '../redux/slice/api/notesApiSlice'
 // import Modal from '../Modal'
 import MemoizedNote from './Note'
 import Time from './Time'
@@ -59,7 +59,18 @@ const WeekNoteWrapper = styled.div`
 `
 // Week View styled component end
 
-const DayNotes = ({ view, user_id, month, day, weekday, year }) => {
+const DayNotes = ({ view, user_id, year, month, day, weekday }) => {
+  const date =
+    year.toString() +
+    month.toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+      useGrouping: false,
+    }) +
+    day.toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+      useGrouping: false,
+    })
+  const queryStr = user_id + date
   const {
     data: notes,
     isLoading,
@@ -67,7 +78,7 @@ const DayNotes = ({ view, user_id, month, day, weekday, year }) => {
     isSuccess,
     isError,
     error,
-  } = useGetNotesQuery('notesList', {
+  } = useGetNoteByUserDayQuery(queryStr, {
     pollingInterval: 15000,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
@@ -78,26 +89,7 @@ const DayNotes = ({ view, user_id, month, day, weekday, year }) => {
   if (isError) content = <p>Error {error?.data?.message}</p>
   if (!isLoading && isSuccess) {
     const { ids, entities } = notes
-
-    const filteredIds = [...ids].filter((id) => {
-      let assignedDate = entities[id].createdAt
-
-      if (entities[id].assignedDate) {
-        assignedDate = entities[id].assignedDate
-      }
-      const [assignedDateMonth, assignedDateDay, assignedDateYear] = [
-        new Date(assignedDate).getMonth(),
-        new Date(assignedDate).getDate(),
-        new Date(assignedDate).getFullYear(),
-      ]
-      return (
-        entities[id].user === user_id &&
-        assignedDateMonth === month &&
-        assignedDateDay === day &&
-        assignedDateYear === year
-      )
-    })
-    content = filteredIds
+    content = [...ids]
       .sort((a, b) => {
         return entities[a].completed === entities[b].completed
           ? 0
@@ -106,7 +98,7 @@ const DayNotes = ({ view, user_id, month, day, weekday, year }) => {
           : -1
       })
       .map((id) => {
-        return <MemoizedNote key={id} noteId={id} />
+        return <MemoizedNote key={id} noteId={id} queryStr={queryStr} />
       })
   }
   return (
@@ -141,4 +133,5 @@ const DayNotes = ({ view, user_id, month, day, weekday, year }) => {
   )
 }
 
-export default DayNotes
+const MemoizedDayNotes = memo(DayNotes)
+export default MemoizedDayNotes
