@@ -1,11 +1,16 @@
-import React, { memo } from 'react'
+import React, { memo, useCallback } from 'react'
 import styled from 'styled-components'
 import { MONTH, WEEKDAY } from '../config/calendar'
-import { useGetNoteByUserDayQuery } from '../redux/slice/api/notesApiSlice'
+import {
+  useGetNoteByUserDayQuery,
+  useAddNewNoteMutation,
+} from '../redux/slice/api/notesApiSlice'
 // import Modal from '../Modal'
 import MemoizedNote from './Note'
 import Time from './Time'
 import { device } from '../config/deviceBreakpoint'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 // Day View styled component start
 const DayWrapper = styled.div`
@@ -60,17 +65,15 @@ const WeekNoteWrapper = styled.div`
 // Week View styled component end
 
 const DayNotes = ({ view, user_id, year, month, day, weekday }) => {
-  const date =
-    year.toString() +
-    month.toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-      useGrouping: false,
-    }) +
-    day.toLocaleString('en-US', {
+  const [digitMonth, digitDay] = [month, day].map((n) =>
+    n.toLocaleString('en-US', {
       minimumIntegerDigits: 2,
       useGrouping: false,
     })
-  const queryStr = user_id + date
+  )
+  const date = year + '' + digitMonth + digitDay
+
+  const queryStr = user_id + '-' + date
   const {
     data: notes,
     isLoading,
@@ -79,10 +82,27 @@ const DayNotes = ({ view, user_id, year, month, day, weekday }) => {
     isError,
     error,
   } = useGetNoteByUserDayQuery(queryStr, {
-    pollingInterval: 15000,
-    refetchOnFocus: true,
-    refetchOnMountOrArgChange: true,
+    // pollingInterval: 15000,
+    // refetchOnFocus: true,
+    // refetchOnMountOrArgChange: true,
   })
+
+  const [
+    addNewNote,
+    {
+      isLoading: addIsLoading,
+      isSuccess: addIsSuccess,
+      isError: addIsError,
+      error: addError,
+    },
+  ] = useAddNewNoteMutation(queryStr)
+
+  const handleOnClickAddNew = useCallback(async () => {
+    await addNewNote({
+      user: user_id,
+      assignedDate: new Date(year, month, day),
+    })
+  }, [year, month, day])
 
   let content
   if (isLoading) content = <p>Loading...</p>
@@ -90,6 +110,9 @@ const DayNotes = ({ view, user_id, year, month, day, weekday }) => {
   if (!isLoading && isSuccess) {
     const { ids, entities } = notes
     content = [...ids]
+      .sort((a, b) => {
+        return new Date(entities[b].createdAt) - new Date(entities[a].createdAt)
+      })
       .sort((a, b) => {
         return entities[a].completed === entities[b].completed
           ? 0
@@ -108,7 +131,7 @@ const DayNotes = ({ view, user_id, year, month, day, weekday }) => {
           <DayHeader>
             <Time />
             <DayNewNoteBtnDiv>
-              <button>New Note</button>
+              <button onClick={handleOnClickAddNew}>New Note</button>
             </DayNewNoteBtnDiv>
           </DayHeader>
           <DayMain>{content}</DayMain>
@@ -121,13 +144,20 @@ const DayNotes = ({ view, user_id, year, month, day, weekday }) => {
             <div>
               {MONTH[month]} {day}
             </div>
-            <div>
-              <button>Add New</button>
+            <div onClick={handleOnClickAddNew}>
+              <FontAwesomeIcon icon={faPlus} />
             </div>
           </WeekDateWrapper>
-
           <WeekNoteWrapper>{content}</WeekNoteWrapper>
         </WeekWrapper>
+      )}
+      {view === 'unassigned' && (
+        <DayWrapper>
+          <DayHeader>
+            <Time />
+          </DayHeader>
+          <DayMain>{content}</DayMain>
+        </DayWrapper>
       )}
     </>
   )

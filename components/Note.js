@@ -8,7 +8,11 @@ import {
 import ElementMaker from './ElementMaker'
 import TextareaMaker from './TextareaMaker'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faCheck } from '@fortawesome/free-solid-svg-icons'
+import {
+  faTrash,
+  faCheck,
+  faPenToSquare,
+} from '@fortawesome/free-solid-svg-icons'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import { device } from '../config/deviceBreakpoint'
 
@@ -161,7 +165,15 @@ const Note = ({ noteId, queryStr }) => {
   }
 
   const handleDelete = async () => {
-    await deleteNote({ id: noteId })
+    if (!note.assignedDate || note.assignedDate === '')
+      await deleteNote({ id: noteId })
+    await updateNote({
+      ...note,
+      assignedDate: '',
+    })
+  }
+  const handleEdit = () => {
+    setShowInputEle(true)
   }
 
   return (
@@ -186,6 +198,9 @@ const Note = ({ noteId, queryStr }) => {
               </SetCompleted>
             ))}
         </SetsDiv>
+        <DeleteDiv onClick={handleEdit}>
+          <FontAwesomeIcon icon={faPenToSquare} />
+        </DeleteDiv>
         <DeleteDiv onClick={handleDelete}>
           <FontAwesomeIcon icon={faTrash} />
         </DeleteDiv>

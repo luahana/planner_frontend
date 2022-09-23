@@ -69,6 +69,11 @@ const Navbar = () => {
                   <a>Monthly</a>
                 </li>
               </Link>
+              <Link href='/unassigned'>
+                <li className={styles.pointer} onClick={close}>
+                  <a>Unassigned</a>
+                </li>
+              </Link>
             </>
           )}
           {isAdmin && (
@@ -129,6 +134,11 @@ const Navbar = () => {
                     }`}
                   >
                     <a>Monthly</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href='/unassigned'>
+                    <a>Unassigned</a>
                   </Link>
                 </li>
                 {isAdmin && (

@@ -51,7 +51,7 @@ const WeeklyPage = ({ wid }) => {
         view='week'
         user_id={user_id}
         year={curWeekDay.year}
-        month={curWeekDay.month}
+        month={curWeekDay.month - 1}
         day={curWeekDay.day}
         weekday={curWeekDay.weekday}
       />

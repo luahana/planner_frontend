@@ -55,9 +55,8 @@ export const notesApiSlice = apiSlice.injectEndpoints({
     }),
     addNewNote: builder.mutation({
       query({
-        _id,
         user,
-        title,
+        title = '',
         content = '',
         completed = false,
         assignedDate = new Date(),
@@ -66,7 +65,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         return {
           url: '/notes',
           method: 'POST',
-          body: { _id, user, title, content, completed, assignedDate, sets },
+          body: { user, title, content, completed, assignedDate, sets },
         }
       },
       invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
@@ -75,10 +74,10 @@ export const notesApiSlice = apiSlice.injectEndpoints({
       query({
         _id,
         user,
-        title,
+        title = '',
         content = '',
         completed = false,
-        assignedDate = new Date(),
+        assignedDate = '',
         sets = [],
       }) {
         return {
