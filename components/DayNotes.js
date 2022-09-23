@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react'
+import React, { memo, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { MONTH, WEEKDAY } from '../config/calendar'
 import {
@@ -65,6 +65,7 @@ const WeekNoteWrapper = styled.div`
 // Week View styled component end
 
 const DayNotes = ({ view, user_id, year, month, day, weekday }) => {
+  // const [isDateChanged, setIsDateChanged] = useState(false)
   const [digitMonth, digitDay] = [month, day].map((n) =>
     n.toLocaleString('en-US', {
       minimumIntegerDigits: 2,
@@ -121,7 +122,14 @@ const DayNotes = ({ view, user_id, year, month, day, weekday }) => {
           : -1
       })
       .map((id) => {
-        return <MemoizedNote key={id} noteId={id} queryStr={queryStr} />
+        return (
+          <MemoizedNote
+            key={id}
+            noteId={id}
+            queryStr={queryStr}
+            // setIsDateChanged={setIsDateChanged}
+          />
+        )
       })
   }
   return (

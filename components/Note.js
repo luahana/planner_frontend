@@ -7,11 +7,13 @@ import {
 } from '../redux/slice/api/notesApiSlice'
 import ElementMaker from './ElementMaker'
 import TextareaMaker from './TextareaMaker'
+import Calendar from 'react-calendar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faTrash,
   faCheck,
   faPenToSquare,
+  faCalendarDays,
 } from '@fortawesome/free-solid-svg-icons'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import { device } from '../config/deviceBreakpoint'
@@ -60,7 +62,16 @@ const DeleteDiv = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  width: 10%;
+  width: 5%;
+  @media ${device.tablet} {
+  }
+`
+const EditDateDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 5%;
   @media ${device.tablet} {
   }
 `
@@ -76,6 +87,8 @@ const ContentDiv = styled.div`
 const SetCompleted = styled.div`
   cursor: pointer;
 `
+
+const Caldiv = styled.div``
 
 const Note = ({ noteId, queryStr }) => {
   const { note } = useGetNoteByUserDayQuery(queryStr, {
@@ -104,6 +117,9 @@ const Note = ({ noteId, queryStr }) => {
   const [content, setContent] = useState(note.content)
   const [completed, setCompleted] = useState(note.completed)
   const [sets, setSets] = useState(note.sets)
+  const [calValue, onChange] = useState(new Date())
+  const [calOpen, setCalOpen] = useState(false)
+  console.log(calValue)
 
   useEffect(() => {
     setTitle(note.title)
@@ -175,55 +191,81 @@ const Note = ({ noteId, queryStr }) => {
   const handleEdit = () => {
     setShowInputEle(true)
   }
+  const handleEditDate = () => {
+    setCalOpen(!calOpen)
+  }
+
+  const handleChangeDate = async () => {
+    await updateNote({
+      ...note,
+      assignedDate: calValue,
+    })
+  }
 
   return (
-    <Wrapper>
-      <FeatureDiv>
-        <CompletedDiv onClick={handleOnClickCompleted}>
-          {note?.completed ? (
-            <FontAwesomeIcon icon={faCheck} />
-          ) : (
-            <FontAwesomeIcon icon={faCircle} />
-          )}
-        </CompletedDiv>
-        <SetsDiv>
-          {sets &&
-            sets.map((set, i) => (
-              <SetCompleted key={i} onClick={() => handleOnClickSet(i)}>
-                {set ? (
-                  <FontAwesomeIcon icon={faCheck} />
-                ) : (
-                  <FontAwesomeIcon icon={faCircle} />
-                )}
-              </SetCompleted>
-            ))}
-        </SetsDiv>
-        <DeleteDiv onClick={handleEdit}>
-          <FontAwesomeIcon icon={faPenToSquare} />
-        </DeleteDiv>
-        <DeleteDiv onClick={handleDelete}>
-          <FontAwesomeIcon icon={faTrash} />
-        </DeleteDiv>
-      </FeatureDiv>
-      <TitleDiv>
-        <ElementMaker
-          value={title}
-          handleChange={(e) => setTitle(e.target.value)}
-          handleDoubleClick={() => setShowInputEle(true)}
-          handleBlur={handleBlur}
-          showInputEle={showInputEle}
-        />
-      </TitleDiv>
-      <ContentDiv>
-        <TextareaMaker
-          value={content}
-          handleChange={(e) => setContent(e.target.value)}
-          handleDoubleClick={() => setShowContentInputEle(true)}
-          handleBlur={handleBlurContent}
-          showContentInputEle={showContentInputEle}
-        />
-      </ContentDiv>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <FeatureDiv>
+          <CompletedDiv onClick={handleOnClickCompleted}>
+            {note?.completed ? (
+              <FontAwesomeIcon icon={faCheck} />
+            ) : (
+              <FontAwesomeIcon icon={faCircle} />
+            )}
+          </CompletedDiv>
+          <SetsDiv>
+            {sets &&
+              sets.map((set, i) => (
+                <SetCompleted key={i} onClick={() => handleOnClickSet(i)}>
+                  {set ? (
+                    <FontAwesomeIcon icon={faCheck} />
+                  ) : (
+                    <FontAwesomeIcon icon={faCircle} />
+                  )}
+                </SetCompleted>
+              ))}
+          </SetsDiv>
+          <DeleteDiv onClick={handleEdit}>
+            <FontAwesomeIcon icon={faPenToSquare} />
+          </DeleteDiv>
+          <EditDateDiv onClick={handleEditDate}>
+            <FontAwesomeIcon icon={faCalendarDays} />
+          </EditDateDiv>
+          <DeleteDiv onClick={handleDelete}>
+            <FontAwesomeIcon icon={faTrash} />
+          </DeleteDiv>
+        </FeatureDiv>
+        {calOpen && (
+          <Caldiv>
+            <Calendar onChange={onChange} value={calValue} />
+            <p>{calValue.toDateString()}</p>
+            <button onClick={handleChangeDate}>Change Date</button>
+          </Caldiv>
+        )}
+        {!calOpen && (
+          <>
+            <TitleDiv>
+              <ElementMaker
+                value={title}
+                handleChange={(e) => setTitle(e.target.value)}
+                handleDoubleClick={() => setShowInputEle(true)}
+                handleBlur={handleBlur}
+                showInputEle={showInputEle}
+              />
+            </TitleDiv>
+            <ContentDiv>
+              <TextareaMaker
+                value={content}
+                handleChange={(e) => setContent(e.target.value)}
+                handleDoubleClick={() => setShowContentInputEle(true)}
+                handleBlur={handleBlurContent}
+                showContentInputEle={showContentInputEle}
+              />
+            </ContentDiv>
+          </>
+        )}
+      </Wrapper>
+    </>
   )
 }
 
