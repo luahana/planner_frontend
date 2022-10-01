@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import styles from '../styles/Login.module.css'
+import styles from '../styles/login.module.css'
 import { ROLES } from '../config/roles'
 import { useRouter } from 'next/router'
 import { useAddNewUserMutation } from '../redux/slice/api/usersApiSlice'
