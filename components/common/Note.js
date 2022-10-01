@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import {
   useUpdateNoteMutation,
   useDeleteNoteMutation,
-  useGetNoteByUserDayQuery,
-} from '../redux/slice/api/notesApiSlice'
-import ElementMaker from './ElementMaker'
-import TextareaMaker from './TextareaMaker'
+  useGetNoteByUserMonthQuery,
+} from '../../redux/slice/api/notesApiSlice'
+import ElementMaker from '../ElementMaker'
+import TextareaMaker from '../TextareaMaker'
 import Calendar from 'react-calendar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -16,12 +16,14 @@ import {
   faCalendarDays,
 } from '@fortawesome/free-solid-svg-icons'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
-import { device } from '../config/deviceBreakpoint'
+import { device } from '../../config/deviceBreakpoint'
 
 const Wrapper = styled.div`
   width: 100%;
   max-height: 16.3rem;
-  background-color: AntiqueWhite;
+  background-image: url('/post.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   margin-bottom: 0.5rem;
@@ -68,7 +70,6 @@ const DeleteDiv = styled.div`
 `
 const EditDateDiv = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   cursor: pointer;
   width: 5%;
@@ -90,14 +91,18 @@ const SetCompleted = styled.div`
 
 const Caldiv = styled.div``
 
-const Note = ({ noteId, queryStr }) => {
-  const { note } = useGetNoteByUserDayQuery(queryStr, {
-    selectFromResult: ({ data }) => {
-      return {
-        note: data?.entities[noteId],
-      }
-    },
-  })
+const Note = ({ userId, noteId, year, month }) => {
+  const { note } = useGetNoteByUserMonthQuery(
+    { userId, year, month },
+    {
+      selectFromResult: ({ data }) => {
+        return {
+          note: data?.find((note) => note._id === noteId),
+        }
+      },
+    }
+  )
+
   const [updateNote, { isLoading, isSuccess, isError, error }] =
     useUpdateNoteMutation()
 
@@ -119,7 +124,13 @@ const Note = ({ noteId, queryStr }) => {
   const [sets, setSets] = useState(note.sets)
   const [calValue, onChange] = useState(new Date())
   const [calOpen, setCalOpen] = useState(false)
-  console.log(calValue)
+
+  useEffect(() => {
+    setTitle(note.title)
+    setContent(note.content)
+    setCompleted(note.completed)
+    setSets(note.sets)
+  }, [note.title, note.content, note.completed, note.sets])
 
   useEffect(() => {
     setTitle(note.title)
@@ -170,8 +181,8 @@ const Note = ({ noteId, queryStr }) => {
     const newSets = sets.slice()
     newSets[i] = !sets[i]
     setSets(newSets)
-    const allCompleted = newSets.every((set) => set === true)
-    if (allCompleted) setCompleted(allCompleted)
+    const allCompleted = newSets.every((set) => set.true)
+    setCompleted(allCompleted)
 
     await updateNote({
       ...note,
@@ -269,6 +280,7 @@ const Note = ({ noteId, queryStr }) => {
   )
 }
 
-const MemoizedNote = memo(Note)
+// const MemoizedNote = memo(Note)
 
-export default MemoizedNote
+// export default MemoizedNote
+export default Note

@@ -14,7 +14,29 @@ export const calendarApiSlice = apiSlice.injectEndpoints({
           return response.status === 200 && !result.isError
         },
       }),
-
+      providesTags: (result, error, arg) => {
+        if (result?.ids) {
+          return [
+            { type: 'Calendar', id: 'LIST' },
+            ...result.ids.map((id) => ({ type: 'Calendar', id })),
+          ]
+        } else return [{ type: 'Calendar', id: 'LIST' }]
+      },
+    }),
+    getCalendarByWeek: builder.query({
+      query: (queryStr) => ({
+        url: `/calendar/${queryStr}`,
+        validateStatus: (response, result) => {
+          return response.status === 200 && !result.isError
+        },
+      }),
+      transformResponse: (responseData) => {
+        const loadedNotes = responseData.map((note) => {
+          note.id = note._id
+          return note
+        })
+        return notesAdapter.setAll(initialState, loadedNotes)
+      },
       providesTags: (result, error, arg) => {
         if (result?.ids) {
           return [

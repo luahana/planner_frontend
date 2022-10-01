@@ -6,7 +6,7 @@ import useAuth from '../hooks/useAuth'
 import styles from '../styles/navbar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
-import currentWeekNumber from 'current-week-number'
+import { calcWeekId } from '../lib/calendar'
 
 const Navbar = () => {
   const router = useRouter()
@@ -35,6 +35,22 @@ const Navbar = () => {
     close()
   }
 
+  const dt = new Date()
+  const mid =
+    dt.getFullYear() +
+    (dt.getMonth() + 1).toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+    })
+  const wid = calcWeekId(dt.getFullYear(), dt.getMonth() + 1, dt.getDate())
+  const did =
+    dt.getFullYear() +
+    (dt.getMonth() + 1).toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+    }) +
+    dt.getDate().toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+    })
+
   return (
     <>
       <div
@@ -45,26 +61,22 @@ const Navbar = () => {
         <ul className={styles.menuUl}>
           {user_id && (
             <>
-              <Link href='/dash'>
+              {/* <Link href='/dash'>
                 <li className={styles.pointer} onClick={close}>
                   <a>Dashboard</a>
                 </li>
-              </Link>
-              <Link href='/notes'>
+              </Link> */}
+              <Link href={`/daily/${did}`}>
                 <li className={styles.pointer} onClick={close}>
                   <a>Today</a>
                 </li>
               </Link>
-              <Link
-                href={`/weekly/${new Date().getFullYear()}${currentWeekNumber()}`}
-              >
+              <Link href={`/weekly/${wid}`}>
                 <li className={styles.pointer} onClick={close}>
                   <a>Weekly</a>
                 </li>
               </Link>
-              <Link
-                href={`/monthly/${new Date().getFullYear()}${d.getMonth() + 1}`}
-              >
+              <Link href={`/monthly/${mid}`}>
                 <li className={styles.pointer} onClick={close}>
                   <a>Monthly</a>
                 </li>
@@ -110,29 +122,23 @@ const Navbar = () => {
           <ul>
             {user_id && (
               <>
-                <li>
+                {/* <li>
                   <Link href='/dash'>
                     <a>Dashboard</a>
                   </Link>
-                </li>
+                </li> */}
                 <li>
-                  <Link href='/notes'>
+                  <Link href={`/daily/${did}`}>
                     <a>Today</a>
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href={`/weekly/${new Date().getFullYear()}${currentWeekNumber()}`}
-                  >
+                  <Link href={`/weekly/${wid}`}>
                     <a>Weekly</a>
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href={`/monthly/${new Date().getFullYear()}${
-                      d.getMonth() + 1
-                    }`}
-                  >
+                  <Link href={`/monthly/${mid}`}>
                     <a>Monthly</a>
                   </Link>
                 </li>
