@@ -9,7 +9,7 @@ const DailyPage = ({ did }) => {
   const didYear = parseInt(did.slice(0, 4))
   const didMonth = parseInt(did.slice(4, 6))
   const didDate = parseInt(did.slice(-2))
-  const fullDay = new Date(didYear, didMonth, didDate).toDateString()
+  const fullDay = new Date(didYear, didMonth - 1, didDate).toDateString()
 
   return (
     <div>
