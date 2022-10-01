@@ -26,8 +26,9 @@ const WeekNoteWrapper = styled.div`
 
 const NotesWeekView = ({ fullDay, weekday, content, onAddNewClicked }) => {
   const dt = new Date(fullDay)
-  const month = parseInt(dt.getMonth() + 1)
-  const date = parseInt(dt.getDate())
+  const year = dt.getFullYear()
+  const month = dt.getMonth() + 1
+  const date = dt.getDate()
 
   return (
     <WeekWrapper>
@@ -36,7 +37,7 @@ const NotesWeekView = ({ fullDay, weekday, content, onAddNewClicked }) => {
         <div>
           {MONTH[month]} {date}
         </div>
-        <div onClick={() => onAddNewClicked()}>
+        <div onClick={() => onAddNewClicked(year, month, date)}>
           <FontAwesomeIcon icon={faPlus} />
         </div>
       </WeekDateWrapper>

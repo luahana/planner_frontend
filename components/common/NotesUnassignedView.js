@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { device } from '../../config/deviceBreakpoint'
-import Time from '../Time'
 
 const DayWrapper = styled.div`
   width: 100%;
@@ -32,17 +31,12 @@ const DayMain = styled.div`
   }
 `
 
-const NotesDayView = ({ fullDay, content, onAddNewClicked }) => {
-  const dt = new Date(fullDay)
-  const year = dt.getFullYear()
-  const month = dt.getMonth() + 1
-  const date = dt.getDate()
+const NotesUnassignedView = ({ content, onAddNewClicked }) => {
   return (
     <DayWrapper>
       <DayHeader>
-        <Time />
         <DayNewNoteBtnDiv>
-          <button onClick={() => onAddNewClicked(year, month, date)}>
+          <button onClick={() => onAddNewClicked(1111, 11, 11)}>
             New Note
           </button>
         </DayNewNoteBtnDiv>
@@ -52,4 +46,4 @@ const NotesDayView = ({ fullDay, content, onAddNewClicked }) => {
   )
 }
 
-export default NotesDayView
+export default NotesUnassignedView

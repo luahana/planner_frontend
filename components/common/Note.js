@@ -192,11 +192,14 @@ const Note = ({ userId, noteId, year, month }) => {
   }
 
   const handleDelete = async () => {
+    const dt = new Date(note.assignedDate)
+    if (dt.getFullYear() === 1111 && dt.getMonth() === 10)
+      await deleteNote({ id: noteId })
     if (!note.assignedDate || note.assignedDate === '')
       await deleteNote({ id: noteId })
     await updateNote({
       ...note,
-      assignedDate: '',
+      assignedDate: new Date(1111, 10, 11),
     })
   }
   const handleEdit = () => {

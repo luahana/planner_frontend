@@ -3,7 +3,7 @@ import useUserAuth from '../../hooks/useUserAuth'
 import styled from 'styled-components'
 import { weekdays, widsMonth, fullMonthArray } from '../../lib/calendar'
 import Link from 'next/link'
-import { calcMid } from '../../lib/calendar'
+import { calcMid, convertDateStrToDid } from '../../lib/calendar'
 import PagesHeader from '../common/PagesHeader'
 import DayNotes from '../common/DayNotes'
 
@@ -63,10 +63,12 @@ const MonthlyPage = ({ mid }) => {
           </DayOfWeekWrapper>
           <DateGrid>
             {fullMonthArr.map((day) => (
-              <DayDiv key={day}>
-                <div>{new Date(day).getDate()}</div>
-                <DayNotes view='month' userId={userId} fullDay={day} />
-              </DayDiv>
+              <Link key={day} href={`/daily/${convertDateStrToDid(day)}`}>
+                <DayDiv key={day}>
+                  <div>{new Date(day).getDate()}</div>
+                  <DayNotes view='month' userId={userId} fullDay={day} />
+                </DayDiv>
+              </Link>
             ))}
           </DateGrid>
         </div>

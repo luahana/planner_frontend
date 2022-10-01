@@ -21,41 +21,12 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         })
         return notesAdapter.setAll(initialState, loadedNotes)
       },
-      providesTags: (result, error, arg) => {
-        if (result?.ids) {
-          return [
-            { type: 'Notes', id: 'LIST' },
-            ...result.ids.map((id) => ({ type: 'Notes', id })),
-          ]
-        } else return [{ type: 'Notes', id: 'LIST' }]
-      },
-    }),
-    getNoteByUser: builder.query({
-      query: (userId) => ({
-        url: `/notes/${userId}`,
-      }),
     }),
     getNoteByUserMonth: builder.query({
       query: (queryStr) => ({
         url: `/notes/${queryStr.userId}/${queryStr.year}/${queryStr.month}`,
       }),
-      providesTags: ['Notes'],
-    }),
-    getNoteByUserDay: builder.query({
-      query: (queryStr) => ({
-        url: `/notes/${queryStr}`,
-        validateStatus: (response, result) => {
-          return response.status === 200 && !result.isError
-        },
-      }),
-      transformResponse: (responseData) => {
-        const loadedNotes = responseData.map((note) => {
-          note.id = note._id
-          return note
-        })
-        return notesAdapter.setAll(initialState, loadedNotes)
-      },
-      providesTags: ['Notes'],
+      providesTags: [{ type: 'Notes', id: 'LIST' }],
     }),
     addNewNote: builder.mutation({
       query({
@@ -72,10 +43,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
           body: { user, title, content, completed, assignedDate, sets },
         }
       },
-      invalidatesTags: ['Notes'],
-      // invalidatesTags: (result, error, arg) => {
-      //   return [{ type: 'Notes', id: arg.id }]
-      // },
+      invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
     }),
     updateNote: builder.mutation({
       query({
@@ -93,7 +61,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
           body: { _id, user, title, content, completed, assignedDate, sets },
         }
       },
-      invalidatesTags: ['Notes'],
+      invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
     }),
     deleteNote: builder.mutation({
       query(body) {
@@ -103,8 +71,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
           body,
         }
       },
-      invalidatesTags: ['Notes'],
-      // invalidatesTags: (result, error, arg) => [{ type: 'Notes', id: arg.id }],
+      invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
     }),
   }),
 })
@@ -112,7 +79,6 @@ export const notesApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetNotesQuery,
   useGetNoteByUserMonthQuery,
-  useGetNoteByUserDayQuery,
   useAddNewNoteMutation,
   useUpdateNoteMutation,
   useDeleteNoteMutation,

@@ -6,6 +6,7 @@ import {
 import NotesDayView from './NotesDayView'
 import NotesWeekView from './NotesWeekView'
 import NotesMonthView from './NotesMonthView'
+import NotesUnassignedView from './NotesUnassignedView'
 import Note from './Note'
 
 const DayNotes = ({ view, userId, fullDay, weekday }) => {
@@ -44,14 +45,19 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
     },
   ] = useAddNewNoteMutation()
 
-  const onAddNewClicked = async () => {
+  const onAddNewClicked = async (year, month, date) => {
     await addNewNote({
       user: userId,
-      assignedDate: new Date(year, month, date),
+      assignedDate: new Date(year, month - 1, date),
     })
   }
+  const notedByCompleted = notes.sort((a, b) => {
+    if (a.completed === b.completed) return 0
+    if (a.completed) return 1
+    if (!a.completed) return -1
+  })
 
-  let content = notes.map((note) => (
+  let content = notedByCompleted.map((note) => (
     <Note
       key={note._id}
       userId={userId}
@@ -61,13 +67,28 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
     />
   ))
   if (view === 'month') {
-    content = notes.map((note) => note.title)
+    content = notedByCompleted.map((note) => <div>{note.title}</div>)
+  }
+  if (view === 'unassigned') {
+    content = notedByCompleted.map((note) => (
+      <Note
+        key={note._id}
+        userId={userId}
+        noteId={note._id}
+        year={year}
+        month={month}
+      />
+    ))
   }
 
   return (
     <>
       {view === 'day' && (
-        <NotesDayView content={content} onAddNewClicked={onAddNewClicked} />
+        <NotesDayView
+          fullDay={fullDay}
+          content={content}
+          onAddNewClicked={onAddNewClicked}
+        />
       )}
       {view === 'week' && (
         <NotesWeekView
@@ -78,6 +99,12 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
         />
       )}
       {view === 'month' && <NotesMonthView content={content} />}
+      {view === 'unassigned' && (
+        <NotesUnassignedView
+          content={content}
+          onAddNewClicked={onAddNewClicked}
+        />
+      )}
     </>
   )
 }
