@@ -67,7 +67,7 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
     />
   ))
   if (view === 'month') {
-    content = notedByCompleted.map((note) => <div>{note.title}</div>)
+    content = notedByCompleted
   }
   if (view === 'unassigned') {
     content = notedByCompleted.map((note) => (

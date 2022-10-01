@@ -10,6 +10,11 @@ const Wrapper = styled.div`
   }
 `
 
+const TitleDiv = styled.div`
+  text-align: center;
+  font-size: 2.5rem;
+`
+
 const UnassignedPage = () => {
   const userId = useUserAuth()
   const fullDay = new Date(1111, 10, 11).toDateString()
@@ -17,6 +22,7 @@ const UnassignedPage = () => {
   return (
     <>
       <Wrapper>
+        <TitleDiv>Unassgined Notes</TitleDiv>
         <DayNotes view='unassigned' userId={userId} fullDay={fullDay} />
       </Wrapper>
     </>

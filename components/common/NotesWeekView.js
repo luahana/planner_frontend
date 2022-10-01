@@ -7,11 +7,13 @@ import { device } from '../../config/deviceBreakpoint'
 
 const WeekWrapper = styled.div`
   display: flex;
+  padding: 1rem;
   margin-bottom: 2rem;
-  border-top: 1px solid black;
+  border-top: 2px solid #e6e7e8;
   width: 100%;
 `
 const WeekDateWrapper = styled.div`
+  padding-right: 1rem;
   width: 20%;
 `
 
@@ -23,6 +25,15 @@ const WeekNoteWrapper = styled.div`
     gap: 1rem;
   }
 `
+const AddNewDiv = styled.div`
+  background-color: #7afcff;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  width: 100%;
+`
 
 const NotesWeekView = ({ fullDay, weekday, content, onAddNewClicked }) => {
   const dt = new Date(fullDay)
@@ -30,16 +41,25 @@ const NotesWeekView = ({ fullDay, weekday, content, onAddNewClicked }) => {
   const month = dt.getMonth() + 1
   const date = dt.getDate()
 
+  const today = new Date()
+  const todayDateStr = today.toDateString()
+
   return (
-    <WeekWrapper>
+    <WeekWrapper
+      style={{
+        border: fullDay === todayDateStr && '3px double black',
+      }}
+    >
       <WeekDateWrapper>
-        <div>{WEEKDAY[weekday]}</div>
         <div>
-          {MONTH[month]} {date}
+          <div>{WEEKDAY[weekday]}</div>
+          <div>
+            {MONTH[month]} {date}
+          </div>
         </div>
-        <div onClick={() => onAddNewClicked(year, month, date)}>
+        <AddNewDiv onClick={() => onAddNewClicked(year, month, date)}>
           <FontAwesomeIcon icon={faPlus} />
-        </div>
+        </AddNewDiv>
       </WeekDateWrapper>
       <WeekNoteWrapper>{content}</WeekNoteWrapper>
     </WeekWrapper>

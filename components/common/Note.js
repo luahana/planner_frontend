@@ -21,9 +21,7 @@ import { device } from '../../config/deviceBreakpoint'
 const Wrapper = styled.div`
   width: 100%;
   max-height: 16.3rem;
-  background-image: url('/post.svg');
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-color: hsl(61, 100%, 81%);
   display: flex;
   flex-direction: column;
   margin-bottom: 0.5rem;
@@ -204,6 +202,7 @@ const Note = ({ userId, noteId, year, month }) => {
   }
   const handleEdit = () => {
     setShowInputEle(true)
+    setShowContentInputEle(true)
   }
   const handleEditDate = () => {
     setCalOpen(!calOpen)
@@ -218,7 +217,11 @@ const Note = ({ userId, noteId, year, month }) => {
 
   return (
     <>
-      <Wrapper>
+      <Wrapper
+        style={{
+          backgroundColor: note.completed && 'hsl(61, 25%, 81%)',
+        }}
+      >
         <FeatureDiv>
           <CompletedDiv onClick={handleOnClickCompleted}>
             {note?.completed ? (
