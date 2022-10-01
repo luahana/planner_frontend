@@ -3,7 +3,7 @@ import usePersistLogin from '../../../hooks/usePersistLogin'
 import MemoizedWeeklyPage from '../../../components/pages/WeeklyPage'
 import { useRouter } from 'next/router'
 
-const weekly = ({ initialPersistValue }) => {
+const Weekly = ({ initialPersistValue }) => {
   const persistLogin = usePersistLogin(initialPersistValue)
   const router = useRouter()
   const { wid } = router.query
@@ -11,11 +11,11 @@ const weekly = ({ initialPersistValue }) => {
   return <>{persistLogin(<MemoizedWeeklyPage wid={wid} />)}</>
 }
 
-weekly.getInitialProps = ({ req }) => {
+Weekly.getInitialProps = ({ req }) => {
   const cookies = parseCookies(req)
   return {
     initialPersistValue: cookies.persist,
   }
 }
 
-export default weekly
+export default Weekly

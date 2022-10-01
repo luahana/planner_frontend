@@ -2,17 +2,17 @@ import { parseCookies } from '../lib/parseCookies'
 import usePersistLogin from '../hooks/usePersistLogin'
 import UnassignedPage from '../components/pages/UnassignedPage'
 
-const unassigned = ({ initialPersistValue }) => {
+const Unassigned = ({ initialPersistValue }) => {
   const persistLogin = usePersistLogin(initialPersistValue)
 
   return <>{persistLogin(<UnassignedPage />)}</>
 }
 
-unassigned.getInitialProps = ({ req }) => {
+Unassigned.getInitialProps = ({ req }) => {
   const cookies = parseCookies(req)
   return {
     initialPersistValue: cookies.persist,
   }
 }
 
-export default unassigned
+export default Unassigned

@@ -3,7 +3,7 @@ import usePersistLogin from '../../../hooks/usePersistLogin'
 import MemoizedDailyPage from '../../../components/pages/DailyPage'
 import { useRouter } from 'next/router'
 
-const daily = ({ initialPersistValue }) => {
+const Daily = ({ initialPersistValue }) => {
   const persistLogin = usePersistLogin(initialPersistValue)
   const router = useRouter()
   const { did } = router.query
@@ -11,11 +11,11 @@ const daily = ({ initialPersistValue }) => {
   return <>{persistLogin(<MemoizedDailyPage did={did} />)}</>
 }
 
-daily.getInitialProps = ({ req }) => {
+Daily.getInitialProps = ({ req }) => {
   const cookies = parseCookies(req)
   return {
     initialPersistValue: cookies.persist,
   }
 }
 
-export default daily
+export default Daily

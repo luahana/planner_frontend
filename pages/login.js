@@ -7,8 +7,9 @@ import { useLoginMutation } from '../redux/slice/api/authApiSlice'
 import { setCredentials } from '../redux/slice/authSlice'
 import usePersist from '../hooks/usePersist'
 import { parseCookies } from '../lib/parseCookies'
+import { convertDateStrToDid } from '../lib/calendar'
 
-const login = ({ initialPersistValue }) => {
+const Login = ({ initialPersistValue }) => {
   const router = useRouter()
   const userRef = useRef()
   const errRef = useRef()
@@ -38,7 +39,8 @@ const login = ({ initialPersistValue }) => {
       dispath(setCredentials({ accessToken }))
       setEmail('')
       setPassword('')
-      router.push('/notes')
+      const dt = new Date()
+      router.push(`/daily/${convertDateStrToDid(dt.toDateString())}`)
     } catch (err) {
       if (!err.status) {
         setErrMsg('No Server Response')
@@ -86,17 +88,17 @@ const login = ({ initialPersistValue }) => {
         </label>
       </form>
       <Link href='/signup'>
-        <a>Don't have an accout? Sign up!</a>
+        <a>{`Don't have an accout? Sign up!`}</a>
       </Link>
     </div>
   )
 }
 
-login.getInitialProps = ({ req }) => {
+Login.getInitialProps = ({ req }) => {
   const cookies = parseCookies(req)
   return {
     initialPersistValue: cookies.persist,
   }
 }
 
-export default login
+export default Login

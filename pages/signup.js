@@ -8,7 +8,7 @@ import { useAddNewUserMutation } from '../redux/slice/api/usersApiSlice'
 const USER_REGEX = /^[A-z0-9]{3,20}$/
 const PASSWORD_REGEX = /^[\S]{8,30}$/
 
-const signup = () => {
+const Signup = () => {
   const router = useRouter()
   const [addNewUser, { isLoading, isSuccess, isError, error }] =
     useAddNewUserMutation()
@@ -121,4 +121,4 @@ const signup = () => {
   )
 }
 
-export default signup
+export default Signup
