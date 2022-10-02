@@ -41,6 +41,7 @@ const LoginPage = () => {
 
   return (
     <div>
+      <p>{process.env.GOOGLE_CLIENT_ID}</p>
       <div style={{ width: '100%' }} id='signInDiv' />
     </div>
   )
