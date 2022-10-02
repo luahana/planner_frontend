@@ -18,20 +18,20 @@ const Login = ({ initialPersistValue, googleClientId }) => {
   return <>{persistLogin(<LoginPage wid={wid} />)}</>
 }
 
-Login.getInitialProps = ({ req }) => {
-  const cookies = parseCookies(req)
-  const googleClientId = process.env.GOOGLE_CLIENT_ID
-  return {
-    initialPersistValue: cookies.persist,
-    googleClientId,
-  }
-}
-
-// export async function getStaticProps() {
-
+// Login.getInitialProps = ({ req }) => {
+//   const cookies = parseCookies(req)
+//   const googleClientId = process.env.GOOGLE_CLIENT_ID
 //   return {
-//     props: { googleClientId },
+//     initialPersistValue: cookies.persist,
+//     googleClientId,
 //   }
 // }
+
+export async function getStaticProps() {
+  const googleClientId = process.env.GOOGLE_CLIENT_ID
+  return {
+    props: { googleClientId },
+  }
+}
 
 export default Login
