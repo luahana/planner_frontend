@@ -7,12 +7,6 @@ import Script from 'next/script'
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
-      <Script
-        src='https://accounts.google.com/gsi/client'
-        strategy='beforeInteractive'
-        async
-        defer
-      />
       <Layout>
         <Component {...pageProps} />
       </Layout>
