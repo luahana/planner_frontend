@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials } from '../authSlice'
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://planner-7epn.vercel.app',
+  baseUrl: 'https://planner-7epn.vercel.app/api',
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token
