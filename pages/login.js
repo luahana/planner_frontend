@@ -51,7 +51,7 @@ const Login = ({ initialPersistValue }) => {
       } else {
         setErrMsg(err.data?.message)
       }
-      errRef.current.focus()
+      userRef.current.focus()
     }
   }
 
