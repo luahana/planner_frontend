@@ -41,7 +41,6 @@ const LoginPage = ({ googleClientId }) => {
 
   return (
     <div>
-      <p>{googleClientId}</p>
       <div style={{ width: '100%' }} id='signInDiv' />
     </div>
   )
