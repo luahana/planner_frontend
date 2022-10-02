@@ -5,9 +5,18 @@ import { setCredentials } from '../authSlice'
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      query(credentials) {
+      query(tokenStr) {
         return {
           url: '/auth',
+          method: 'POST',
+          body: { ...tokenStr },
+        }
+      },
+    }),
+    googleLogin: builder.mutation({
+      query(credentials) {
+        return {
+          url: '/auth/googlelogin',
           method: 'POST',
           body: { ...credentials },
         }
@@ -54,5 +63,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
   }),
 })
 
-export const { useLoginMutation, useSendLogoutMutation, useRefreshMutation } =
-  authApiSlice
+export const {
+  useGoogleLoginMutation,
+  useLoginMutation,
+  useSendLogoutMutation,
+  useRefreshMutation,
+} = authApiSlice

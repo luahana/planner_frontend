@@ -15,8 +15,6 @@ const Navbar = () => {
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation()
 
-  const d = new Date()
-
   useEffect(() => {
     if (isSuccess) router.push('/')
   }, [isSuccess])
