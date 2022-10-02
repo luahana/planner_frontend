@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import usePersist from '../hooks/usePersist'
 import { useEffect } from 'react'
 
-const Login = ({ initialPersistValue }) => {
+const Login = ({ initialPersistValue, googleClientId }) => {
   const persistLogin = usePersistLogin(initialPersistValue)
   const [persist, setPersist] = usePersist(initialPersistValue)
   const router = useRouter()
@@ -13,8 +13,8 @@ const Login = ({ initialPersistValue }) => {
   useEffect(() => {
     setPersist(true)
   }, [])
-  console.log('process.env.GOOGLE_CLIENT_ID')
-  console.log(process.env.GOOGLE_CLIENT_ID)
+  console.log('googleClientId')
+  console.log(googleClientId)
   return <>{persistLogin(<LoginPage wid={wid} />)}</>
 }
 
@@ -22,6 +22,13 @@ Login.getInitialProps = ({ req }) => {
   const cookies = parseCookies(req)
   return {
     initialPersistValue: cookies.persist,
+  }
+}
+
+export async function getStaticProps(context) {
+  const googleClientId = process.env.GOOGLE_CLIENT_ID
+  return {
+    props: { googleClientId },
   }
 }
 
