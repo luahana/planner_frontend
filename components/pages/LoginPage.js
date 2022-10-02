@@ -6,7 +6,7 @@ import { selectCurrentToken, setCredentials } from '../../redux/slice/authSlice'
 import { convertDateStrToDid } from '../../lib/calendar'
 import { useGoogleLoginMutation } from '../../redux/slice/api/authApiSlice'
 
-const LoginPage = () => {
+const LoginPage = ({ googleClientId }) => {
   const dispatch = useDispatch()
   const curToken = useSelector(selectCurrentToken)
   const router = useRouter()
@@ -30,7 +30,7 @@ const LoginPage = () => {
       router.push(`/daily/${convertDateStrToDid(dt.toDateString())}`)
     }
     google.accounts.id.initialize({
-      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_id: googleClientId,
       callback: handleCallbackResponse,
     })
     google.accounts.id.renderButton(document.getElementById('signInDiv'), {
@@ -41,7 +41,7 @@ const LoginPage = () => {
 
   return (
     <div>
-      <p>{process.env.GOOGLE_CLIENT_ID}</p>
+      <p>{googleClientId}</p>
       <div style={{ width: '100%' }} id='signInDiv' />
     </div>
   )
