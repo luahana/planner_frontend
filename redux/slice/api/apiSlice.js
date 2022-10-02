@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials } from '../authSlice'
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://simple-todo-planner-api.onrender.com',
+  baseUrl: 'planner-7rl5-2wnj1u6cs-luahana.vercel.app',
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token
