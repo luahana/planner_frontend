@@ -20,16 +20,18 @@ const Login = ({ initialPersistValue, googleClientId }) => {
 
 Login.getInitialProps = ({ req }) => {
   const cookies = parseCookies(req)
+  const googleClientId = process.env.GOOGLE_CLIENT_ID
   return {
     initialPersistValue: cookies.persist,
+    googleClientId,
   }
 }
 
-export async function getStaticProps(context) {
-  const googleClientId = process.env.GOOGLE_CLIENT_ID
-  return {
-    props: { googleClientId },
-  }
-}
+// export async function getStaticProps() {
+
+//   return {
+//     props: { googleClientId },
+//   }
+// }
 
 export default Login
