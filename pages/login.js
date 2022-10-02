@@ -13,7 +13,8 @@ const Login = ({ initialPersistValue }) => {
   useEffect(() => {
     setPersist(true)
   }, [])
-
+  console.log('process.env.GOOGLE_CLIENT_ID')
+  console.log(process.env.GOOGLE_CLIENT_ID)
   return <>{persistLogin(<LoginPage wid={wid} />)}</>
 }
 
