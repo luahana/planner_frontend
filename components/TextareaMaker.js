@@ -16,7 +16,6 @@ const ContentDiv = styled.div`
   padding: 1rem calc(5% + 1rem);
   width: 100%;
   overflow: auto;
-  whitespace: pre-wrap;
   @media ${device.tablet} {
   }
 `
@@ -40,8 +39,8 @@ const ElementMaker = ({
             autoFocus
           />
         ) : (
-          <ContentDiv onDoubleClick={handleDoubleClick} style={{}}>
-            {value}
+          <ContentDiv onDoubleClick={handleDoubleClick}>
+            <pre>{value}</pre>
           </ContentDiv>
         )
       }

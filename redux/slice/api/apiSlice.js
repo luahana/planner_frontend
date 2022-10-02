@@ -3,6 +3,7 @@ import { setCredentials } from '../authSlice'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://planner-7epn.vercel.app/api',
+  // baseUrl: 'http://localhost:8080/api',
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token
