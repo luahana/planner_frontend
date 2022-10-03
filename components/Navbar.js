@@ -103,12 +103,11 @@ const Navbar = () => {
           </div>
         )}
       </div>
-
       <nav className={styles.nav}>
         {isLoading && <p>Logging Out...</p>}
         {isError && <p>Error: {error.message}</p>}
         <Link href='/'>
-          <a>Simple ToDo</a>
+          <a>SimpleToDo</a>
         </Link>
         {user_id && (
           <div className={styles.hamburger} onClick={open}>

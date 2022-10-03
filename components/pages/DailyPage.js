@@ -4,6 +4,11 @@ import { calcDid } from '../../lib/calendar'
 import PagesHeader from '../common/PagesHeader'
 import DayNotes from '../common/DayNotes'
 import { WEEKDAY } from '../../config/calendar'
+import styled from 'styled-components'
+
+const TitleDiv = styled.div`
+  text-align: center;
+`
 
 const DailyPage = ({ did }) => {
   const userId = useUserAuth()
@@ -12,11 +17,20 @@ const DailyPage = ({ did }) => {
   const didDate = parseInt(did.slice(-2))
   const dt = new Date(didYear, didMonth - 1, didDate)
   const fullDay = dt.toDateString()
+  const title = (
+    <TitleDiv>
+      {didYear}{' '}
+      <span style={{ whiteSpace: 'nowrap' }}>
+        {didMonth} {didDate}
+      </span>{' '}
+      {WEEKDAY[dt.getDay() + 1]}
+    </TitleDiv>
+  )
 
   return (
     <div>
       <PagesHeader
-        title={`${didYear} ${didMonth} ${didDate} ${WEEKDAY[dt.getDay() + 1]}`}
+        title={title}
         prev={`/daily/${calcDid(did, -1)}`}
         next={`/daily/${calcDid(did, 1)}`}
       />

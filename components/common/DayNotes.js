@@ -67,7 +67,7 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
       fullDay={fullDay}
     />
   ))
-  if (view === 'month') {
+  if (view === 'month' || view === 'monthSmall') {
     content = notedByCompleted
   }
   if (view === 'unassigned') {
@@ -101,6 +101,9 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
         />
       )}
       {view === 'month' && <NotesMonthView content={content} />}
+      {view === 'monthSmall' && (
+        <NotesMonthView view='monthSmall' content={content} />
+      )}
       {view === 'unassigned' && (
         <NotesUnassignedView
           content={content}

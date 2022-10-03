@@ -8,6 +8,15 @@ import {
 } from '../../lib/calendar'
 import PagesHeader from '../common/PagesHeader'
 import DayNotes from '../common/DayNotes'
+import styled from 'styled-components'
+
+const TitleDiv = styled.div`
+  text-align: center;
+`
+
+const Wrapper = styled.div`
+  padding: 0 1rem;
+`
 
 const WeeklyPage = ({ wid }) => {
   const userId = useUserAuth()
@@ -20,11 +29,18 @@ const WeeklyPage = ({ wid }) => {
     curWeekArr[curWeekArr.length - 1]
   )
   const { prevYear, prevMonth, prevDate } = getDayOfPrevWeek(curWeekArr[0])
-
+  const title = (
+    <TitleDiv>
+      {widYear}{' '}
+      <span style={{ whiteSpace: 'nowrap' }}>
+        {widMonth} {widWeek}
+      </span>
+    </TitleDiv>
+  )
   return (
-    <div>
+    <Wrapper>
       <PagesHeader
-        title={`${widYear} ${widMonth} Week${widWeek}`}
+        title={title}
         prev={`/weekly/${calcWeekId(prevYear, prevMonth, prevDate)}`}
         next={`/weekly/${calcWeekId(nextYear, nextMonth, nextDate)}`}
       />
@@ -39,7 +55,7 @@ const WeeklyPage = ({ wid }) => {
           />
         ))}
       </div>
-    </div>
+    </Wrapper>
   )
 }
 

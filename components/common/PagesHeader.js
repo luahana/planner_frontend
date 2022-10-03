@@ -14,20 +14,20 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.div`
+  display: flex;
+  justify-content: center;
   font-size: 2.5rem;
 `
 const PrevDiv = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 0 1rem;
   margin: 0 2rem;
 `
 const NextDiv = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 0 1rem;
   margin: 0 2rem;
 `
 
