@@ -22,7 +22,9 @@ const Wrapper = styled.div`
   }
 `
 
-const NoteDiv = styled.div``
+const NoteDiv = styled.div`
+  position: relative;
+`
 
 const CalDiv = styled.div``
 

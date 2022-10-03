@@ -20,6 +20,8 @@ const CalendarWrapper = styled.div`
   justify-content: center;
   width: 100%;
   background-color: #ff7eb9;
+  position: absolute;
+  top: 0;
 `
 
 const DayOfWeekWrapper = styled.div`

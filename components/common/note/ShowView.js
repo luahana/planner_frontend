@@ -14,6 +14,7 @@ const ContentDiv = styled.div`
   white-space: pre-line;
   overflow: auto;
   padding-bottom: 1rem;
+  max-height: 10.5rem;
 `
 
 const ShowView = ({ title, content }) => {
