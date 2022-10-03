@@ -28,15 +28,31 @@ const NoteDiv = styled.div`
 
 const Note = ({ view, userId, noteId, fullDay }) => {
   const curDate = new Date(fullDay)
+
   const year = curDate.getFullYear()
   const month = curDate.getMonth() + 1
   const date = curDate.getDate()
-
-  const mid =
+  const [mid, setMid] = useState(
     year.toString() +
-    month.toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-    })
+      month.toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+      })
+  )
+
+  useEffect(() => {
+    if (view === 'unassigned') {
+      const dt = new Date()
+      const year = dt.getFullYear()
+      const month = dt.getMonth() + 1
+      setMid(
+        year.toString() +
+          month.toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+          })
+      )
+    }
+  }, [])
+
   const { note } = useGetNoteByUserMonthQuery(
     { userId, year, month },
     {
