@@ -52,7 +52,7 @@ export default function Home({ initialPersistValue }) {
             <h2 className={styles.heading2}>Plan and organize your week.</h2>
             <p>
               You can plan and organize your list of todos with weekly view.
-              Assign them to different date if you can't make it done.
+              Assign them to different date if you can&rsquo;t make it done.
             </p>
           </div>
         </section>
@@ -61,8 +61,8 @@ export default function Home({ initialPersistValue }) {
             <h2 className={styles.heading2}>See how much you have achieved.</h2>
             <p>Monthly view is just like a calendar.</p>
             <p>
-              You can see which days you have or haven't achieved all your todos
-              at a glance.
+              You can see which days you have or haven&rsquo;t achieved all your
+              todos at a glance.
             </p>
           </div>
           <Image src='/monthlyView.png' width='550' height='500' />
@@ -70,7 +70,7 @@ export default function Home({ initialPersistValue }) {
         <section className={`${styles.subSection} ${styles.subSectionLast}`}>
           <div>
             <h2>Make it Unassigned if you are not sure.</h2>
-            You know you need to do but don't know when?
+            You know you need to do but don&rsquo;t know when?
             <p>You can put them to Unassigned.</p>
           </div>
           <Image src='/note.png' width='375' height='153' />
