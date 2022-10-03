@@ -1,22 +1,14 @@
-import React, { useState, useEffect, memo } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import {
   useUpdateNoteMutation,
-  useDeleteNoteMutation,
   useGetNoteByUserMonthQuery,
 } from '../../redux/slice/api/notesApiSlice'
-import ElementMaker from '../ElementMaker'
-import TextareaMaker from '../TextareaMaker'
 import Calendar from 'react-calendar'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faTrash,
-  faCheck,
-  faPenToSquare,
-  faCalendarDays,
-} from '@fortawesome/free-solid-svg-icons'
-import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import { device } from '../../config/deviceBreakpoint'
+import EditView from './note/EditView'
+import ShowView from './note/ShowView'
+import Feature from './note/Feature'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -29,65 +21,9 @@ const Wrapper = styled.div`
   }
 `
 
-const FeatureDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5rem;
-  padding-top: 1rem;
-`
+const NoteDiv = styled.div``
 
-const SetsDiv = styled.div`
-  display: flex;
-  gap: 1rem;
-`
-
-const TitleDiv = styled.div`
-  display: flex;
-  width: 100%;
-  @media ${device.tablet} {
-  }
-`
-
-const CompletedDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  width: 10%;
-  @media ${device.tablet} {
-  }
-`
-const DeleteDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  width: 5%;
-  @media ${device.tablet} {
-  }
-`
-const EditDateDiv = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  width: 5%;
-  @media ${device.tablet} {
-  }
-`
-
-const ContentDiv = styled.div`
-  width: 100%;
-  flex-grow: 1;
-  overflow: auto;
-  @media ${device.tablet} {
-  }
-`
-
-const SetCompleted = styled.div`
-  cursor: pointer;
-`
-
-const Caldiv = styled.div``
+const CalDiv = styled.div``
 
 const Note = ({ userId, noteId, year, month }) => {
   const { note } = useGetNoteByUserMonthQuery(
@@ -104,22 +40,10 @@ const Note = ({ userId, noteId, year, month }) => {
   const [updateNote, { isLoading, isSuccess, isError, error }] =
     useUpdateNoteMutation()
 
-  const [
-    deleteNote,
-    {
-      isLoading: isDelLoading,
-      isSuccess: isDelSuccess,
-      isError: isDelError,
-      error: delerror,
-    },
-  ] = useDeleteNoteMutation()
-
-  const [showInputEle, setShowInputEle] = useState(false)
-  const [showContentInputEle, setShowContentInputEle] = useState(false)
+  const [showEdit, setShowEdit] = useState(false)
   const [title, setTitle] = useState(note.title)
   const [content, setContent] = useState(note.content)
   const [completed, setCompleted] = useState(note.completed)
-  const [sets, setSets] = useState(note.sets)
   const [calValue, onChange] = useState(new Date())
   const [calOpen, setCalOpen] = useState(false)
 
@@ -127,85 +51,33 @@ const Note = ({ userId, noteId, year, month }) => {
     setTitle(note.title)
     setContent(note.content)
     setCompleted(note.completed)
-    setSets(note.sets)
   }, [note.title, note.content, note.completed, note.sets])
 
   useEffect(() => {
     setTitle(note.title)
     setContent(note.content)
     setCompleted(note.completed)
-    setSets(note.sets)
-  }, [isError, isDelError])
+  }, [isError])
 
-  const handleBlur = async () => {
-    setShowInputEle(false)
-    if (note.title !== title) {
-      await updateNote({
-        ...note,
-        title: title,
-      })
-    }
+  const handleEdit = () => {
+    setShowEdit((showEdit) => !showEdit)
   }
-
-  const handleBlurContent = async () => {
-    setShowContentInputEle(false)
-    if (note.content !== content) {
-      await updateNote({
-        ...note,
-        content: content,
-      })
-    }
+  const handleEditDate = () => {
+    setCalOpen(!calOpen)
   }
 
   const handleOnClickCompleted = async () => {
-    const newCompleted = !completed
-    const newSets = new Array()
-    newSets.length = sets.length
-    if (!newCompleted) {
-      newSets.fill(false)
-    } else {
-      newSets.fill(true)
-    }
-    setCompleted(newCompleted)
-    setSets(newSets)
     await updateNote({
       ...note,
-      completed: newCompleted,
-      sets: newSets,
+      completed: !completed,
     })
   }
 
-  const handleOnClickSet = async (i) => {
-    const newSets = sets.slice()
-    newSets[i] = !sets[i]
-    setSets(newSets)
-    const allCompleted = newSets.every((set) => set.true)
-    setCompleted(allCompleted)
-
-    await updateNote({
-      ...note,
-      completed: allCompleted,
-      sets: newSets,
-    })
-  }
-
-  const handleDelete = async () => {
-    const dt = new Date(note.assignedDate)
-    if (dt.getFullYear() === 1111 && dt.getMonth() === 10)
-      await deleteNote({ id: noteId })
-    if (!note.assignedDate || note.assignedDate === '')
-      await deleteNote({ id: noteId })
+  const handleUnassign = async () => {
     await updateNote({
       ...note,
       assignedDate: new Date(1111, 10, 11),
     })
-  }
-  const handleEdit = () => {
-    setShowInputEle(true)
-    setShowContentInputEle(true)
-  }
-  const handleEditDate = () => {
-    setCalOpen(!calOpen)
   }
 
   const handleChangeDate = async () => {
@@ -215,6 +87,15 @@ const Note = ({ userId, noteId, year, month }) => {
     })
   }
 
+  const onClickSave = async () => {
+    await updateNote({
+      ...note,
+      title: title,
+      content: content,
+    })
+    setShowEdit(false)
+  }
+
   return (
     <>
       <Wrapper
@@ -222,65 +103,34 @@ const Note = ({ userId, noteId, year, month }) => {
           backgroundColor: note.completed && 'hsl(61, 25%, 81%)',
         }}
       >
-        <FeatureDiv>
-          <CompletedDiv onClick={handleOnClickCompleted}>
-            {note?.completed ? (
-              <FontAwesomeIcon icon={faCheck} />
-            ) : (
-              <FontAwesomeIcon icon={faCircle} />
-            )}
-          </CompletedDiv>
-          <SetsDiv>
-            {sets &&
-              sets.map((set, i) => (
-                <SetCompleted key={i} onClick={() => handleOnClickSet(i)}>
-                  {set ? (
-                    <FontAwesomeIcon icon={faCheck} />
-                  ) : (
-                    <FontAwesomeIcon icon={faCircle} />
-                  )}
-                </SetCompleted>
-              ))}
-          </SetsDiv>
-          <DeleteDiv onClick={handleEdit}>
-            <FontAwesomeIcon icon={faPenToSquare} />
-          </DeleteDiv>
-          <EditDateDiv onClick={handleEditDate}>
-            <FontAwesomeIcon icon={faCalendarDays} />
-          </EditDateDiv>
-          <DeleteDiv onClick={handleDelete}>
-            <FontAwesomeIcon icon={faTrash} />
-          </DeleteDiv>
-        </FeatureDiv>
-        {calOpen && (
-          <Caldiv>
-            <Calendar onChange={onChange} value={calValue} />
-            <p>{calValue.toDateString()}</p>
-            <button onClick={handleChangeDate}>Change Date</button>
-          </Caldiv>
-        )}
-        {!calOpen && (
-          <>
-            <TitleDiv>
-              <ElementMaker
-                value={title}
-                handleChange={(e) => setTitle(e.target.value)}
-                handleDoubleClick={() => setShowInputEle(true)}
-                handleBlur={handleBlur}
-                showInputEle={showInputEle}
-              />
-            </TitleDiv>
-            <ContentDiv>
-              <TextareaMaker
-                value={content}
-                handleChange={(e) => setContent(e.target.value)}
-                handleDoubleClick={() => setShowContentInputEle(true)}
-                handleBlur={handleBlurContent}
-                showContentInputEle={showContentInputEle}
-              />
-            </ContentDiv>
-          </>
-        )}
+        <Feature
+          note={note}
+          handleOnClickCompleted={handleOnClickCompleted}
+          handleEdit={handleEdit}
+          handleEditDate={handleEditDate}
+          handleUnassign={handleUnassign}
+        />
+
+        <NoteDiv>
+          {showEdit && (
+            <EditView
+              title={title}
+              content={content}
+              onTitleChange={(e) => setTitle(e.target.value)}
+              onContentChange={(e) => setContent(e.target.value)}
+              onClickSave={onClickSave}
+            />
+          )}
+          {!showEdit && <ShowView title={title} content={content} />}
+
+          {calOpen && (
+            <CalDiv>
+              <Calendar onChange={onChange} value={calValue} />
+              <p>{calValue.toDateString()}</p>
+              <button onClick={handleChangeDate}>Change Date</button>
+            </CalDiv>
+          )}
+        </NoteDiv>
       </Wrapper>
     </>
   )
