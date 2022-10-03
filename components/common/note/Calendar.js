@@ -46,12 +46,12 @@ const DayOfWeekDiv = styled.div`
 const DayDiv = styled.div`
   margin: 0.5rem;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
-const DayDivDate = styled.div`
-  text-align: right;
-  padding: 0.3rem 0.5rem 0 0;
-`
+const DayDivDate = styled.div``
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
