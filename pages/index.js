@@ -35,8 +35,8 @@ export default function Home({ initialPersistValue }) {
               Focus what you need to do today.
             </h2>
             <p>
-              With daily view, focus what you need to do today and don't be
-              bothered with other things.
+              With daily view, focus what you need to do today and don&rsquo;t
+              be bothered with other things.
             </p>
           </div>
           <Image src='/dailyView.png' width='500' height='400' />
