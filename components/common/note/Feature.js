@@ -22,7 +22,7 @@ const CompletedDiv = styled.div`
   display: flex;
   padding-left: 1rem;
   align-items: center;
-  cursor: pointer;
+
   width: 40%;
   @media ${device.tablet} {
   }
@@ -40,6 +40,13 @@ const FeatureDiv = styled.div`
   text-align: center;
   width: 10%;
   cursor: pointer;
+`
+
+const CompletedPointerDiv = styled.div`
+  cursor: pointer;
+  width: 20%;
+  display: flex;
+  justify-content: center;
 `
 
 const Feature = ({
@@ -64,12 +71,14 @@ const Feature = ({
   }
   return (
     <Wrapper>
-      <CompletedDiv onClick={handleOnClickCompleted}>
-        {note?.completed ? (
-          <FontAwesomeIcon icon={faCheck} />
-        ) : (
-          <FontAwesomeIcon icon={faCircle} />
-        )}
+      <CompletedDiv>
+        <CompletedPointerDiv onClick={handleOnClickCompleted}>
+          {note?.completed ? (
+            <FontAwesomeIcon icon={faCheck} />
+          ) : (
+            <FontAwesomeIcon icon={faCircle} />
+          )}
+        </CompletedPointerDiv>
       </CompletedDiv>
       <FeaturesWrapper>
         <FeatureDiv>
