@@ -26,9 +26,7 @@ const NoteDiv = styled.div`
   position: relative;
 `
 
-const CalDiv = styled.div``
-
-const Note = ({ userId, noteId, fullDay }) => {
+const Note = ({ view, userId, noteId, fullDay }) => {
   const curDate = new Date(fullDay)
   const year = curDate.getFullYear()
   const month = curDate.getMonth() + 1
@@ -57,7 +55,7 @@ const Note = ({ userId, noteId, fullDay }) => {
   const [title, setTitle] = useState(note.title)
   const [content, setContent] = useState(note.content)
   const [completed, setCompleted] = useState(note.completed)
-  const [calOpen, setCalOpen] = useState(false)
+  const [showCal, setShowCal] = useState(false)
 
   useEffect(() => {
     setTitle(note.title)
@@ -72,10 +70,12 @@ const Note = ({ userId, noteId, fullDay }) => {
   }, [isError])
 
   const handleEdit = () => {
+    if (showCal) setShowCal(false)
     setShowEdit((showEdit) => !showEdit)
   }
   const handleEditDate = () => {
-    setCalOpen((calOpen) => !calOpen)
+    if (showEdit) setShowEdit(false)
+    setShowCal((showCal) => !showCal)
   }
 
   const handleOnClickCompleted = async () => {
@@ -121,6 +121,8 @@ const Note = ({ userId, noteId, fullDay }) => {
           handleEdit={handleEdit}
           handleEditDate={handleEditDate}
           handleUnassign={handleUnassign}
+          setShowEdit={setShowEdit}
+          setShowCal={setShowCal}
         />
         <NoteDiv>
           {showEdit && (
@@ -134,12 +136,13 @@ const Note = ({ userId, noteId, fullDay }) => {
           )}
           {!showEdit && <ShowView title={title} content={content} />}
 
-          {calOpen && (
+          {showCal && (
             <Calendar
+              view={view}
               mid={mid}
               fullDay={fullDay}
               handleChangeDate={handleChangeDate}
-              setCalOpen={setCalOpen}
+              setShowCal={setShowCal}
             />
           )}
         </NoteDiv>

@@ -42,7 +42,7 @@ const NotesUnassignedView = ({ content, onAddNewClicked }) => {
   return (
     <DayWrapper>
       <DayHeader>
-        <AddNewDiv onClick={() => onAddNewClicked(year, month, date)}>
+        <AddNewDiv onClick={() => onAddNewClicked(1111, 11, 11)}>
           <FontAwesomeIcon icon={faPlus} />
         </AddNewDiv>
       </DayHeader>

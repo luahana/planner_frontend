@@ -73,6 +73,7 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
   if (view === 'unassigned') {
     content = notedByCompleted.map((note) => (
       <Note
+        view='unassigned'
         key={note._id}
         userId={userId}
         noteId={note._id}

@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Index.module.css'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home({ initialPersistValue }) {
   return (
@@ -21,8 +22,9 @@ export default function Home({ initialPersistValue }) {
               <h1 className={styles.heading}>Free Web To Do List.</h1>
               <h1 className={styles.heading}>Make a list.</h1>
               <h1 className={styles.heading}>Achieve.</h1>
-
-              <div className={styles.signinbutton}> Start Free</div>
+              <Link href='/login'>
+                <div className={styles.signinbutton}> Start Free</div>
+              </Link>
             </div>
           </div>
         </section>
@@ -65,7 +67,7 @@ export default function Home({ initialPersistValue }) {
           </div>
           <Image src='/monthlyView.png' width='550' height='500' />
         </section>
-        <section className={styles.subSection}>
+        <section className={`${styles.subSection} ${styles.subSectionLast}`}>
           <div>
             <h2>Make it Unassigned if you are not sure.</h2>
             You know you need to do but don't know when?
@@ -74,6 +76,11 @@ export default function Home({ initialPersistValue }) {
           <Image src='/note.png' width='375' height='153' />
         </section>
       </div>
+      <footer className={styles.footer}>
+        <p>Copyright &copy; 2022 SimpleToDo. All Rights Reserved.</p>
+        <div>Terms</div>
+        <div>Privacy Policy</div>
+      </footer>
     </div>
   )
 }

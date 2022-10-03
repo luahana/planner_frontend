@@ -51,6 +51,8 @@ const CompletedPointerDiv = styled.div`
 
 const Feature = ({
   note,
+  setShowEdit,
+  setShowCal,
   handleOnClickCompleted,
   handleEdit,
   handleEditDate,
