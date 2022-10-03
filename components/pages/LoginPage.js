@@ -34,6 +34,8 @@ const LoginPage = ({ googleClientId }) => {
   ] = useGoogleLoginMutation()
 
   const handleCallbackResponse = async (response) => {
+    console.log('response.credential')
+    console.log(response.credential)
     const { payload } = await googleLogin({
       googleToken: response.credential,
     })
