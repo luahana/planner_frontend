@@ -7,19 +7,20 @@ import { convertDateStrToDid } from '../../lib/calendar'
 import { useGoogleLoginMutation } from '../../redux/slice/api/authApiSlice'
 
 const Wrapper = styled.div`
-  height: 100vh;
-  padding-top: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 `
 const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 30%;
   width: 50%;
   gap: 3rem;
+  overflow: hidden;
 `
 
 const LoginPage = ({ googleClientId }) => {
