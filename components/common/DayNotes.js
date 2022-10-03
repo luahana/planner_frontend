@@ -64,6 +64,7 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
       noteId={note._id}
       year={year}
       month={month}
+      fullDay={fullDay}
     />
   ))
   if (view === 'month') {
@@ -77,6 +78,7 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
         noteId={note._id}
         year={year}
         month={month}
+        fullDay={fullDay}
       />
     ))
   }

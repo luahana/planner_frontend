@@ -4,11 +4,12 @@ import {
   useUpdateNoteMutation,
   useGetNoteByUserMonthQuery,
 } from '../../redux/slice/api/notesApiSlice'
-import Calendar from 'react-calendar'
+// import Calendar from 'react-calendar'
 import { device } from '../../config/deviceBreakpoint'
 import EditView from './note/EditView'
 import ShowView from './note/ShowView'
 import Feature from './note/Feature'
+import Calendar from './note/Calendar'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -25,7 +26,17 @@ const NoteDiv = styled.div``
 
 const CalDiv = styled.div``
 
-const Note = ({ userId, noteId, year, month }) => {
+const Note = ({ userId, noteId, fullDay }) => {
+  const curDate = new Date(fullDay)
+  const year = curDate.getFullYear()
+  const month = curDate.getMonth() + 1
+  const date = curDate.getDate()
+
+  const mid =
+    year.toString() +
+    month.toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+    })
   const { note } = useGetNoteByUserMonthQuery(
     { userId, year, month },
     {
@@ -44,7 +55,6 @@ const Note = ({ userId, noteId, year, month }) => {
   const [title, setTitle] = useState(note.title)
   const [content, setContent] = useState(note.content)
   const [completed, setCompleted] = useState(note.completed)
-  const [calValue, onChange] = useState(new Date())
   const [calOpen, setCalOpen] = useState(false)
 
   useEffect(() => {
@@ -63,7 +73,7 @@ const Note = ({ userId, noteId, year, month }) => {
     setShowEdit((showEdit) => !showEdit)
   }
   const handleEditDate = () => {
-    setCalOpen(!calOpen)
+    setCalOpen((calOpen) => !calOpen)
   }
 
   const handleOnClickCompleted = async () => {
@@ -80,10 +90,10 @@ const Note = ({ userId, noteId, year, month }) => {
     })
   }
 
-  const handleChangeDate = async () => {
+  const handleChangeDate = async (date) => {
     await updateNote({
       ...note,
-      assignedDate: calValue,
+      assignedDate: date,
     })
   }
 
@@ -110,7 +120,6 @@ const Note = ({ userId, noteId, year, month }) => {
           handleEditDate={handleEditDate}
           handleUnassign={handleUnassign}
         />
-
         <NoteDiv>
           {showEdit && (
             <EditView
@@ -124,11 +133,12 @@ const Note = ({ userId, noteId, year, month }) => {
           {!showEdit && <ShowView title={title} content={content} />}
 
           {calOpen && (
-            <CalDiv>
-              <Calendar onChange={onChange} value={calValue} />
-              <p>{calValue.toDateString()}</p>
-              <button onClick={handleChangeDate}>Change Date</button>
-            </CalDiv>
+            <Calendar
+              mid={mid}
+              fullDay={fullDay}
+              handleChangeDate={handleChangeDate}
+              setCalOpen={setCalOpen}
+            />
           )}
         </NoteDiv>
       </Wrapper>
