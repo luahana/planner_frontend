@@ -82,10 +82,10 @@ const Feature = ({
       </CompletedDiv>
       <FeaturesWrapper>
         <FeatureDiv>
-          <FontAwesomeIcon icon={faCalendarDays} onClick={handleEditDate} />
+          <FontAwesomeIcon icon={faPenToSquare} onClick={handleEdit} />
         </FeatureDiv>
         <FeatureDiv>
-          <FontAwesomeIcon icon={faPenToSquare} onClick={handleEdit} />
+          <FontAwesomeIcon icon={faCalendarDays} onClick={handleEditDate} />
         </FeatureDiv>
         <FeatureDiv>
           <FontAwesomeIcon icon={faArrowTurnUp} onClick={handleUnassign} />

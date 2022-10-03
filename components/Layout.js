@@ -1,6 +1,6 @@
 import Navbar from './Navbar'
 import styles from '../styles/layout.module.css'
-// import Footer from "./footer";
+import Footer from './footer'
 
 export default function Layout({ children }) {
   return (
@@ -9,8 +9,7 @@ export default function Layout({ children }) {
         <Navbar />
       </header>
       <main className={styles.main}>{children}</main>
-      <footer></footer>
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }

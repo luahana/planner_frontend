@@ -71,6 +71,24 @@ export const notesApiSlice = apiSlice.injectEndpoints({
           body,
         }
       },
+      // async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+      //   console.log('asdf')
+      //   const patchResult = dispatch(
+      //     apiSlice.util.updateQueryData(
+      //       'getNoteByUserMonth',
+      //       undefined,
+      //       (draft) => {
+      //         draft = draft.filter((note) => note.id !== id)
+      //       }
+      //     )
+      //   )
+      //   try {
+      //     console.log('asdf')
+      //     await queryFulfilled
+      //   } catch {
+      //     patchResult.undo()
+      //   }
+      // },
       invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
     }),
   }),
