@@ -39,6 +39,10 @@ const LoginPage = ({ googleClientId }) => {
     const { payload, CLIENT_ID, token } = await googleLogin({
       googleToken: response.credential,
     })
+    if (isError) {
+      console.log('error')
+      console.log(error)
+    }
     console.log('payload')
     console.log({ payload, CLIENT_ID, token })
     dispatch(setCredentials({ accessToken }))
