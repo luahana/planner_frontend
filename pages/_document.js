@@ -12,6 +12,10 @@ export default function Document() {
           src='https://accounts.google.com/gsi/client'
           strategy='beforeInteractive'
         />
+        <Script
+          src='https://apis.google.com/js/platform.js?onload=renderButton'
+          strategy='beforeInteractive'
+        />
       </body>
     </Html>
   )

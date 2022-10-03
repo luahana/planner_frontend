@@ -108,7 +108,7 @@ const Navbar = () => {
         {isLoading && <p>Logging Out...</p>}
         {isError && <p>Error: {error.message}</p>}
         <Link href='/'>
-          <a>logo</a>
+          <a>Simple ToDo</a>
         </Link>
         {user_id && (
           <div className={styles.hamburger} onClick={open}>
