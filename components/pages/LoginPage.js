@@ -34,11 +34,11 @@ const LoginPage = ({ googleClientId }) => {
   ] = useGoogleLoginMutation()
 
   const handleCallbackResponse = async (response) => {
-    const { accessToken } = await googleLogin({
+    const { payload } = await googleLogin({
       googleToken: response.credential,
     })
-    console.log('accessToken')
-    console.log(accessToken)
+    console.log('payload')
+    console.log(payload)
     dispatch(setCredentials({ accessToken }))
 
     router.push(`/daily/${convertDateStrToDid(dt.toDateString())}`)
