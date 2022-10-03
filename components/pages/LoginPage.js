@@ -37,6 +37,8 @@ const LoginPage = ({ googleClientId }) => {
     const { accessToken } = await googleLogin({
       googleToken: response.credential,
     })
+    console.log('accessToken')
+    console.log(accessToken)
     dispatch(setCredentials({ accessToken }))
 
     router.push(`/daily/${convertDateStrToDid(dt.toDateString())}`)
@@ -52,7 +54,7 @@ const LoginPage = ({ googleClientId }) => {
     })
     google.accounts.id.renderButton(document.getElementById('my-signin2'), {
       scope: 'profile email',
-      width: 1000,
+      width: '100%',
       // height: 5000,
       longtitle: true,
       theme: 'dark',
