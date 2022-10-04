@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import {
-  useUpdateNoteMutation,
-  useGetNoteByUserDateQuery,
-} from '../../redux/slice/api/notesApiSlice'
+import { useUpdateNoteMutation } from '../../redux/slice/api/notesApiSlice'
 import { device } from '../../config/deviceBreakpoint'
 import EditView from './note/EditView'
 import ShowView from './note/ShowView'

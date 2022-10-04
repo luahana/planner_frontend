@@ -43,11 +43,15 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
 
   if (isSuccess) {
     const notes = data.ids.map((id) => data.entities[id])
-    const notesByCompleted = notes.sort((a, b) => {
-      if (a.completed === b.completed) return 0
-      if (a.completed) return 1
-      if (!a.completed) return -1
-    })
+    const notesByCompleted = notes
+      .sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      })
+      .sort((a, b) => {
+        if (a.completed === b.completed) return 0
+        if (a.completed) return 1
+        if (!a.completed) return -1
+      })
     content = notesByCompleted.map((note) => (
       <Note
         key={note._id}
