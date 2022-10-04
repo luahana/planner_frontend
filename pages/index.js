@@ -28,7 +28,6 @@ export default function Home({ initialPersistValue }) {
             </div>
           </div>
         </section>
-
         <section className={styles.subSection}>
           <div className={styles.subSectionTextWrapper}>
             <h2 className={styles.heading2}>

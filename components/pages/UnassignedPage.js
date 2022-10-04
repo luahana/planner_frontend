@@ -22,7 +22,7 @@ const UnassignedPage = () => {
   return (
     <>
       <Wrapper>
-        <TitleDiv>Unassgined Notes</TitleDiv>
+        <TitleDiv>Unassigned Notes</TitleDiv>
         <DayNotes view='unassigned' userId={userId} fullDay={fullDay} />
       </Wrapper>
     </>
