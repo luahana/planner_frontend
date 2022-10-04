@@ -1,35 +1,39 @@
-.container {
+.wrapper {
   padding: 0 2rem;
-}
-
-.main {
-  /* min-height: 100vh; */
-  padding: 4rem 0;
-}
-
-.block {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
-  border-bottom: 4px solid black;
-}
-
-.postsBackground {
-  border: 1px solid blue;
 }
 
 .mainSection {
   display: flex;
-  padding-top: 8rem;
+  flex-direction: column;
+  padding-top: 1rem;
   padding-bottom: 3rem;
   gap: 3rem;
+  margin: 3rem 0;
 }
-
+.subSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 5rem 0;
+}
+.subSectionLast {
+  text-align: center;
+  margin-bottom: 5rem;
+}
 .mainSectionTextWrapper {
   display: flex;
   align-items: center;
-  width: 50%;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+.subSectionTextWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
 }
 
 .signinbutton {
@@ -38,52 +42,63 @@
   width: 30%;
   text-align: center;
   border-radius: 10%;
+  margin: 0 auto;
   margin-top: 1rem;
   cursor: pointer;
 }
-
 .heading {
   font-size: 2.5rem;
 }
-.subSection {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 5rem;
-}
-.subSection2 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 5rem;
-}
-
-.subSectionTextWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 30%;
-}
 .heading2 {
   font-size: 1.8rem;
+  margin-bottom: 2rem;
 }
-
 .midTitle {
   display: flex;
   justify-content: center;
+  text-align: center;
   margin-top: 3rem;
 }
 
 .footer {
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
-.subSectionLast {
-  margin-bottom: 10rem;
+.paragraph {
+  margin-bottom: 2rem;
 }
 
 .pointer {
   cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .mainSection {
+    padding-top: 7rem;
+    margin-top: 0;
+    flex-direction: row;
+  }
+  .subSection {
+    flex-direction: row;
+  }
+  .subSectionLast {
+    margin-bottom: 10rem;
+  }
+  .mainSectionTextWrapper {
+    width: 50%;
+    justify-content: flex-start;
+  }
+  .subSectionTextWrapper {
+    width: 30%;
+  }
+  .footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
