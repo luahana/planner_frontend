@@ -15,7 +15,9 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
   const dt = new Date(fullDay)
   const year = dt.getFullYear()
   const month = dt.getMonth() + 1
-  const date = dt.getDate()
+  const date = dt.getDate().toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+  })
 
   const { data, isLoading, isSuccess, isError, error } =
     useGetNoteByUserDateQuery({ userId, year, month, date })
