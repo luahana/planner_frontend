@@ -39,8 +39,6 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         url: `/notes/${userId}/${year}/${month}/${date}`,
       }),
       transformResponse: (responseData) => {
-        console.log('responseData')
-        console.log(responseData)
         const loadedNotes = responseData.map((note) => {
           note.id = note._id
           return note

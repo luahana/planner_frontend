@@ -39,8 +39,6 @@ const LoadingWrapper = styled.div`
 `
 
 const Note = ({ view, note, fullDay }) => {
-  console.log('note')
-  console.log(note)
   const curDate = new Date(fullDay)
   const did = convertDateStrToDid(fullDay)
   const year = curDate.getFullYear()

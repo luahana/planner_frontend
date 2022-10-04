@@ -11,7 +11,6 @@ import Note from './Note'
 import ClipLoader from 'react-spinners/ClipLoader'
 
 const DayNotes = ({ view, userId, fullDay, weekday }) => {
-  console.log('DayNotes')
   const dt = new Date(fullDay)
   const year = dt.getFullYear()
   const month = dt.getMonth() + 1
@@ -46,17 +45,12 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
     )
   }
   if (isSuccess) {
-    console.log('isSuccess')
-    console.log('data')
-    console.log(data)
     const notes = data.ids.map((id) => data.entities[id])
     const notesByCompleted = notes.sort((a, b) => {
       if (a.completed === b.completed) return 0
       if (a.completed) return 1
       if (!a.completed) return -1
     })
-    console.log('notes')
-    console.log(notes)
     content = notesByCompleted.map((note) => (
       <Note
         key={note._id}
