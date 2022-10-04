@@ -13,7 +13,9 @@ import ClipLoader from 'react-spinners/ClipLoader'
 const DayNotes = ({ view, userId, fullDay, weekday }) => {
   const dt = new Date(fullDay)
   const year = dt.getFullYear()
-  const month = dt.getMonth() + 1
+  const month = (dt.getMonth() + 1).toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+  })
   const date = dt.getDate().toLocaleString('en-US', {
     minimumIntegerDigits: 2,
   })
