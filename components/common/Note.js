@@ -158,6 +158,7 @@ const Note = ({ view, note, fullDay }) => {
           setLoading={setLoading}
         />
         <NoteDiv>
+          <ShowView title={title} content={content} />
           {showEdit && (
             <EditView
               title={title}
@@ -168,7 +169,6 @@ const Note = ({ view, note, fullDay }) => {
               loading={loading}
             />
           )}
-          {!showEdit && <ShowView title={title} content={content} />}
 
           {showCal && (
             <Calendar
