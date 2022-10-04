@@ -169,7 +169,6 @@ const Note = ({ view, note, fullDay }) => {
               loading={loading}
             />
           )}
-
           {showCal && (
             <Calendar
               view={view}

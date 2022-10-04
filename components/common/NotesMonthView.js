@@ -1,6 +1,23 @@
 import React from 'react'
+import ClipLoader from 'react-spinners/ClipLoader'
+import styled from 'styled-components'
 
-const NotesMonthView = ({ view, content: notes }) => {
+const LoaderWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const NotesMonthView = ({ view, content: notes, loading }) => {
+  if (loading) {
+    return (
+      <LoaderWrapper>
+        <ClipLoader color='aqua' size={50} aria-label='Loading Spinner' />
+      </LoaderWrapper>
+    )
+  }
+
   if (view === 'monthSmall') {
     const numCompleted = notes.reduce(
       (acc, cur) => (cur.completed ? acc + 1 : acc),
