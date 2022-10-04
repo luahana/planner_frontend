@@ -45,6 +45,8 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
   }
   if (isSuccess) {
     console.log('isSuccess')
+    console.log('data')
+    console.log(data)
     const notes = data.ids.map((id) => data.entities[id])
     const notesByCompleted = notes.sort((a, b) => {
       if (a.completed === b.completed) return 0
