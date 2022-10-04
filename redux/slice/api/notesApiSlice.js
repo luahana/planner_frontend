@@ -1,4 +1,9 @@
 import { createSelector, createEntityAdapter } from '@reduxjs/toolkit'
+import {
+  convertDateStrToDid,
+  convertDateToDid,
+  convertYmdToDid,
+} from '../../../lib/calendar'
 import { apiSlice } from './apiSlice'
 
 const notesAdapter = createEntityAdapter({})
@@ -26,7 +31,27 @@ export const notesApiSlice = apiSlice.injectEndpoints({
       query: (queryStr) => ({
         url: `/notes/${queryStr.userId}/${queryStr.year}/${queryStr.month}`,
       }),
+
       providesTags: [{ type: 'Notes', id: 'LIST' }],
+    }),
+    getNoteByUserDate: builder.query({
+      query: ({ userId, year, month, date }) => ({
+        url: `/notes/${userId}/${year}/${month}/${date}`,
+      }),
+      transformResponse: (responseData) => {
+        const loadedNotes = responseData.map((note) => {
+          note.id = note._id
+          return note
+        })
+        return notesAdapter.setAll(initialState, loadedNotes)
+      },
+      providesTags: (result, error, arg) => {
+        const did = convertYmdToDid(arg.year, arg.month, arg.date)
+        return [
+          { type: 'Notes', id: 'LIST' },
+          { type: 'Notes', id: did },
+        ]
+      },
     }),
     addNewNote: builder.mutation({
       query({
@@ -43,7 +68,11 @@ export const notesApiSlice = apiSlice.injectEndpoints({
           body: { user, title, content, completed, assignedDate, sets },
         }
       },
-      invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
+      invalidatesTags: (result, error, arg) => {
+        const did = convertDateStrToDid(arg.assignedDate.toDateString())
+
+        return [{ type: 'Notes', id: did }]
+      },
     }),
     updateNote: builder.mutation({
       query({
@@ -52,6 +81,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         title = '',
         content = '',
         completed = false,
+        curDate,
         assignedDate = '',
         sets = [],
       }) {
@@ -61,35 +91,30 @@ export const notesApiSlice = apiSlice.injectEndpoints({
           body: { _id, user, title, content, completed, assignedDate, sets },
         }
       },
-      invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
+      invalidatesTags: (result, error, arg) => {
+        const assignedDid = convertDateToDid(arg.assignedDate)
+        if (!arg.curDate) {
+          return [{ type: 'Notes', id: assignedDid }]
+        }
+
+        const curDid = convertDateToDid(arg.curDate)
+        return [
+          { type: 'Notes', id: curDid },
+          { type: 'Notes', id: assignedDid },
+        ]
+      },
     }),
     deleteNote: builder.mutation({
-      query(body) {
+      query({ id }) {
         return {
           url: '/notes',
           method: 'DELETE',
-          body,
+          body: { id },
         }
       },
-      // async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
-      //   console.log('asdf')
-      //   const patchResult = dispatch(
-      //     apiSlice.util.updateQueryData(
-      //       'getNoteByUserMonth',
-      //       undefined,
-      //       (draft) => {
-      //         draft = draft.filter((note) => note.id !== id)
-      //       }
-      //     )
-      //   )
-      //   try {
-      //     console.log('asdf')
-      //     await queryFulfilled
-      //   } catch {
-      //     patchResult.undo()
-      //   }
-      // },
-      invalidatesTags: [{ type: 'Notes', id: 'LIST' }],
+      invalidatesTags: (result, error, arg) => {
+        return [{ type: 'Notes', id: arg.did }]
+      },
     }),
   }),
 })
@@ -97,6 +122,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetNotesQuery,
   useGetNoteByUserMonthQuery,
+  useGetNoteByUserDateQuery,
   useAddNewNoteMutation,
   useUpdateNoteMutation,
   useDeleteNoteMutation,

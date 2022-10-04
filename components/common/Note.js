@@ -2,19 +2,21 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import {
   useUpdateNoteMutation,
-  useGetNoteByUserMonthQuery,
+  useGetNoteByUserDateQuery,
 } from '../../redux/slice/api/notesApiSlice'
-// import Calendar from 'react-calendar'
 import { device } from '../../config/deviceBreakpoint'
 import EditView from './note/EditView'
 import ShowView from './note/ShowView'
 import Feature from './note/Feature'
 import Calendar from './note/Calendar'
+import { convertDateStrToDid } from '../../lib/calendar'
+import ClipLoader from 'react-spinners/ClipLoader'
 
 const Wrapper = styled.div`
+  position: relative;
   width: 100%;
   max-height: 16.3rem;
-  background-color: hsl(61, 100%, 81%);
+  background-color: #fdff9e;
   display: flex;
   flex-direction: column;
   margin-bottom: 0.5rem;
@@ -26,9 +28,19 @@ const NoteDiv = styled.div`
   position: relative;
 `
 
-const Note = ({ view, userId, noteId, fullDay }) => {
-  const curDate = new Date(fullDay)
+const LoadingWrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+`
 
+const Note = ({ view, note, fullDay }) => {
+  const curDate = new Date(fullDay)
+  const did = convertDateStrToDid(fullDay)
   const year = curDate.getFullYear()
   const month = curDate.getMonth() + 1
   const date = curDate.getDate()
@@ -38,6 +50,16 @@ const Note = ({ view, userId, noteId, fullDay }) => {
         minimumIntegerDigits: 2,
       })
   )
+
+  const [updateNote, { isLoading, isSuccess, isError, error }] =
+    useUpdateNoteMutation()
+
+  const [showEdit, setShowEdit] = useState(false)
+  const [title, setTitle] = useState(note.title)
+  const [content, setContent] = useState(note.content)
+  const [completed, setCompleted] = useState(note.completed)
+  const [showCal, setShowCal] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (view === 'unassigned') {
@@ -53,25 +75,9 @@ const Note = ({ view, userId, noteId, fullDay }) => {
     }
   }, [])
 
-  const { note } = useGetNoteByUserMonthQuery(
-    { userId, year, month },
-    {
-      selectFromResult: ({ data }) => {
-        return {
-          note: data?.find((note) => note._id === noteId),
-        }
-      },
-    }
-  )
-
-  const [updateNote, { isLoading, isSuccess, isError, error }] =
-    useUpdateNoteMutation()
-
-  const [showEdit, setShowEdit] = useState(false)
-  const [title, setTitle] = useState(note.title)
-  const [content, setContent] = useState(note.content)
-  const [completed, setCompleted] = useState(note.completed)
-  const [showCal, setShowCal] = useState(false)
+  useEffect(() => {
+    setLoading(isLoading)
+  }, [isLoading])
 
   useEffect(() => {
     setTitle(note.title)
@@ -97,6 +103,7 @@ const Note = ({ view, userId, noteId, fullDay }) => {
   const handleOnClickCompleted = async () => {
     await updateNote({
       ...note,
+      // curDate: new Date(fullDay),
       completed: !completed,
     })
   }
@@ -108,16 +115,18 @@ const Note = ({ view, userId, noteId, fullDay }) => {
     })
   }
 
-  const handleChangeDate = async (date) => {
+  const handleChangeDate = async (curDate, tobeDate) => {
     await updateNote({
       ...note,
-      assignedDate: date,
+      curDate: curDate,
+      assignedDate: tobeDate,
     })
   }
 
   const onClickSave = async () => {
     await updateNote({
       ...note,
+
       title: title,
       content: content,
     })
@@ -131,14 +140,22 @@ const Note = ({ view, userId, noteId, fullDay }) => {
           backgroundColor: note.completed && 'hsl(61, 25%, 81%)',
         }}
       >
+        {loading && (
+          <LoadingWrapper>
+            <ClipLoader color='aqua' size={60} aria-label='Loading Spinner' />
+          </LoadingWrapper>
+        )}
+
         <Feature
           note={note}
+          did={did}
           handleOnClickCompleted={handleOnClickCompleted}
           handleEdit={handleEdit}
           handleEditDate={handleEditDate}
           handleUnassign={handleUnassign}
           setShowEdit={setShowEdit}
           setShowCal={setShowCal}
+          setLoading={setLoading}
         />
         <NoteDiv>
           {showEdit && (
@@ -148,6 +165,7 @@ const Note = ({ view, userId, noteId, fullDay }) => {
               onTitleChange={(e) => setTitle(e.target.value)}
               onContentChange={(e) => setContent(e.target.value)}
               onClickSave={onClickSave}
+              loading={loading}
             />
           )}
           {!showEdit && <ShowView title={title} content={content} />}

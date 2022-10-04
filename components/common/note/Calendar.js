@@ -22,6 +22,7 @@ const CalendarWrapper = styled.div`
   background-color: #ff7eb9;
   position: absolute;
   top: 0;
+  z-index: 100;
 `
 
 const DayOfWeekWrapper = styled.div`
@@ -74,7 +75,7 @@ const MoveDiv = styled.div`
   cursor: pointer;
 `
 
-const Calendar = ({ mid, fullDay, handleChangeDate, setCalOpen }) => {
+const Calendar = ({ mid, fullDay, handleChangeDate, setShowCal }) => {
   const [curMid, setCurMid] = useState(mid)
   const midYear = parseInt(curMid.slice(0, 4))
   const midMonth = parseInt(curMid.slice(4, 6))
@@ -92,8 +93,8 @@ const Calendar = ({ mid, fullDay, handleChangeDate, setCalOpen }) => {
   }, [curMid])
 
   const onChnageClicked = () => {
-    handleChangeDate(selectedDayDate)
-    setCalOpen(false)
+    handleChangeDate(new Date(fullDay), selectedDayDate)
+    setShowCal(false)
   }
   return (
     <CalendarWrapper>
