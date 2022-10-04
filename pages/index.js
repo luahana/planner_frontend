@@ -77,8 +77,12 @@ export default function Home({ initialPersistValue }) {
       </div>
       <footer className={styles.footer}>
         <p>Copyright &copy; 2022 SimpleToDo. All Rights Reserved.</p>
-        <div>Terms</div>
-        <div>Privacy Policy</div>
+        <Link href='/termsofuse'>
+          <div className={styles.pointer}>Terms of Use</div>
+        </Link>
+        <Link href='/privacyPolicy'>
+          <div className={styles.pointer}>Privacy Policy</div>
+        </Link>
       </footer>
     </div>
   )

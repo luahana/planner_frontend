@@ -83,3 +83,7 @@
 .subSectionLast {
   margin-bottom: 10rem;
 }
+
+.pointer {
+  cursor: pointer;
+}
