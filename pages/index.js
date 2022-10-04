@@ -7,10 +7,10 @@ export default function Home({ initialPersistValue }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>SimpleTodo</title>
+        <title>SimpleTodo - free online todolist</title>
         <meta
           name='description'
-          content='Web to do list to manage your personal work'
+          content='Web to do list to manage your personal work. online todo list free. Web todo list.'
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
@@ -19,9 +19,9 @@ export default function Home({ initialPersistValue }) {
           <Image src='/postsbackground.png' width='585' height='330' />
           <div className={styles.mainSectionTextWrapper}>
             <div>
-              <h1 className={styles.heading}>Free Web To Do List.</h1>
+              <h1 className={styles.heading}>Web Online ToDo List.</h1>
               <h1 className={styles.heading}>Make a list.</h1>
-              <h1 className={styles.heading}>Achieve.</h1>
+              <h1 className={styles.heading}>Manage your work.</h1>
               <Link href='/login'>
                 <div className={styles.signinbutton}> Start Free</div>
               </Link>
