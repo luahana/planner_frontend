@@ -7,8 +7,6 @@
   padding: 1em;
   height: 5vh;
   position: relative;
-  padding-left: 5rem;
-  padding-right: 3rem;
 }
 
 .overlayOpen {
@@ -91,6 +89,10 @@
 }
 
 @media (min-width: 768px) {
+  .nav {
+    padding-left: 5rem;
+    padding-right: 3rem;
+  }
   .hamburger {
     display: none;
   }
