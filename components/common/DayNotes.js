@@ -11,6 +11,7 @@ import Note from './Note'
 import ClipLoader from 'react-spinners/ClipLoader'
 
 const DayNotes = ({ view, userId, fullDay, weekday }) => {
+  console.log('DayNotes')
   const dt = new Date(fullDay)
   const year = dt.getFullYear()
   const month = dt.getMonth() + 1
