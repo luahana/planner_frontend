@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { useState } from 'react'
 import {
   useGetNoteByUserDateQuery,
   useAddNewNoteMutation,
@@ -32,11 +32,25 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
     },
   ] = useAddNewNoteMutation()
 
+  const [newNotes, setNewNotes] = useState([])
+  const [newNoteNum, setNewNoteNum] = useState(1)
+
   const onAddNewClicked = async (year, month, date) => {
-    await addNewNote({
+    const newNote = {
+      newNoteNum,
       user: userId,
-      assignedDate: new Date(year, month - 1, date),
-    })
+      title: '',
+      content: '',
+      completed: false,
+      sets: [],
+      assignedDate: dt,
+    }
+    setNewNoteNum(newNoteNum + 1)
+    setNewNotes((prev) => [newNote, ...prev])
+    // await addNewNote({
+    //   user: userId,
+    //   assignedDate: new Date(year, month - 1, date),
+    // })
   }
 
   let content = []
@@ -52,21 +66,23 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
         if (a.completed) return 1
         if (!a.completed) return -1
       })
-    content = notesByCompleted.map((note) => (
+    const notesWithNew = [...newNotes, ...notesByCompleted]
+    content = notesWithNew.map((note) => (
       <Note
-        key={note._id}
+        key={note._id ? note._id : note.newNoteNum}
         userId={userId}
         note={note}
         year={year}
         month={month}
         fullDay={fullDay}
+        setNewNotes={setNewNotes}
       />
     ))
     if (view === 'month' || view === 'monthSmall') {
-      content = notesByCompleted
+      content = notesWithNew
     }
     if (view === 'unassigned') {
-      content = notesByCompleted.map((note) => (
+      content = notesWithNew.map((note) => (
         <Note
           view='unassigned'
           key={note._id}
@@ -75,6 +91,7 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
           year={year}
           month={month}
           fullDay={fullDay}
+          setNewNotes={setNewNotes}
         />
       ))
     }

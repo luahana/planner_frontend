@@ -35,7 +35,7 @@ const LoadingWrapper = styled.div`
   z-index: 200;
 `
 
-const Note = ({ view, note, fullDay }) => {
+const Note = ({ view, note, fullDay, setNewNotes }) => {
   const curDate = new Date(fullDay)
   const did = convertDateStrToDid(fullDay)
   const year = curDate.getFullYear()
@@ -98,6 +98,11 @@ const Note = ({ view, note, fullDay }) => {
   }
 
   const handleOnClickCompleted = async () => {
+    if (note.newNoteNum) {
+      setNewNotes((prev) => {
+        return prev.filter((n) => n.newNoteNum !== note.newNoteNum)
+      })
+    }
     await updateNote({
       ...note,
       // curDate: new Date(fullDay),
@@ -106,6 +111,11 @@ const Note = ({ view, note, fullDay }) => {
   }
 
   const handleUnassign = async () => {
+    if (note.newNoteNum) {
+      setNewNotes((prev) => {
+        return prev.filter((n) => n.newNoteNum !== note.newNoteNum)
+      })
+    }
     await updateNote({
       ...note,
       assignedDate: new Date(1111, 10, 11),
@@ -113,6 +123,11 @@ const Note = ({ view, note, fullDay }) => {
   }
 
   const handleChangeDate = async (curDate, tobeDate) => {
+    if (note.newNoteNum) {
+      setNewNotes((prev) => {
+        return prev.filter((n) => n.newNoteNum !== note.newNoteNum)
+      })
+    }
     await updateNote({
       ...note,
       curDate: curDate,
@@ -121,12 +136,17 @@ const Note = ({ view, note, fullDay }) => {
   }
 
   const onClickSave = async () => {
+    if (note.newNoteNum) {
+      setNewNotes((prev) => {
+        return prev.filter((n) => n.newNoteNum !== note.newNoteNum)
+      })
+    }
     await updateNote({
       ...note,
-
       title: title,
       content: content,
     })
+
     setShowEdit(false)
   }
 
