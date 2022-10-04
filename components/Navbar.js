@@ -107,7 +107,9 @@ const Navbar = () => {
         {isLoading && <p>Logging Out...</p>}
         {isError && <p>Error: {error.message}</p>}
         <Link href='/'>
-          <a>SimpleToDo</a>
+          <div className={styles.pointer}>
+            <a>SimpleToDo</a>
+          </div>
         </Link>
         {user_id && (
           <div className={styles.hamburger} onClick={open}>
@@ -163,7 +165,7 @@ const Navbar = () => {
         {!user_id && (
           <Link href='/login'>
             <div className={styles.pointer} onClick={close}>
-              <a>log in</a>
+              <a>Sign in</a>
             </div>
           </Link>
         )}

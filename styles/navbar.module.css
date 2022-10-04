@@ -7,6 +7,8 @@
   padding: 1em;
   height: 5vh;
   position: relative;
+  padding-left: 5rem;
+  padding-right: 3rem;
 }
 
 .overlayOpen {
@@ -64,6 +66,7 @@
 }
 .pointer {
   cursor: pointer;
+  padding: 1rem;
 }
 
 .menuUl {
@@ -93,10 +96,11 @@
   }
   .navUlWrapper {
     display: block;
-    width: 70%;
+    width: 55%;
   }
   .navUlWrapper ul {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 }
