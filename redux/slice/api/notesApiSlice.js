@@ -60,11 +60,23 @@ export const notesApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: (result, error, arg) => {
         const did = convertYmdToDid(arg.year, arg.month, arg.date)
-        return [
-          { type: 'Notes', id: 'LIST' },
-          { type: 'Notes', id: did },
-        ]
+        return [{ type: 'Notes', id: did }]
       },
+    }),
+    getUnassignedNoteByUser: builder.query({
+      query: ({ userId }) => {
+        return {
+          url: `/notes/${userId}/unassigned`,
+        }
+      },
+      transformResponse: (responseData) => {
+        const loadedNotes = responseData.map((note) => {
+          note.id = note._id
+          return note
+        })
+        return notesAdapter.setAll(initialState, loadedNotes)
+      },
+      providesTags: [{ type: 'Notes', id: convertDateToDid(new Date(0)) }],
     }),
     addNewNote: builder.mutation({
       query({
@@ -95,28 +107,47 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         content = '',
         completed = false,
         curDate,
-        assignedDate = '',
+        assignedTime = 0,
+        assigned,
         sets = [],
       }) {
         return {
           url: '/notes',
           method: 'PUT',
-          body: { _id, user, title, content, completed, assignedDate, sets },
+          body: {
+            _id,
+            user,
+            title,
+            content,
+            completed,
+            assignedTime,
+            assigned,
+            sets,
+          },
         }
       },
       invalidatesTags: (result, error, arg) => {
-        const assignedDid = convertDateToDid(arg.assignedDate)
+        const assignedDid = convertDateToDid(new Date(arg.assignedTime))
         if (!arg.curDate) {
           return [{ type: 'Notes', id: assignedDid }]
         }
 
-        const curDid = convertDateToDid(arg.curDate)
+        const curDid = convertDateToDid(new Date(arg.curDate))
         return [
           { type: 'Notes', id: curDid },
           { type: 'Notes', id: assignedDid },
         ]
       },
     }),
+    updateTime: builder.mutation({
+      query() {
+        return {
+          url: '/notes/updateUnassigned',
+          method: 'post',
+        }
+      },
+    }),
+
     deleteNote: builder.mutation({
       query({ id }) {
         return {
@@ -136,9 +167,11 @@ export const {
   useGetNotesQuery,
   useGetNoteByUserMonthQuery,
   useGetNoteByUserDateQuery,
+  useGetUnassignedNoteByUserQuery,
   useAddNewNoteMutation,
   useUpdateNoteMutation,
   useDeleteNoteMutation,
+  useUpdateTimeMutation,
 } = notesApiSlice
 
 // export const selectNotesResult = notesApiSlice.endpoints.getNoteByDay.select()

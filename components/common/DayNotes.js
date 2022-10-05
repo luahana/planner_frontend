@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
-import { useGetNoteByUserDateQuery } from '../../redux/slice/api/notesApiSlice'
+import {
+  useGetNoteByUserDateQuery,
+  useGetUnassignedNoteByUserQuery,
+} from '../../redux/slice/api/notesApiSlice'
 import NotesDayView from './NotesDayView'
 import NotesWeekView from './NotesWeekView'
 import NotesMonthView from './NotesMonthView'
@@ -20,10 +23,22 @@ const DayNotes = ({ view, userId, curDateStr, weekday }) => {
   const { data, isLoading, isSuccess, isError, error } =
     useGetNoteByUserDateQuery({ userId, year, month, date })
 
+  const {
+    data: unassignedNotes,
+    isLoading: unIsLoading,
+    isSuccess: unIsSuccess,
+  } = useGetUnassignedNoteByUserQuery({ userId, year, month, date })
+
   const [newNotes, setNewNotes] = useState([])
   const [newNoteNum, setNewNoteNum] = useState(1)
 
-  const onAddNewClicked = async (year, month, date) => {
+  const onAddNewClicked = async () => {
+    let assigned = true
+    let assignedTime = dt.getTime()
+    if (view === 'unassigned') {
+      assigned = false
+      assignedTime = 0
+    }
     const newNote = {
       newNoteNum,
       user: userId,
@@ -31,7 +46,8 @@ const DayNotes = ({ view, userId, curDateStr, weekday }) => {
       content: '',
       completed: false,
       sets: [],
-      assignedDate: dt,
+      assigned,
+      assignedTime,
     }
     setNewNoteNum(newNoteNum + 1)
     setNewNotes((prev) => [newNote, ...prev])
@@ -46,8 +62,34 @@ const DayNotes = ({ view, userId, curDateStr, weekday }) => {
       <ClipLoader color='aqua' size={100} aria-label='Loading Spinner' />
     )
   }
+  if (view === 'unassigned' && unIsSuccess) {
+    const notes = unassignedNotes.ids.map((id) => unassignedNotes.entities[id])
+    const notesByCompleted = notes
+      .sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      })
+      .sort((a, b) => {
+        if (a.completed === b.completed) return 0
+        if (a.completed) return 1
+        if (!a.completed) return -1
+      })
+    const notesWithNew = [...newNotes, ...notesByCompleted]
+    content = notesWithNew.map((note) => (
+      <Note
+        view='unassigned'
+        key={note._id}
+        userId={userId}
+        note={note}
+        year={year}
+        month={month}
+        curDateStr={curDateStr}
+        setNewNotes={setNewNotes}
+      />
+    ))
+  }
   if (isSuccess) {
     const notes = data.ids.map((id) => data.entities[id])
+
     const notesByCompleted = notes
       .sort((a, b) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -123,7 +165,7 @@ const DayNotes = ({ view, userId, curDateStr, weekday }) => {
         <NotesUnassignedView
           content={content}
           onAddNewClicked={onAddNewClicked}
-          loadingComp={loadingComp}
+          loadingComp={unIsLoading}
           loading={isLoading}
         />
       )}

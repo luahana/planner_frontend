@@ -36,14 +36,14 @@ const AddNewDiv = styled.div`
 `
 
 const NotesWeekView = ({
-  fullDay,
+  curDateStr,
   weekday,
   content,
   onAddNewClicked,
   loadingComp,
   loading,
 }) => {
-  const dt = new Date(fullDay)
+  const dt = new Date(curDateStr)
   const year = dt.getFullYear()
   const month = dt.getMonth() + 1
   const date = dt.getDate()
@@ -56,7 +56,7 @@ const NotesWeekView = ({
   return (
     <WeekWrapper
       style={{
-        border: fullDay === todayDateStr && '3px double black',
+        border: curDateStr === todayDateStr && '3px double black',
       }}
     >
       <WeekDateWrapper>

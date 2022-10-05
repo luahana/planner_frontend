@@ -117,11 +117,15 @@ const Note = ({ view, note, curDateStr, setNewNotes }) => {
     }
     await updateNote({
       ...note,
-      assignedDate: new Date(1111, 10, 11),
+      assigned: false,
     })
   }
 
   const handleChangeDate = async (curDate, tobeDate) => {
+    let a = curDate
+    if (view === 'assigned') {
+      a = 0
+    }
     if (curDate.getTime() !== tobeDate.getTime()) {
       if (note.newNoteNum) {
         setNewNotes((prev) => {
@@ -130,8 +134,9 @@ const Note = ({ view, note, curDateStr, setNewNotes }) => {
       }
       await updateNote({
         ...note,
-        curDate: curDate,
-        assignedDate: tobeDate,
+        assigned: true,
+        curDate: a,
+        assignedTime: new Date(tobeDate).getTime(),
       })
     }
   }

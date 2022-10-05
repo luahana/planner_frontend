@@ -4,6 +4,7 @@ import { calcDid, didToYmd } from '../../lib/calendar'
 import PagesHeader from '../common/PagesHeader'
 import DayNotes from '../common/DayNotes'
 import Title from '../common/Title'
+import { useUpdateTimeMutation } from '../../redux/slice/api/notesApiSlice'
 
 const DailyPage = ({ did }) => {
   const userId = useUserAuth()
@@ -13,7 +14,11 @@ const DailyPage = ({ did }) => {
   const title = (
     <Title year={year} month={month} date={date} curDate={curDate} />
   )
+  const [updateTime] = useUpdateTimeMutation()
 
+  const onClickUpdate = async () => {
+    await updateTime()
+  }
   return (
     <>
       <PagesHeader
@@ -21,6 +26,7 @@ const DailyPage = ({ did }) => {
         prev={`/daily/${calcDid(did, -1)}`}
         next={`/daily/${calcDid(did, 1)}`}
       />
+      <button onClick={onClickUpdate}>update</button>
       <DayNotes view='day' userId={userId} curDateStr={curDateStr} />
     </>
   )
