@@ -35,7 +35,14 @@ const AddNewDiv = styled.div`
   width: 100%;
 `
 
-const NotesWeekView = ({ fullDay, weekday, content, onAddNewClicked }) => {
+const NotesWeekView = ({
+  fullDay,
+  weekday,
+  content,
+  onAddNewClicked,
+  loadingComp,
+  loading,
+}) => {
   const dt = new Date(fullDay)
   const year = dt.getFullYear()
   const month = dt.getMonth() + 1
@@ -43,7 +50,9 @@ const NotesWeekView = ({ fullDay, weekday, content, onAddNewClicked }) => {
 
   const today = new Date()
   const todayDateStr = today.toDateString()
-
+  if (loading) {
+    content = loadingComp
+  }
   return (
     <WeekWrapper
       style={{

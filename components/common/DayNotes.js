@@ -38,6 +38,9 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
   }
 
   let content = []
+  let loadingComp = (
+    <ClipLoader color='aqua' size={100} aria-label='Loading Spinner' />
+  )
   if (isLoading) {
     content = (
       <ClipLoader color='aqua' size={100} aria-label='Loading Spinner' />
@@ -92,6 +95,8 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
           fullDay={fullDay}
           content={content}
           onAddNewClicked={onAddNewClicked}
+          loadingComp={loadingComp}
+          loading={isLoading}
         />
       )}
       {view === 'week' && (
@@ -100,12 +105,14 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
           weekday={weekday}
           content={content}
           onAddNewClicked={onAddNewClicked}
+          loadingComp={loadingComp}
+          loading={isLoading}
         />
       )}
-      {isSuccess && view === 'month' && (
+      {view === 'month' && (
         <NotesMonthView content={content} loading={isLoading} />
       )}
-      {isSuccess && view === 'monthSmall' && (
+      {view === 'monthSmall' && (
         <NotesMonthView
           view='monthSmall'
           content={content}
@@ -116,6 +123,8 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
         <NotesUnassignedView
           content={content}
           onAddNewClicked={onAddNewClicked}
+          loadingComp={loadingComp}
+          loading={isLoading}
         />
       )}
     </>

@@ -39,11 +39,20 @@ const AddNewDiv = styled.div`
 `
 const HeaderWrapper = styled.div``
 
-const NotesDayView = ({ fullDay, content, onAddNewClicked }) => {
+const NotesDayView = ({
+  fullDay,
+  content,
+  onAddNewClicked,
+  loadingComp,
+  loading,
+}) => {
   const dt = new Date(fullDay)
   const year = dt.getFullYear()
   const month = dt.getMonth() + 1
   const date = dt.getDate()
+  if (loading) {
+    content = loadingComp
+  }
   return (
     <DayWrapper>
       <DayHeader>

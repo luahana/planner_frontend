@@ -38,7 +38,15 @@ const AddNewDiv = styled.div`
   width: 100%;
 `
 
-const NotesUnassignedView = ({ content, onAddNewClicked }) => {
+const NotesUnassignedView = ({
+  content,
+  onAddNewClicked,
+  loadingComp,
+  loading,
+}) => {
+  if (loading) {
+    content = loadingComp
+  }
   return (
     <DayWrapper>
       <DayHeader>
