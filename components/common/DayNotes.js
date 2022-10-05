@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
-import {
-  useGetNoteByUserDateQuery,
-  useAddNewNoteMutation,
-} from '../../redux/slice/api/notesApiSlice'
+import { useGetNoteByUserDateQuery } from '../../redux/slice/api/notesApiSlice'
 import NotesDayView from './NotesDayView'
 import NotesWeekView from './NotesWeekView'
 import NotesMonthView from './NotesMonthView'
@@ -22,16 +19,6 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
   const { data, isLoading, isSuccess, isError, error } =
     useGetNoteByUserDateQuery({ userId, year, month, date })
 
-  const [
-    addNewNote,
-    {
-      isLoading: addIsLoading,
-      isSuccess: addIsSuccess,
-      isError: addIsError,
-      error: addError,
-    },
-  ] = useAddNewNoteMutation()
-
   const [newNotes, setNewNotes] = useState([])
   const [newNoteNum, setNewNoteNum] = useState(1)
 
@@ -47,10 +34,6 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
     }
     setNewNoteNum(newNoteNum + 1)
     setNewNotes((prev) => [newNote, ...prev])
-    // await addNewNote({
-    //   user: userId,
-    //   assignedDate: new Date(year, month - 1, date),
-    // })
   }
 
   let content = []

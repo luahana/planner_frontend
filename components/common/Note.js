@@ -105,7 +105,6 @@ const Note = ({ view, note, fullDay, setNewNotes }) => {
     }
     await updateNote({
       ...note,
-      // curDate: new Date(fullDay),
       completed: !completed,
     })
   }
@@ -123,29 +122,33 @@ const Note = ({ view, note, fullDay, setNewNotes }) => {
   }
 
   const handleChangeDate = async (curDate, tobeDate) => {
-    if (note.newNoteNum) {
-      setNewNotes((prev) => {
-        return prev.filter((n) => n.newNoteNum !== note.newNoteNum)
+    if (curDate.getTime() !== tobeDate.getTime()) {
+      if (note.newNoteNum) {
+        setNewNotes((prev) => {
+          return prev.filter((n) => n.newNoteNum !== note.newNoteNum)
+        })
+      }
+      await updateNote({
+        ...note,
+        curDate: curDate,
+        assignedDate: tobeDate,
       })
     }
-    await updateNote({
-      ...note,
-      curDate: curDate,
-      assignedDate: tobeDate,
-    })
   }
 
   const onClickSave = async () => {
-    if (note.newNoteNum) {
-      setNewNotes((prev) => {
-        return prev.filter((n) => n.newNoteNum !== note.newNoteNum)
+    if (note.title !== title || note.content !== content) {
+      if (note.newNoteNum) {
+        setNewNotes((prev) => {
+          return prev.filter((n) => n.newNoteNum !== note.newNoteNum)
+        })
+      }
+      await updateNote({
+        ...note,
+        title: title,
+        content: content,
       })
     }
-    await updateNote({
-      ...note,
-      title: title,
-      content: content,
-    })
 
     setShowEdit(false)
   }
@@ -173,6 +176,7 @@ const Note = ({ view, note, fullDay, setNewNotes }) => {
           setShowEdit={setShowEdit}
           setShowCal={setShowCal}
           setLoading={setLoading}
+          setNewNotes={setNewNotes}
         />
         <NoteDiv>
           <ShowView title={title} content={content} />

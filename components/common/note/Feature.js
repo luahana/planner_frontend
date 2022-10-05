@@ -57,6 +57,7 @@ const Feature = ({
   handleEditDate,
   handleUnassign,
   setLoading,
+  setNewNotes,
 }) => {
   const [
     deleteNote,
@@ -73,6 +74,12 @@ const Feature = ({
   }, [isDelLoading])
 
   const handleDelete = async () => {
+    if (note.newNoteNum) {
+      setNewNotes((prev) => {
+        return prev.filter((n) => n.newNoteNum !== note.newNoteNum)
+      })
+      return
+    }
     await deleteNote({ id: note._id, did })
   }
 
