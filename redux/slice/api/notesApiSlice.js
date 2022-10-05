@@ -139,14 +139,6 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         ]
       },
     }),
-    updateTime: builder.mutation({
-      query() {
-        return {
-          url: '/notes/updateUnassigned',
-          method: 'post',
-        }
-      },
-    }),
 
     deleteNote: builder.mutation({
       query({ id }) {
@@ -171,7 +163,6 @@ export const {
   useAddNewNoteMutation,
   useUpdateNoteMutation,
   useDeleteNoteMutation,
-  useUpdateTimeMutation,
 } = notesApiSlice
 
 // export const selectNotesResult = notesApiSlice.endpoints.getNoteByDay.select()
