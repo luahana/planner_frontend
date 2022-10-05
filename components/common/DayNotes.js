@@ -5,6 +5,7 @@ import NotesWeekView from './NotesWeekView'
 import NotesMonthView from './NotesMonthView'
 import NotesUnassignedView from './NotesUnassignedView'
 import Note from './Note'
+import ClipLoader from 'react-spinners/ClipLoader'
 
 const DayNotes = ({ view, userId, fullDay, weekday }) => {
   const dt = new Date(fullDay)
@@ -37,7 +38,11 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
   }
 
   let content = []
-
+  if (isLoading) {
+    content = (
+      <ClipLoader color='aqua' size={100} aria-label='Loading Spinner' />
+    )
+  }
   if (isSuccess) {
     const notes = data.ids.map((id) => data.entities[id])
     const notesByCompleted = notes
@@ -97,10 +102,10 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
           onAddNewClicked={onAddNewClicked}
         />
       )}
-      {view === 'month' && (
+      {isSuccess && view === 'month' && (
         <NotesMonthView content={content} loading={isLoading} />
       )}
-      {view === 'monthSmall' && (
+      {isSuccess && view === 'monthSmall' && (
         <NotesMonthView
           view='monthSmall'
           content={content}
@@ -118,4 +123,3 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
 }
 
 export default DayNotes
-// export default DayNotes
