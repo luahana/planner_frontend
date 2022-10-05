@@ -7,8 +7,8 @@ import NotesUnassignedView from './NotesUnassignedView'
 import Note from './Note'
 import ClipLoader from 'react-spinners/ClipLoader'
 
-const DayNotes = ({ view, userId, fullDay, weekday }) => {
-  const dt = new Date(fullDay)
+const DayNotes = ({ view, userId, curDateStr, weekday }) => {
+  const dt = new Date(curDateStr)
   const year = dt.getFullYear()
   const month = (dt.getMonth() + 1).toLocaleString('en-US', {
     minimumIntegerDigits: 2,
@@ -65,7 +65,7 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
         note={note}
         year={year}
         month={month}
-        fullDay={fullDay}
+        curDateStr={curDateStr}
         setNewNotes={setNewNotes}
       />
     ))
@@ -81,7 +81,7 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
           note={note}
           year={year}
           month={month}
-          fullDay={fullDay}
+          curDateStr={curDateStr}
           setNewNotes={setNewNotes}
         />
       ))
@@ -92,7 +92,7 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
     <>
       {view === 'day' && (
         <NotesDayView
-          fullDay={fullDay}
+          curDateStr={curDateStr}
           content={content}
           onAddNewClicked={onAddNewClicked}
           loadingComp={loadingComp}
@@ -101,7 +101,7 @@ const DayNotes = ({ view, userId, fullDay, weekday }) => {
       )}
       {view === 'week' && (
         <NotesWeekView
-          fullDay={fullDay}
+          curDateStr={curDateStr}
           weekday={weekday}
           content={content}
           onAddNewClicked={onAddNewClicked}

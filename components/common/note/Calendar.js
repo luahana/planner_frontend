@@ -75,12 +75,12 @@ const MoveDiv = styled.div`
   cursor: pointer;
 `
 
-const Calendar = ({ mid, fullDay, handleChangeDate, setShowCal }) => {
+const Calendar = ({ mid, curDateStr, handleChangeDate, setShowCal }) => {
   const [curMid, setCurMid] = useState(mid)
   const midYear = parseInt(curMid.slice(0, 4))
   const midMonth = parseInt(curMid.slice(4, 6))
   let fullMonthArr = fullMonthArray(midYear, midMonth)
-  const curDid = convertDateStrToDid(fullDay)
+  const curDid = convertDateStrToDid(curDateStr)
   const [selectedDay, setSelectedDay] = useState(curDid)
   const selectedDayDate = new Date(
     parseInt(selectedDay.slice(0, 4)),
@@ -93,7 +93,7 @@ const Calendar = ({ mid, fullDay, handleChangeDate, setShowCal }) => {
   }, [curMid])
 
   const onChnageClicked = () => {
-    handleChangeDate(new Date(fullDay), selectedDayDate)
+    handleChangeDate(new Date(curDateStr), selectedDayDate)
     setShowCal(false)
   }
   return (

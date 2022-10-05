@@ -35,9 +35,9 @@ const LoadingWrapper = styled.div`
   z-index: 200;
 `
 
-const Note = ({ view, note, fullDay, setNewNotes }) => {
-  const curDate = new Date(fullDay)
-  const did = convertDateStrToDid(fullDay)
+const Note = ({ view, note, curDateStr, setNewNotes }) => {
+  const curDate = new Date(curDateStr)
+  const did = convertDateStrToDid(curDateStr)
   const year = curDate.getFullYear()
   const month = curDate.getMonth() + 1
   const date = curDate.getDate()
@@ -194,7 +194,7 @@ const Note = ({ view, note, fullDay, setNewNotes }) => {
             <Calendar
               view={view}
               mid={mid}
-              fullDay={fullDay}
+              curDateStr={curDateStr}
               handleChangeDate={handleChangeDate}
               setShowCal={setShowCal}
             />
@@ -204,8 +204,4 @@ const Note = ({ view, note, fullDay, setNewNotes }) => {
     </>
   )
 }
-
-// const MemoizedNote = memo(Note)
-
-// export default MemoizedNote
 export default Note

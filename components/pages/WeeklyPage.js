@@ -50,7 +50,7 @@ const WeeklyPage = ({ wid }) => {
             key={day}
             view='week'
             userId={userId}
-            fullDay={day}
+            curDateStr={day}
             weekday={i + 1}
           />
         ))}

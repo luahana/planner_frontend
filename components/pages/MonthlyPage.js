@@ -179,7 +179,7 @@ const MonthlyPage = ({ mid }) => {
                       }}
                     >
                       <DayDivDate>{new Date(day).getDate()}</DayDivDate>
-                      <DayNotes view='month' userId={userId} fullDay={day} />
+                      <DayNotes view='month' userId={userId} curDateStr={day} />
                     </DayDiv>
                   </Link>
                 )
@@ -232,7 +232,7 @@ const MonthlyPage = ({ mid }) => {
                       <DayNotes
                         view='monthSmall'
                         userId={userId}
-                        fullDay={day}
+                        curDateStr={day}
                       />
                     </DayDivSmallWidth>
                   </Link>

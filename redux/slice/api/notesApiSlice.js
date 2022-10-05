@@ -35,9 +35,22 @@ export const notesApiSlice = apiSlice.injectEndpoints({
       providesTags: [{ type: 'Notes', id: 'LIST' }],
     }),
     getNoteByUserDate: builder.query({
-      query: ({ userId, year, month, date }) => ({
-        url: `/notes/${userId}/${year}/${month}/${date}`,
-      }),
+      query: ({ userId, year, month, date }) => {
+        const fromTime = new Date(year, month - 1, date, 0, 0, 0).getTime()
+        const toTime = new Date(
+          year,
+          month - 1,
+          date,
+          23,
+          59,
+          59,
+          999
+        ).getTime()
+
+        return {
+          url: `/notes/${userId}/${fromTime}/${toTime}`,
+        }
+      },
       transformResponse: (responseData) => {
         const loadedNotes = responseData.map((note) => {
           note.id = note._id
@@ -104,6 +117,15 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         ]
       },
     }),
+    updateTime: builder.mutation({
+      query() {
+        return {
+          url: '/notes/updateTime',
+          method: 'post',
+        }
+      },
+    }),
+
     deleteNote: builder.mutation({
       query({ id }) {
         return {
@@ -126,6 +148,7 @@ export const {
   useAddNewNoteMutation,
   useUpdateNoteMutation,
   useDeleteNoteMutation,
+  useUpdateTimeMutation,
 } = notesApiSlice
 
 // export const selectNotesResult = notesApiSlice.endpoints.getNoteByDay.select()
