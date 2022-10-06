@@ -37,7 +37,7 @@ const SaveDiv = styled.div`
   background-color: #7afcff;
   height: 3rem;
 `
-const SaveDivWrapper = styled.div`
+const SaveWrapperDiv = styled.div`
   position: relative;
 `
 
@@ -56,27 +56,26 @@ const EditView = ({
   content,
   onTitleChange,
   onContentChange,
-  onClickSave,
-  loading,
+  handleSaveNote,
+  isLoading,
 }) => {
   return (
     <EditWrapper>
       <TitleInput type='text' value={title} onChange={onTitleChange} />
       <ContentTextarea value={content} onChange={onContentChange} />
-      <SaveDivWrapper>
-        {loading && (
+      <SaveWrapperDiv>
+        {isLoading && (
           <LoaderWrapper>
             <PulseLoader
               color='#ff7eb9'
-              loading={loading}
               size='2rem'
               aria-label='Loading Spinner'
             />
           </LoaderWrapper>
         )}
 
-        <SaveDiv onClick={onClickSave}>Save</SaveDiv>
-      </SaveDivWrapper>
+        <SaveDiv onClick={handleSaveNote}>Save</SaveDiv>
+      </SaveWrapperDiv>
     </EditWrapper>
   )
 }

@@ -1,6 +1,6 @@
 import { parseCookies } from '../../../lib/parseCookies'
 import usePersistLogin from '../../../hooks/usePersistLogin'
-import MemoizedDailyPage from '../../../components/pages/DailyPage'
+import MemoizedDailyPage from '../../../components/pages/daily/DailyPage'
 import { useRouter } from 'next/router'
 
 const Daily = ({ initialPersistValue }) => {

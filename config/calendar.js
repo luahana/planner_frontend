@@ -1,4 +1,4 @@
-const MONTH = {
+export const MONTH = {
   1: 'January',
   2: 'February',
   3: 'March',
@@ -13,7 +13,7 @@ const MONTH = {
   12: 'December',
 }
 
-const WEEKDAY = {
+export const WEEKDAY = {
   1: 'SUNDAY',
   2: 'MONDAY',
   3: 'TUESDAY',
@@ -22,5 +22,3 @@ const WEEKDAY = {
   6: 'FRIDAY',
   7: 'SATURDAY',
 }
-
-export { MONTH, WEEKDAY }

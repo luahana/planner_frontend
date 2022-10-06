@@ -7,6 +7,8 @@ import styles from '../styles/navbar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { calcWeekId } from '../lib/calendar'
+import { didFromDate, midFromDate, ymdFromDate } from '../lib/date'
+import { addZero } from '../lib/date'
 
 const Navbar = () => {
   const router = useRouter()
@@ -32,22 +34,11 @@ const Navbar = () => {
     sendLogout()
     close()
   }
-
+  addZero
   const dt = new Date()
-  const mid =
-    dt.getFullYear() +
-    (dt.getMonth() + 1).toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-    })
-  const wid = calcWeekId(dt.getFullYear(), dt.getMonth() + 1, dt.getDate())
-  const did =
-    dt.getFullYear() +
-    (dt.getMonth() + 1).toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-    }) +
-    dt.getDate().toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-    })
+  const mid = midFromDate(dt)
+  const wid = calcWeekId(ymdFromDate(dt))
+  const did = didFromDate(dt)
 
   return (
     <>

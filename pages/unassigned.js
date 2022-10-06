@@ -1,6 +1,6 @@
 import { parseCookies } from '../lib/parseCookies'
 import usePersistLogin from '../hooks/usePersistLogin'
-import UnassignedPage from '../components/pages/UnassignedPage'
+import UnassignedPage from '../components/pages/unassigned/UnassignedPage'
 
 const Unassigned = ({ initialPersistValue }) => {
   const persistLogin = usePersistLogin(initialPersistValue)

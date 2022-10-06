@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { device } from '../../config/deviceBreakpoint'
+import { device } from '../../../config/deviceBreakpoint'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
@@ -50,7 +50,7 @@ const NotesUnassignedView = ({
   return (
     <DayWrapper>
       <DayHeader>
-        <AddNewDiv onClick={() => onAddNewClicked(1111, 11, 11)}>
+        <AddNewDiv onClick={() => onAddNewClicked()}>
           <FontAwesomeIcon icon={faPlus} />
         </AddNewDiv>
       </DayHeader>

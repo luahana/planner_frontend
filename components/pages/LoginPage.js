@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentToken, setCredentials } from '../../redux/slice/authSlice'
-import { convertDateStrToDid } from '../../lib/calendar'
+import { didFromDateStr } from '../../lib/date'
 import { useGoogleLoginMutation } from '../../redux/slice/api/authApiSlice'
 
 const Wrapper = styled.div`
@@ -40,12 +40,12 @@ const LoginPage = ({ googleClientId }) => {
 
     dispatch(setCredentials({ accessToken: res.data.accessToken }))
 
-    router.push(`/daily/${convertDateStrToDid(dt.toDateString())}`)
+    router.push(`/daily/${didFromDateStr(dt.toDateString())}`)
   }
 
   useEffect(() => {
     if (curToken) {
-      router.push(`/daily/${convertDateStrToDid(dt.toDateString())}`)
+      router.push(`/daily/${didFromDateStr(dt.toDateString())}`)
     }
     google.accounts.id.initialize({
       client_id: googleClientId,

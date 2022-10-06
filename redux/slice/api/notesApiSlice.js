@@ -1,9 +1,5 @@
-import { createSelector, createEntityAdapter } from '@reduxjs/toolkit'
-import {
-  convertDateStrToDid,
-  convertDateToDid,
-  convertYmdToDid,
-} from '../../../lib/calendar'
+import { createEntityAdapter } from '@reduxjs/toolkit'
+import { didFromDateStr, didFromDate, didFromYmd } from '../../../lib/date'
 import { apiSlice } from './apiSlice'
 
 const notesAdapter = createEntityAdapter({})
@@ -59,7 +55,11 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         return notesAdapter.setAll(initialState, loadedNotes)
       },
       providesTags: (result, error, arg) => {
-        const did = convertYmdToDid(arg.year, arg.month, arg.date)
+        const did = didFromYmd({
+          year: arg.year,
+          month: arg.month,
+          date: arg.date,
+        })
         return [{ type: 'Notes', id: did }]
       },
     }),
@@ -76,7 +76,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         })
         return notesAdapter.setAll(initialState, loadedNotes)
       },
-      providesTags: [{ type: 'Notes', id: convertDateToDid(new Date(0)) }],
+      providesTags: [{ type: 'Notes', id: didFromDate(new Date(0)) }],
     }),
     addNewNote: builder.mutation({
       query({
@@ -94,7 +94,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         }
       },
       invalidatesTags: (result, error, arg) => {
-        const did = convertDateStrToDid(arg.assignedDate.toDateString())
+        const did = didFromDateStr(arg.assignedDate.toDateString())
 
         return [{ type: 'Notes', id: did }]
       },
@@ -127,12 +127,11 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         }
       },
       invalidatesTags: (result, error, arg) => {
-        const assignedDid = convertDateToDid(new Date(arg.assignedTime))
-        if (!arg.curDate) {
+        const assignedDid = didFromDate(new Date(arg.assignedTime))
+        if (arg.curDate === undefined) {
           return [{ type: 'Notes', id: assignedDid }]
         }
-
-        const curDid = convertDateToDid(new Date(arg.curDate))
+        const curDid = didFromDate(new Date(arg.curDate))
         return [
           { type: 'Notes', id: curDid },
           { type: 'Notes', id: assignedDid },
@@ -164,16 +163,3 @@ export const {
   useUpdateNoteMutation,
   useDeleteNoteMutation,
 } = notesApiSlice
-
-// export const selectNotesResult = notesApiSlice.endpoints.getNoteByDay.select()
-
-// const selectNotesData = createSelector(
-//   selectNotesResult,
-//   (notesResult) => notesResult.data
-// )
-
-// export const {
-//   selectAll: selectAllNotes,
-//   selectById: selectNoteById,
-//   selectIds: selectNoteIds,
-// } = notesAdapter.getSelectors((state) => selectNotesData(state) ?? initialState)

@@ -1,6 +1,6 @@
 import { parseCookies } from '../../../lib/parseCookies'
 import usePersistLogin from '../../../hooks/usePersistLogin'
-import MonthlyPage from '../../../components/pages/MonthlyPage'
+import MonthlyPage from '../../../components/pages/monthly/MonthlyPage'
 import { useRouter } from 'next/router'
 
 const Monthly = ({ initialPersistValue }) => {

@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   justify-content: center;
 `
 
-const Header = styled.div`
+const Title = styled.div`
   display: flex;
   justify-content: center;
   font-size: 2.5rem;
@@ -31,7 +31,7 @@ const NextDiv = styled.div`
   margin: 0 2rem;
 `
 
-const PagesHeader = ({ title, prev, next }) => {
+const Header = ({ title, prev, next }) => {
   return (
     <Wrapper>
       <Link href={prev}>
@@ -39,7 +39,7 @@ const PagesHeader = ({ title, prev, next }) => {
           <FontAwesomeIcon icon={faChevronLeft} />
         </PrevDiv>
       </Link>
-      <Header>{title}</Header>
+      <Title>{title}</Title>
       <Link href={next}>
         <NextDiv>
           <FontAwesomeIcon icon={faChevronRight} />
@@ -49,4 +49,4 @@ const PagesHeader = ({ title, prev, next }) => {
   )
 }
 
-export default PagesHeader
+export default Header

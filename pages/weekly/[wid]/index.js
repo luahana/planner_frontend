@@ -1,6 +1,6 @@
 import { parseCookies } from '../../../lib/parseCookies'
 import usePersistLogin from '../../../hooks/usePersistLogin'
-import MemoizedWeeklyPage from '../../../components/pages/WeeklyPage'
+import MemoizedWeeklyPage from '../../../components/pages/weekly/WeeklyPage'
 import { useRouter } from 'next/router'
 
 const Weekly = ({ initialPersistValue }) => {

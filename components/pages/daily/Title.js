@@ -1,19 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
-import { WEEKDAY } from '../../config/calendar'
+import { WEEKDAY } from '../../../config/calendar'
+import { ymdFromDate } from '../../../lib/date'
 
-const TitleDiv = styled.div`
+const Wrapper = styled.div`
   text-align: center;
 `
-const Title = ({ year, month, date, curDate }) => {
+const Title = ({ curDate }) => {
+  const { year, month, date } = ymdFromDate(curDate)
   return (
-    <TitleDiv>
+    <Wrapper>
+      {' '}
       {year}{' '}
       <span style={{ whiteSpace: 'nowrap' }}>
         {month} {date}
       </span>{' '}
       {WEEKDAY[curDate.getDay() + 1]}
-    </TitleDiv>
+    </Wrapper>
   )
 }
 

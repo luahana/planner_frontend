@@ -1,16 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
-import { device } from '../../config/deviceBreakpoint'
+import { device } from '../../../config/deviceBreakpoint'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
-const DayWrapper = styled.div`
+const Wrapper = styled.div`
   width: 100%;
   @media ${device.tablet} {
   }
 `
 
-const DayHeader = styled.div`
+const Header = styled.div`
   display: flex;
   justify-content: right;
   padding: 0 2rem;
@@ -18,7 +18,7 @@ const DayHeader = styled.div`
   }
 `
 
-const DayMain = styled.div`
+const MainDiv = styled.div`
   padding: 1rem 2rem;
   display: flex;
   flex-direction: column;
@@ -37,32 +37,18 @@ const AddNewDiv = styled.div`
   margin-top: 1rem;
   width: 100%;
 `
-const HeaderWrapper = styled.div``
 
-const NotesDayView = ({
-  fullDay,
-  content,
-  onAddNewClicked,
-  loadingComp,
-  loading,
-}) => {
-  const dt = new Date(fullDay)
-  const year = dt.getFullYear()
-  const month = dt.getMonth() + 1
-  const date = dt.getDate()
-  if (loading) {
-    content = loadingComp
-  }
+const NotesViewer = ({ content, onAddNewClicked }) => {
   return (
-    <DayWrapper>
-      <DayHeader>
-        <AddNewDiv onClick={() => onAddNewClicked(year, month, date)}>
+    <Wrapper>
+      <Header>
+        <AddNewDiv onClick={onAddNewClicked}>
           <FontAwesomeIcon icon={faPlus} />
         </AddNewDiv>
-      </DayHeader>
-      <DayMain>{content}</DayMain>
-    </DayWrapper>
+      </Header>
+      <MainDiv>{content}</MainDiv>
+    </Wrapper>
   )
 }
 
-export default NotesDayView
+export default NotesViewer
