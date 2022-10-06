@@ -23,6 +23,7 @@ const FeatureDiv = styled.div`
   cursor: pointer;
 `
 const Features = ({
+  view,
   handleEdit,
   handleEditDate,
   handleUnassign,
@@ -36,9 +37,12 @@ const Features = ({
       <FeatureDiv onClick={handleEditDate}>
         <FontAwesomeIcon icon={faCalendarDays} />
       </FeatureDiv>
-      <FeatureDiv onClick={handleUnassign}>
-        <FontAwesomeIcon icon={faArrowTurnUp} />
-      </FeatureDiv>
+      {view !== 'unassigned' && (
+        <FeatureDiv onClick={handleUnassign}>
+          <FontAwesomeIcon icon={faArrowTurnUp} />
+        </FeatureDiv>
+      )}
+
       <FeatureDiv onClick={handleDelete}>
         <FontAwesomeIcon icon={faTrash} />
       </FeatureDiv>

@@ -104,6 +104,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
     >
       {isLoading && <Loading size={60} />}
       <Header
+        view={view}
         note={note}
         did={did}
         handleCompleted={handleCompleted}

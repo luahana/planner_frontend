@@ -32,6 +32,7 @@ const CompletedPointerDiv = styled.div`
 `
 
 const Header = ({
+  view,
   note,
   did,
   handleCompleted,
@@ -67,6 +68,7 @@ const Header = ({
         </CompletedPointerDiv>
       </CompletedDiv>
       <Features
+        view={view}
         handleEdit={handleEdit}
         handleEditDate={handleEditDate}
         handleUnassign={handleUnassign}
