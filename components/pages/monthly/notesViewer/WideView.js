@@ -13,6 +13,10 @@ const CompletedNoteDiv = styled.div`
 `
 const IncompletedNoteDiv = styled.div`
   background-color: hsl(61, 100%, 81%);
+  padding-left: 0.5rem;
+  border-top: 1px outset white;
+  border-bottom: 1px outset white;
+  color: black;
 `
 
 const MoreDiv = styled.div`
@@ -35,12 +39,12 @@ const WideView = ({ notes }) => {
       {displayNotes.map((note) => {
         if (note.completed)
           return (
-            <CompletedNoteDiv>
+            <CompletedNoteDiv key={note._id}>
               <NoteTitle note={note} />
             </CompletedNoteDiv>
           )
         return (
-          <IncompletedNoteDiv>
+          <IncompletedNoteDiv key={note._id}>
             <NoteTitle note={note} />
           </IncompletedNoteDiv>
         )
