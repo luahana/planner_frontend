@@ -9,11 +9,7 @@ const NotesViewer = ({ curDate, weekday, content, addNewNote }) => {
         curDate.toDateString() === new Date().toDateString() && styles.today
       }`}
     >
-      <Header
-        weekday={weekday}
-        curDate={curDate}
-        onAddNewClicked={() => addNewNote()}
-      />
+      <Header weekday={weekday} curDate={curDate} addNewNote={addNewNote} />
       <div className={styles.notes}>{content}</div>
     </div>
   )

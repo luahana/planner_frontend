@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { ymdFromDate } from '../../../../lib/date'
 
-const Header = ({ weekday, curDate, onAddNewClicked }) => {
+const Header = ({ weekday, curDate, addNewNote }) => {
   const { month, date } = ymdFromDate(curDate)
 
   return (
@@ -14,7 +14,7 @@ const Header = ({ weekday, curDate, onAddNewClicked }) => {
       <div>
         {MONTH[month]} {date}
       </div>
-      <div className={styles.addNew} onClick={onAddNewClicked}>
+      <div className={styles.addNew} onClick={() => addNewNote()}>
         <FontAwesomeIcon icon={faPlus} />
       </div>
     </div>
