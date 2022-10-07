@@ -128,13 +128,16 @@ export const notesApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: (result, error, arg) => {
         const assignedDid = didFromDate(new Date(arg.assignedTime))
-        if (!arg.assigned) {
-          return [{ type: 'Notes', id: didFromDate(new Date(0)) }]
-        }
         if (arg.curDate === undefined) {
           return [{ type: 'Notes', id: assignedDid }]
         }
         const curDid = didFromDate(new Date(arg.curDate))
+        if (!arg.assigned) {
+          return [
+            { type: 'Notes', id: curDid },
+            { type: 'Notes', id: didFromDate(new Date(0)) },
+          ]
+        }
         return [
           { type: 'Notes', id: curDid },
           { type: 'Notes', id: assignedDid },
