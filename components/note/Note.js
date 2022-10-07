@@ -34,11 +34,11 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
 
   const handleEdit = () => {
     if (showCal) setShowCal(false)
-    setShowEdit(true)
+    setShowEdit((prev) => !prev)
   }
   const handleEditDate = () => {
     if (showEdit) setShowEdit(false)
-    setShowCal(true)
+    setShowCal((prev) => !prev)
   }
 
   const handleCompleted = async () => {
