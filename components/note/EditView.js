@@ -8,9 +8,6 @@ const EditView = ({
   onContentChange,
   handleSaveNote,
 }) => {
-  useEffect(() => {
-    wrapperRef.current.focus()
-  }, [])
   return (
     <div className={styles.wrapper} tabIndex={-1}>
       <input
