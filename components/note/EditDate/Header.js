@@ -10,6 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 const Header = ({
+  curDid,
   curMid,
   setCurMid,
   onMoveClicked,
@@ -45,7 +46,12 @@ const Header = ({
           </div>
         )}
         {selectedDids.filter((did) => did !== '19691231').length > 1 && (
-          <div className={styles.btn} onClick={() => setSelectedDids([])}>
+          <div
+            className={styles.btn}
+            onClick={() =>
+              setSelectedDids((dids) => dids.filter((did) => did === curDid))
+            }
+          >
             deselect
           </div>
         )}

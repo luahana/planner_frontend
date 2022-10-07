@@ -39,6 +39,7 @@ const EditDateView = ({ view, curDate, handleMove, handleCopy }) => {
   return (
     <div className={styles.wrapper}>
       <Header
+        curDid={curDid}
         curMid={curMid}
         setCurMid={setCurMid}
         onMoveClicked={onMoveClicked}
