@@ -1,22 +1,19 @@
 import React from 'react'
-import styled from 'styled-components'
+import styles from './title.module.css'
 import { WEEKDAY } from '../../../config/calendar'
 import { ymdFromDate } from '../../../lib/date'
 
-const Wrapper = styled.div`
-  text-align: center;
-`
 const Title = ({ curDate }) => {
   const { year, month, date } = ymdFromDate(curDate)
   return (
-    <Wrapper>
+    <div className={styles.wrapper}>
       {' '}
       {year}{' '}
-      <span style={{ whiteSpace: 'nowrap' }}>
+      <span className={styles.oneline}>
         {month} {date}
       </span>{' '}
       {WEEKDAY[curDate.getDay() + 1]}
-    </Wrapper>
+    </div>
   )
 }
 

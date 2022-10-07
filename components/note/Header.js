@@ -1,35 +1,11 @@
-import React, { useEffect } from 'react'
-import styled from 'styled-components'
+import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { useDeleteNoteMutation } from '../../redux/slice/api/notesApiSlice'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
-import { device } from '../../config/deviceBreakpoint'
 import Features from './Features'
 import { updateNewNotes } from '../../lib/note'
-
-const Wrapper = styled.div`
-  display: flex;
-  padding: 0.5rem;
-  padding-top: 1rem;
-`
-
-const CompletedDiv = styled.div`
-  display: flex;
-  padding-left: 1rem;
-  align-items: center;
-
-  width: 40%;
-  @media ${device.tablet} {
-  }
-`
-
-const CompletedPointerDiv = styled.div`
-  cursor: pointer;
-  width: 20%;
-  display: flex;
-  justify-content: center;
-`
+import styles from './header.module.css'
 
 const Header = ({
   view,
@@ -57,16 +33,16 @@ const Header = ({
   }
 
   return (
-    <Wrapper>
-      <CompletedDiv>
-        <CompletedPointerDiv onClick={handleCompleted}>
+    <div className={styles.wrapper}>
+      <div className={styles.completed}>
+        <div className={styles.completedPointer} onClick={handleCompleted}>
           {note?.completed ? (
             <FontAwesomeIcon icon={faCheck} />
           ) : (
             <FontAwesomeIcon icon={faCircle} />
           )}
-        </CompletedPointerDiv>
-      </CompletedDiv>
+        </div>
+      </div>
       <Features
         view={view}
         handleEdit={handleEdit}
@@ -74,7 +50,7 @@ const Header = ({
         handleUnassign={handleUnassign}
         handleDelete={handleDelete}
       />
-    </Wrapper>
+    </div>
   )
 }
 

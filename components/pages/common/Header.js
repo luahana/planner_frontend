@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styles from './header.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faChevronRight,
@@ -7,45 +7,21 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 
-const Wrapper = styled.div`
-  display: flex;
-  margin: 0 auto;
-  justify-content: center;
-`
-
-const Title = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 2.5rem;
-`
-const PrevDiv = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  margin: 0 2rem;
-`
-const NextDiv = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  margin: 0 2rem;
-`
-
 const Header = ({ title, prev, next }) => {
   return (
-    <Wrapper>
+    <div className={styles.wrapper}>
       <Link href={prev}>
-        <PrevDiv>
+        <div className={styles.prev}>
           <FontAwesomeIcon icon={faChevronLeft} />
-        </PrevDiv>
+        </div>
       </Link>
-      <Title>{title}</Title>
+      <div className={styles.title}>{title}</div>
       <Link href={next}>
-        <NextDiv>
+        <div className={styles.next}>
           <FontAwesomeIcon icon={faChevronRight} />
-        </NextDiv>
+        </div>
       </Link>
-    </Wrapper>
+    </div>
   )
 }
 

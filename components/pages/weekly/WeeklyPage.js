@@ -7,20 +7,16 @@ import {
   getDayOfNextWeek,
 } from '../../../lib/calendar'
 import Header from '../common/Header'
-import styled from 'styled-components'
+import styles from './weekly_page.module.css'
 import Title from './Title'
 import Main from './Main'
-
-const Wrapper = styled.div`
-  padding: 0 1rem;
-`
 
 const WeeklyPage = ({ wid }) => {
   const userId = useUserAuth()
   const curWeekArr = weekArrByWid(wid)[wid]
 
   return (
-    <Wrapper>
+    <div className={styles.wrapper}>
       <Header
         title={<Title view='weekly' wid={wid} />}
         prev={`/weekly/${calcWeekId(getDayOfPrevWeek(curWeekArr[0]))}`}
@@ -29,7 +25,7 @@ const WeeklyPage = ({ wid }) => {
         )}`}
       />
       <Main curWeekArr={curWeekArr} userId={userId} />
-    </Wrapper>
+    </div>
   )
 }
 

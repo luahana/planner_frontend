@@ -1,11 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
 import DateGrid from './DateGrid'
 import Weekdays from './Weekdays'
-
-const Wrapper = styled.div`
-  width: 100%;
-`
+import styles from './calendar.module.css'
 
 const Calendar = ({
   weekdaysView,
@@ -16,7 +12,7 @@ const Calendar = ({
   mid,
 }) => {
   return (
-    <Wrapper>
+    <div className={styles.wrapper}>
       <Weekdays weekdaysView={weekdaysView} />
       <DateGrid
         view={view}
@@ -25,7 +21,7 @@ const Calendar = ({
         setSelectedDid={setSelectedDid}
         selectedDid={selectedDid}
       />
-    </Wrapper>
+    </div>
   )
 }
 

@@ -1,27 +1,10 @@
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
+import styles from './login_page.module.css'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentToken, setCredentials } from '../../redux/slice/authSlice'
 import { didFromDateStr } from '../../lib/date'
 import { useGoogleLoginMutation } from '../../redux/slice/api/authApiSlice'
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
-`
-const LoginWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-top: 30%;
-  width: 50%;
-  gap: 3rem;
-  overflow: hidden;
-`
 
 const LoginPage = ({ googleClientId }) => {
   const dispatch = useDispatch()
@@ -54,7 +37,6 @@ const LoginPage = ({ googleClientId }) => {
     google.accounts.id.renderButton(document.getElementById('my-signin2'), {
       scope: 'profile email',
       width: '100%',
-      // height: 5000,
       longtitle: true,
       theme: 'dark',
       // onsuccess: onSuccess,
@@ -63,12 +45,12 @@ const LoginPage = ({ googleClientId }) => {
   }, [])
 
   return (
-    <Wrapper>
-      <LoginWrapper>
+    <div className={styles.wrapper}>
+      <div className={styles.login}>
         <h1>Sign in with Google</h1>
         <div id='my-signin2' />
-      </LoginWrapper>
-    </Wrapper>
+      </div>
+    </div>
   )
 }
 

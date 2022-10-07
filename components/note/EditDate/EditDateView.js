@@ -1,23 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
-import styled from 'styled-components'
 import { getCalDates } from '../../../lib/calendar'
 import { didFromDate, midFromDate, dateFromDid } from '../../../lib/date'
-
 import { useEffect } from 'react'
 import Header from './Header'
 import Calendar from '../../calendar/Calendar'
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  background-color: #ff7eb9;
-  position: absolute;
-  top: 0;
-  z-index: 100;
-`
+import styles from './edit_date_view.module.css'
 
 const EditDateView = ({ view, curDate, handleChangeDate }) => {
   const curDid = didFromDate(curDate)
@@ -40,7 +28,7 @@ const EditDateView = ({ view, curDate, handleChangeDate }) => {
     handleChangeDate(dateFromDid(selectedDid))
   }
   return (
-    <Wrapper>
+    <div className={styles.wrapper}>
       <Header
         curMid={curMid}
         setCurMid={setCurMid}
@@ -53,7 +41,7 @@ const EditDateView = ({ view, curDate, handleChangeDate }) => {
         selectedDid={selectedDid}
         mid={curMid}
       />
-    </Wrapper>
+    </div>
   )
 }
 

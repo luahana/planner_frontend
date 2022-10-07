@@ -1,21 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
-
-const CompletedNoteDiv = styled.div`
-  background-color: hsl(61, 25%, 81%);
-  padding-left: 0.5rem;
-  border-top: 1px outset white;
-  border-bottom: 1px outset white;
-  color: black;
-`
-
-const IncompletedNoteDiv = styled.div`
-  background-color: hsl(61, 100%, 81%);
-  padding-left: 0.5rem;
-  border-top: 1px outset white;
-  border-bottom: 1px outset white;
-  color: black;
-`
+import styles from './small_view.module.css'
 
 const SmallView = ({ notes }) => {
   const numCompleted = notes.reduce(
@@ -25,9 +9,11 @@ const SmallView = ({ notes }) => {
   const numInCompleted = notes.length - numCompleted
   return (
     <>
-      {numCompleted > 0 && <CompletedNoteDiv>{numCompleted}</CompletedNoteDiv>}
+      {numCompleted > 0 && <div className={styles.note}>{numCompleted}</div>}
       {numInCompleted > 0 && (
-        <IncompletedNoteDiv>{numInCompleted}</IncompletedNoteDiv>
+        <div className={`${styles.note} ${styles.completed}`}>
+          {numInCompleted}
+        </div>
       )}
     </>
   )

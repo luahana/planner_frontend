@@ -1,0 +1,33 @@
+.wrapper {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: right;
+  padding: 0 2rem;
+}
+
+.main {
+  padding: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.addNew {
+  background-color: #7afcff;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}

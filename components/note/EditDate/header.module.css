@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.arrow {
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.select {
+  margin-right: 2rem;
+  background-color: #7afcff;
+  padding: 0.1rem 0.4rem;
+  cursor: pointer;
+}

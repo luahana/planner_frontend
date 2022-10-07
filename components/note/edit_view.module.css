@@ -1,0 +1,49 @@
+.wrapper {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.title {
+  width: 100%;
+  padding: 0 1.5rem;
+  font-size: 1.2rem;
+  border: 1px solid #7afcff;
+}
+
+.content {
+  width: 100%;
+  padding: 0 1.5rem;
+  height: 10.5rem;
+  overflow: auto;
+  font-size: 1.2rem;
+  resize: none;
+  border: 1px solid #7afcff;
+}
+
+.save {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #7afcff;
+  height: 3rem;
+}
+
+.saveWrapper {
+  position: relative;
+}
+
+.loaderWrapper {
+  position: absolute;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}

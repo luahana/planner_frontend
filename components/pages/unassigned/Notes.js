@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useGetUnassignedNoteByUserQuery } from '../../../redux/slice/api/notesApiSlice'
-import NotesUnassignedView from './NotesUnassignedView'
+import NotesViewer from './NotesViewer'
 import Note from '../../note/Note'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { getNewNote, sortedNotesWithNewNotes } from '../../../lib/note'
@@ -44,9 +44,7 @@ const Notes = ({ userId }) => {
     ))
   }
 
-  return (
-    <NotesUnassignedView content={content} onAddNewClicked={onAddNewClicked} />
-  )
+  return <NotesViewer content={content} onAddNewClicked={onAddNewClicked} />
 }
 
 export default Notes

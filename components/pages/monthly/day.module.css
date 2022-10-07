@@ -1,0 +1,27 @@
+.wrapper {
+  border: 1px solid #e6e7e8;
+  margin: 0.5rem;
+  height: 13rem;
+  max-width: 7.5rem;
+  cursor: pointer;
+  justify-self: stretch;
+}
+
+.date {
+  text-align: right;
+  padding: 0.3rem 0.5rem 0 0;
+}
+
+.otherMonthDay {
+  background-color: #e6e7e8;
+  border: none;
+  color: white;
+}
+
+.today {
+  border: 3px double black;
+}
+
+.small {
+  height: 7rem;
+}

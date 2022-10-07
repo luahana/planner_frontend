@@ -1,30 +1,16 @@
 import React from 'react'
-import styled from 'styled-components'
+import styles from './unassigned_page.module.css'
 import useUserAuth from '../../../hooks/useUserAuth'
-import { device } from '../../../config/deviceBreakpoint'
 import Notes from './Notes'
-
-const Wrapper = styled.div`
-  width: 100%;
-  @media ${device.tablet} {
-  }
-`
-
-const TitleDiv = styled.div`
-  text-align: center;
-  font-size: 2.5rem;
-`
 
 const UnassignedPage = () => {
   const userId = useUserAuth()
 
   return (
-    <>
-      <Wrapper>
-        <TitleDiv>Unassigned Notes</TitleDiv>
-        <Notes userId={userId} curDate={new Date()} />
-      </Wrapper>
-    </>
+    <div>
+      <div className={styles.title}>Unassigned Notes</div>
+      <Notes userId={userId} curDate={new Date()} />
+    </div>
   )
 }
 

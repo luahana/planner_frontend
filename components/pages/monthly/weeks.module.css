@@ -1,0 +1,37 @@
+.wrapper {
+  flex-basis: 5%;
+}
+
+.week {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1rem 0;
+  margin-right: 1rem;
+  background-color: #7afcff;
+  height: 13rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.month {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.str {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+.shortStr {
+  height: 7rem;
+}
+
+.weekNum {
+  text-align: center;
+}
+
+.empty {
+  height: 2rem;
+}

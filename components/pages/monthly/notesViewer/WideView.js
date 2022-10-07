@@ -1,29 +1,8 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import styled from 'styled-components'
+import styles from './wide_view.module.css'
 import NoteTitle from './NoteTitle'
-
-const CompletedNoteDiv = styled.div`
-  background-color: hsl(61, 25%, 81%);
-  padding-left: 0.5rem;
-  border-top: 1px outset white;
-  border-bottom: 1px outset white;
-  color: black;
-`
-const IncompletedNoteDiv = styled.div`
-  background-color: hsl(61, 100%, 81%);
-  padding-left: 0.5rem;
-  border-top: 1px outset white;
-  border-bottom: 1px outset white;
-  color: black;
-`
-
-const MoreDiv = styled.div`
-  text-align: right;
-  padding-right: 0.5rem;
-  color: black;
-`
 
 const WideView = ({ notes }) => {
   const maxNotes = 3
@@ -39,17 +18,20 @@ const WideView = ({ notes }) => {
       {displayNotes.map((note) => {
         if (note.completed)
           return (
-            <CompletedNoteDiv key={note._id}>
+            <div
+              className={`${styles.note} ${styles.completed}`}
+              key={note._id}
+            >
               <NoteTitle note={note} />
-            </CompletedNoteDiv>
+            </div>
           )
         return (
-          <IncompletedNoteDiv key={note._id}>
+          <div className={styles.note} key={note._id}>
             <NoteTitle note={note} />
-          </IncompletedNoteDiv>
+          </div>
         )
       })}
-      {numNotes > maxNotes && <MoreDiv>more...</MoreDiv>}
+      {numNotes > maxNotes && <div className={styles.more}>more...</div>}
     </>
   )
 }

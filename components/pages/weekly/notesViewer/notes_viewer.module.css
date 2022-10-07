@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-top: 2px solid #e6e7e8;
+  width: 100%;
+}
+
+.notes {
+  width: 100%;
+}
+
+.today {
+  border: 3px double black;
+}
+
+@media (min-width: 768px) {
+  .notes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}

@@ -1,0 +1,19 @@
+.wrapper {
+  margin: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.today {
+  border: 3px double black;
+}
+
+.curDate {
+  background-color: #7afcff;
+}
+
+.otherMonthDay {
+  color: white;
+}

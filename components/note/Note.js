@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import styles from './note.module.css'
 import { useUpdateNoteMutation } from '../../redux/slice/api/notesApiSlice'
-import { device } from '../../config/deviceBreakpoint'
 import EditView from './EditView'
 import ShowView from './ShowView'
 import Header from './Header'
@@ -9,22 +8,6 @@ import EditDateView from './EditDate/EditDateView'
 import { didFromDate } from '../../lib/date'
 import { updateNewNotes } from '../../lib/note'
 import Loading from '../common/Loading'
-
-const Wrapper = styled.div`
-  position: relative;
-  width: 100%;
-  max-height: 16.3rem;
-  background-color: #fdff9e;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0.5rem;
-  @media ${device.tablet} {
-  }
-`
-
-const NoteDiv = styled.div`
-  position: relative;
-`
 
 const Note = ({ view, note, curDate, setNewNotes }) => {
   const did = didFromDate(curDate)
@@ -97,7 +80,8 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
   }
 
   return (
-    <Wrapper
+    <div
+      className={styles.wrapper}
       style={{
         backgroundColor: note.completed && 'hsl(61, 25%, 81%)',
       }}
@@ -115,7 +99,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
         setShowCal={setShowCal}
         setNewNotes={setNewNotes}
       />
-      <NoteDiv>
+      <div className={styles.note}>
         <ShowView title={title} content={content} />
         {showEdit && (
           <EditView
@@ -134,8 +118,8 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
             handleChangeDate={handleChangeDate}
           />
         )}
-      </NoteDiv>
-    </Wrapper>
+      </div>
+    </div>
   )
 }
 export default Note

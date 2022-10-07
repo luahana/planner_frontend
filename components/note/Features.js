@@ -6,22 +6,8 @@ import {
   faCalendarDays,
   faArrowTurnUp,
 } from '@fortawesome/free-solid-svg-icons'
-import styled from 'styled-components'
+import styles from './features.module.css'
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: right;
-  gap: 2rem;
-  width: 60%;
-  padding-right: 1rem;
-  align-items: center;
-`
-
-const FeatureDiv = styled.div`
-  text-align: center;
-  width: 10%;
-  cursor: pointer;
-`
 const Features = ({
   view,
   handleEdit,
@@ -30,23 +16,23 @@ const Features = ({
   handleDelete,
 }) => {
   return (
-    <Wrapper>
-      <FeatureDiv onClick={handleEdit}>
+    <div className={styles.wrapper}>
+      <div className={styles.feature} onClick={handleEdit}>
         <FontAwesomeIcon icon={faPenToSquare} />
-      </FeatureDiv>
-      <FeatureDiv onClick={handleEditDate}>
+      </div>
+      <div className={styles.feature} onClick={handleEditDate}>
         <FontAwesomeIcon icon={faCalendarDays} />
-      </FeatureDiv>
+      </div>
       {view !== 'unassigned' && (
-        <FeatureDiv onClick={handleUnassign}>
+        <div className={styles.feature} onClick={handleUnassign}>
           <FontAwesomeIcon icon={faArrowTurnUp} />
-        </FeatureDiv>
+        </div>
       )}
 
-      <FeatureDiv onClick={handleDelete}>
+      <div className={styles.feature} onClick={handleDelete}>
         <FontAwesomeIcon icon={faTrash} />
-      </FeatureDiv>
-    </Wrapper>
+      </div>
+    </div>
   )
 }
 

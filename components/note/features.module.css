@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  justify-content: right;
+  gap: 2rem;
+  width: 60%;
+  padding-right: 1rem;
+  align-items: center;
+}
+
+.feature {
+  text-align: center;
+  width: 10%;
+  cursor: pointer;
+}

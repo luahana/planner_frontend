@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+.prev {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 2rem;
+}
+
+.next {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 2rem;
+}

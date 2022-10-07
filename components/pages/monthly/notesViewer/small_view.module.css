@@ -1,0 +1,11 @@
+.note {
+  background-color: hsl(61, 100%, 81%);
+  padding-left: 0.5rem;
+  border-top: 1px outset white;
+  border-bottom: 1px outset white;
+  color: black;
+}
+
+.completed {
+  background-color: hsl(61, 25%, 81%);
+}

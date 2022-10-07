@@ -1,25 +1,16 @@
 import React from 'react'
-import styled from 'styled-components'
 import { WEEKDAYS } from '../../lib/calendar'
+import styles from './weekday.module.css'
 
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  width: 100%;
-`
-const WeekdayDiv = styled.div`
-  margin: 0.5rem;
-  text-align: center;
-`
 const Weekdays = ({ weekdaysView }) => {
   return (
-    <Wrapper>
+    <div className={styles.wrapper}>
       {WEEKDAYS.map((weekday) => (
-        <WeekdayDiv key={weekday}>
+        <div key={weekday} className={styles.weekday}>
           {weekdaysView === 'full' ? weekday : weekday.slice(0, 3)}
-        </WeekdayDiv>
+        </div>
       ))}
-    </Wrapper>
+    </div>
   )
 }
 

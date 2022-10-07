@@ -1,20 +1,11 @@
 import React from 'react'
-import styled from 'styled-components'
 import EditDateDay from '../note/EditDate/Day'
 import MonthlyDay from '../pages/monthly/Day'
-
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  & button:first-child {
-    grid-column: 5;
-  }
-  width: 100%;
-`
+import styles from './date_grid.module.css'
 
 const DateGrid = ({ view, calDates, setSelectedDid, selectedDid, mid }) => {
   return (
-    <Wrapper>
+    <div className={styles.wrapper}>
       {calDates.map((day) => {
         if (view === 'editDate')
           return (
@@ -30,7 +21,7 @@ const DateGrid = ({ view, calDates, setSelectedDid, selectedDid, mid }) => {
           return <MonthlyDay view={view} key={day} day={day} mid={mid} />
         }
       })}
-    </Wrapper>
+    </div>
   )
 }
 
