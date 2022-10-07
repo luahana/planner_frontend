@@ -1,5 +1,4 @@
-import React from 'react'
-import PulseLoader from 'react-spinners/PulseLoader'
+import React, { useRef, useEffect } from 'react'
 import styles from './edit_view.module.css'
 
 const EditView = ({
@@ -8,9 +7,20 @@ const EditView = ({
   onTitleChange,
   onContentChange,
   handleSaveNote,
+  setShowEdit,
 }) => {
+  const wrapperRef = useRef()
+
+  useEffect(() => {
+    wrapperRef.current.focus()
+  }, [])
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={styles.wrapper}
+      ref={wrapperRef}
+      tabIndex={-1}
+      onBlur={() => setShowEdit(false)}
+    >
       <input
         className={styles.title}
         type='text'

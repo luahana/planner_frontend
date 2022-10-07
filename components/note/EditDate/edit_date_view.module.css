@@ -8,3 +8,7 @@
   top: 0;
   z-index: 100;
 }
+
+.wrapper:focus {
+  outline: none;
+}

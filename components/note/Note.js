@@ -34,11 +34,11 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
 
   const handleEdit = () => {
     if (showCal) setShowCal(false)
-    setShowEdit((showEdit) => !showEdit)
+    setShowEdit(true)
   }
   const handleEditDate = () => {
     if (showEdit) setShowEdit(false)
-    setShowCal((showCal) => !showCal)
+    setShowCal(true)
   }
 
   const handleCompleted = async () => {
@@ -114,13 +114,10 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
         note={note}
         did={did}
         handleCompleted={handleCompleted}
-        handleUnassign={handleUnassign}
         handleEdit={handleEdit}
         handleEditDate={handleEditDate}
-        setShowEdit={setShowEdit}
-        setShowCal={setShowCal}
+        handleUnassign={handleUnassign}
         setNewNotes={setNewNotes}
-        oneLoading={oneLoading}
         setOneLoading={setOneLoading}
       />
       <div className={styles.note}>
@@ -132,6 +129,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
             onTitleChange={(e) => setTitle(e.target.value)}
             onContentChange={(e) => setContent(e.target.value)}
             handleSaveNote={handleSaveNote}
+            setShowEdit={setShowEdit}
           />
         )}
         {showCal && (
@@ -140,6 +138,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
             curDate={curDate}
             handleMove={handleMove}
             handleCopy={handleCopy}
+            setShowCal={setShowCal}
           />
         )}
       </div>
