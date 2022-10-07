@@ -54,7 +54,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
     })
   }
 
-  const handleChangeDate = async (tobeDate) => {
+  const handleMove = async (tobeDate) => {
     if (curDate.getTime() !== tobeDate.getTime()) {
       updateNewNotes(note.newNoteNum, setNewNotes)
       await updateNote({
@@ -62,6 +62,18 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
         assigned: true,
         curDate: curDate.getTime(),
         assignedTime: tobeDate.getTime(),
+      })
+    }
+    setShowCal(false)
+  }
+  const handleCopy = async (tobeDate) => {
+    if (curDate.getTime() !== tobeDate.getTime()) {
+      await updateNote({
+        ...note,
+        assigned: true,
+        curDate: curDate.getTime(),
+        assignedTime: tobeDate.getTime(),
+        _id: undefined,
       })
     }
     setShowCal(false)
@@ -115,7 +127,8 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
           <EditDateView
             view={view}
             curDate={curDate}
-            handleChangeDate={handleChangeDate}
+            handleMove={handleMove}
+            handleCopy={handleCopy}
           />
         )}
       </div>

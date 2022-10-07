@@ -9,7 +9,7 @@ import {
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons'
 
-const Header = ({ curMid, setCurMid, onChangeClicked }) => {
+const Header = ({ curMid, setCurMid, onMoveClicked, onCopyClicked }) => {
   const { year, month } = ymdFromMid(curMid)
   return (
     <div className={styles.wrapper}>
@@ -28,8 +28,13 @@ const Header = ({ curMid, setCurMid, onChangeClicked }) => {
           <FontAwesomeIcon icon={faChevronRight} />
         </div>
       </div>
-      <div className={styles.select} onClick={onChangeClicked}>
-        Select
+      <div className={styles.buttons}>
+        <div className={styles.btn} onClick={onCopyClicked}>
+          Copy
+        </div>
+        <div className={styles.btn} onClick={onMoveClicked}>
+          Move
+        </div>
       </div>
     </div>
   )

@@ -14,9 +14,15 @@
   cursor: pointer;
 }
 
-.select {
+.btn {
   margin-right: 2rem;
   background-color: #7afcff;
   padding: 0.1rem 0.4rem;
   cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

@@ -7,7 +7,7 @@ import Header from './Header'
 import Calendar from '../../calendar/Calendar'
 import styles from './edit_date_view.module.css'
 
-const EditDateView = ({ view, curDate, handleChangeDate }) => {
+const EditDateView = ({ view, curDate, handleMove, handleCopy }) => {
   const curDid = didFromDate(curDate)
 
   const [selectedDid, setSelectedDid] = useState(curDid)
@@ -24,15 +24,19 @@ const EditDateView = ({ view, curDate, handleChangeDate }) => {
     setCalDates(getCalDates(curMid))
   }, [curMid])
 
-  const onChangeClicked = () => {
-    handleChangeDate(dateFromDid(selectedDid))
+  const onMoveClicked = () => {
+    handleMove(dateFromDid(selectedDid))
+  }
+  const onCopyClicked = () => {
+    handleCopy(dateFromDid(selectedDid))
   }
   return (
     <div className={styles.wrapper}>
       <Header
         curMid={curMid}
         setCurMid={setCurMid}
-        onChangeClicked={onChangeClicked}
+        onMoveClicked={onMoveClicked}
+        onCopyClicked={onCopyClicked}
       />
       <Calendar
         view='editDate'
