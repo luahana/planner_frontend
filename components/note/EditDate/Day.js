@@ -10,7 +10,7 @@ const Day = ({ day, selectedDid, setSelectedDid, mid }) => {
       className={`${styles.wrapper} ${
         dt.toDateString() === new Date().toDateString() && styles.today
       } ${dt.getMonth() + 1 !== month && styles.otherMonthDay} ${
-        didFromDateStr(day) === selectedDid && styles.today
+        didFromDateStr(day) === selectedDid && styles.selectedDate
       }`}
       key={day}
       onClick={() => setSelectedDid(didFromDateStr(day))}
