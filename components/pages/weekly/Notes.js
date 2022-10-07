@@ -13,7 +13,7 @@ const Notes = ({ userId, curDate, weekday }) => {
   const { data, isLoading, isSuccess, isError, error } =
     useGetNoteByUserDateQuery({ userId, year, month, date })
 
-  const [newNotes, addNewNote, removeNewNote] = useNewNotes()
+  const [newNotes, addNewNote, removeNewNote] = useNewNotes(userId, curDate)
 
   let content
   if (isLoading) {

@@ -9,7 +9,14 @@ import {
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons'
 
-const Header = ({ curMid, setCurMid, onMoveClicked, onCopyClicked }) => {
+const Header = ({
+  curMid,
+  setCurMid,
+  onMoveClicked,
+  onCopyClicked,
+  selectedDids,
+  setSelectedDids,
+}) => {
   const { year, month } = ymdFromMid(curMid)
   return (
     <div className={styles.wrapper}>
@@ -32,9 +39,16 @@ const Header = ({ curMid, setCurMid, onMoveClicked, onCopyClicked }) => {
         <div className={styles.btn} onClick={onCopyClicked}>
           Copy
         </div>
-        <div className={styles.btn} onClick={onMoveClicked}>
-          Move
-        </div>
+        {selectedDids.filter((did) => did !== '19691231').length <= 1 && (
+          <div className={styles.btn} onClick={onMoveClicked}>
+            Move
+          </div>
+        )}
+        {selectedDids.filter((did) => did !== '19691231').length > 1 && (
+          <div className={styles.btn} onClick={() => setSelectedDids([])}>
+            deselect
+          </div>
+        )}
       </div>
     </div>
   )

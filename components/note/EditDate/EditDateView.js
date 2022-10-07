@@ -10,7 +10,7 @@ import styles from './edit_date_view.module.css'
 const EditDateView = ({ view, curDate, handleMove, handleCopy }) => {
   const curDid = didFromDate(curDate)
 
-  const [selectedDid, setSelectedDid] = useState(curDid)
+  const [selectedDids, setSelectedDids] = useState([curDid])
   const [curMid, setCurMid] = useState(midFromDate(curDate))
   const [calDates, setCalDates] = useState(getCalDates(curMid))
 
@@ -25,10 +25,16 @@ const EditDateView = ({ view, curDate, handleMove, handleCopy }) => {
   }, [curMid])
 
   const onMoveClicked = () => {
-    handleMove(dateFromDid(selectedDid))
+    const didsToMove = selectedDids.filter((did) => did !== '19691231')
+    if (didsToMove.length !== 1 || didsToMove[0] === '19691231') return
+
+    handleMove(dateFromDid(didsToMove[0]))
   }
   const onCopyClicked = () => {
-    handleCopy(dateFromDid(selectedDid))
+    const didsToCopy = selectedDids.filter((did) => did !== '19691231')
+    if (didsToCopy.length === 0) return
+
+    handleCopy(didsToCopy)
   }
   return (
     <div className={styles.wrapper}>
@@ -37,12 +43,14 @@ const EditDateView = ({ view, curDate, handleMove, handleCopy }) => {
         setCurMid={setCurMid}
         onMoveClicked={onMoveClicked}
         onCopyClicked={onCopyClicked}
+        selectedDids={selectedDids}
+        setSelectedDids={setSelectedDids}
       />
       <Calendar
         view='editDate'
         calDates={calDates}
-        setSelectedDid={setSelectedDid}
-        selectedDid={selectedDid}
+        setSelectedDids={setSelectedDids}
+        selectedDids={selectedDids}
         mid={curMid}
       />
     </div>

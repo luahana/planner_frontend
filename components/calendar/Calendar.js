@@ -7,8 +7,8 @@ const Calendar = ({
   weekdaysView,
   view,
   calDates,
-  setSelectedDid,
-  selectedDid,
+  setSelectedDids,
+  selectedDids,
   mid,
 }) => {
   return (
@@ -18,8 +18,8 @@ const Calendar = ({
         view={view}
         calDates={calDates}
         mid={mid}
-        setSelectedDid={setSelectedDid}
-        selectedDid={selectedDid}
+        setSelectedDids={setSelectedDids}
+        selectedDids={selectedDids}
       />
     </div>
   )

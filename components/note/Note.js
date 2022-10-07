@@ -5,7 +5,7 @@ import EditView from './EditView'
 import ShowView from './ShowView'
 import Header from './Header'
 import EditDateView from './EditDate/EditDateView'
-import { didFromDate } from '../../lib/date'
+import { dateFromDid, didFromDate } from '../../lib/date'
 import Loading from '../common/Loading'
 
 const Note = ({ view, note, curDate, removeNewNote }) => {
@@ -73,16 +73,19 @@ const Note = ({ view, note, curDate, removeNewNote }) => {
     }
     setShowCal(false)
   }
-  const handleCopy = async (tobeDate) => {
+  const handleCopy = async (tobeDids) => {
+    const tobeDates = tobeDids.map((did) => dateFromDid(did))
     if (oneLoading) return
-    if (curDate.getTime() !== tobeDate.getTime()) {
-      await updateNote({
-        ...note,
-        assigned: true,
-        curDate: curDate.getTime(),
-        assignedTime: tobeDate.getTime(),
-        _id: undefined,
-      })
+    for (let i = 0; i < tobeDates.length; i++) {
+      if (curDate.getTime() !== tobeDates[i].getTime()) {
+        await updateNote({
+          ...note,
+          assigned: true,
+          curDate: curDate.getTime(),
+          assignedTime: tobeDates[i].getTime(),
+          _id: undefined,
+        })
+      }
     }
     setShowCal(false)
   }
