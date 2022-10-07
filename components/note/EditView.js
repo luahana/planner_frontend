@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import styles from './edit_view.module.css'
 
 const EditView = ({
@@ -7,20 +7,12 @@ const EditView = ({
   onTitleChange,
   onContentChange,
   handleSaveNote,
-  setShowEdit,
 }) => {
-  const wrapperRef = useRef()
-
   useEffect(() => {
     wrapperRef.current.focus()
   }, [])
   return (
-    <div
-      className={styles.wrapper}
-      ref={wrapperRef}
-      tabIndex={-1}
-      onBlur={() => setShowEdit(false)}
-    >
+    <div className={styles.wrapper} tabIndex={-1}>
       <input
         className={styles.title}
         type='text'

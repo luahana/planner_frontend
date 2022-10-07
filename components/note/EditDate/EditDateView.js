@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { useState } from 'react'
 import { getCalDates } from '../../../lib/calendar'
 import { didFromDate, midFromDate, dateFromDid } from '../../../lib/date'
@@ -7,25 +7,17 @@ import Header from './Header'
 import Calendar from '../../calendar/Calendar'
 import styles from './edit_date_view.module.css'
 
-const EditDateView = ({
-  view,
-  curDate,
-  handleMove,
-  handleCopy,
-  setShowCal,
-}) => {
+const EditDateView = ({ view, curDate, handleMove, handleCopy }) => {
   const curDid = didFromDate(curDate)
 
   const [selectedDid, setSelectedDid] = useState(curDid)
   const [curMid, setCurMid] = useState(midFromDate(curDate))
   const [calDates, setCalDates] = useState(getCalDates(curMid))
-  const wrapperRef = useRef()
 
   useEffect(() => {
     if (view === 'unassigned') {
       setCurMid(midFromDate(new Date()))
     }
-    wrapperRef.current.focus()
   }, [])
 
   useEffect(() => {
@@ -39,12 +31,7 @@ const EditDateView = ({
     handleCopy(dateFromDid(selectedDid))
   }
   return (
-    <div
-      className={styles.wrapper}
-      ref={wrapperRef}
-      tabIndex={-1}
-      onBlur={() => setShowCal(false)}
-    >
+    <div className={styles.wrapper}>
       <Header
         curMid={curMid}
         setCurMid={setCurMid}

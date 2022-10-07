@@ -129,7 +129,6 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
             onTitleChange={(e) => setTitle(e.target.value)}
             onContentChange={(e) => setContent(e.target.value)}
             handleSaveNote={handleSaveNote}
-            setShowEdit={setShowEdit}
           />
         )}
         {showCal && (
@@ -138,7 +137,6 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
             curDate={curDate}
             handleMove={handleMove}
             handleCopy={handleCopy}
-            setShowCal={setShowCal}
           />
         )}
       </div>
