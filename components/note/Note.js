@@ -6,10 +6,9 @@ import ShowView from './ShowView'
 import Header from './Header'
 import EditDateView from './EditDate/EditDateView'
 import { didFromDate } from '../../lib/date'
-import { updateNewNotes } from '../../lib/note'
 import Loading from '../common/Loading'
 
-const Note = ({ view, note, curDate, setNewNotes }) => {
+const Note = ({ view, note, curDate, removeNewNotes }) => {
   const did = didFromDate(curDate)
 
   const [updateNote, { isLoading, isSuccess, isError, error }] =
@@ -43,7 +42,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
 
   const handleCompleted = async () => {
     if (oneLoading) return
-    updateNewNotes(note.newNoteNum, setNewNotes)
+    removeNewNotes(note)
     await updateNote({
       ...note,
       completed: !completed,
@@ -52,7 +51,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
 
   const handleUnassign = async () => {
     if (oneLoading) return
-    updateNewNotes(note.newNoteNum, setNewNotes)
+    removeNewNotes(note)
     await updateNote({
       ...note,
       assigned: false,
@@ -64,7 +63,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
   const handleMove = async (tobeDate) => {
     if (oneLoading) return
     if (curDate.getTime() !== tobeDate.getTime()) {
-      updateNewNotes(note.newNoteNum, setNewNotes)
+      removeNewNotes(note)
       await updateNote({
         ...note,
         assigned: true,
@@ -91,7 +90,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
   const handleSaveNote = async () => {
     if (oneLoading) return
     if (note.title !== title || note.content !== content) {
-      updateNewNotes(note.newNoteNum, setNewNotes)
+      removeNewNotes(note)
       await updateNote({
         ...note,
         title: title,
@@ -117,7 +116,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
         handleEdit={handleEdit}
         handleEditDate={handleEditDate}
         handleUnassign={handleUnassign}
-        setNewNotes={setNewNotes}
+        removeNewNotes={removeNewNotes}
         setOneLoading={setOneLoading}
       />
       <div className={styles.note}>

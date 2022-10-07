@@ -3,14 +3,14 @@ import styles from './notes_viewer.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
-const NotesViewer = ({ content, onAddNewClicked, loadingComp, loading }) => {
+const NotesViewer = ({ content, addNewNote, loadingComp, loading }) => {
   if (loading) {
     content = loadingComp
   }
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <div className={styles.addNew} onClick={() => onAddNewClicked()}>
+        <div className={styles.addNew} onClick={() => addNewNote()}>
           <FontAwesomeIcon icon={faPlus} />
         </div>
       </div>

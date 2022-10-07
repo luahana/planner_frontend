@@ -4,7 +4,6 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { useDeleteNoteMutation } from '../../redux/slice/api/notesApiSlice'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import Features from './Features'
-import { updateNewNotes } from '../../lib/note'
 import styles from './header.module.css'
 import { useEffect } from 'react'
 
@@ -16,7 +15,7 @@ const Header = ({
   handleEdit,
   handleEditDate,
   handleUnassign,
-  setNewNotes,
+  removeNewNotes,
   setOneLoading,
 }) => {
   const [
@@ -34,8 +33,7 @@ const Header = ({
   }, [isDelLoading])
 
   const handleDelete = async () => {
-    if (!updateNewNotes(note.newNoteNum, setNewNotes))
-      await deleteNote({ id: note._id, did })
+    if (!removeNewNotes(note)) await deleteNote({ id: note._id, did })
   }
 
   return (

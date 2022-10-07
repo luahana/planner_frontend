@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './notes_viewer.module.css'
 import Header from './Header'
 
-const NotesViewer = ({ curDate, weekday, content, onAddNewClicked }) => {
+const NotesViewer = ({ curDate, weekday, content, addNewNote }) => {
   return (
     <div
       className={`${styles.wrapper} ${
@@ -12,7 +12,7 @@ const NotesViewer = ({ curDate, weekday, content, onAddNewClicked }) => {
       <Header
         weekday={weekday}
         curDate={curDate}
-        onAddNewClicked={onAddNewClicked}
+        onAddNewClicked={() => addNewNote()}
       />
       <div className={styles.notes}>{content}</div>
     </div>

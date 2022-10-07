@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useGetNoteByUserDateQuery } from '../../../redux/slice/api/notesApiSlice'
 import NotesViewer from './notesViewer/NotesViewer'
 import Note from '../../note/Note'
-import { getNewNote, sortedNotesWithNewNotes } from '../../../lib/note'
+import { sortedNotesFromNormData } from '../../../lib/note'
 import { ymdFromDate } from '../../../lib/date'
 import ClipLoader from 'react-spinners/ClipLoader'
+import useNewNotes from '../../../hooks/useNewNotes'
 
 const Notes = ({ userId, curDate, weekday }) => {
   const { year, month, date } = ymdFromDate(curDate)
@@ -12,34 +13,21 @@ const Notes = ({ userId, curDate, weekday }) => {
   const { data, isLoading, isSuccess, isError, error } =
     useGetNoteByUserDateQuery({ userId, year, month, date })
 
-  const [newNotes, setNewNotes] = useState([])
-  const [newNoteNum, setNewNoteNum] = useState(1)
-
-  const onAddNewClicked = async () => {
-    const newNote = getNewNote({
-      user: userId,
-      newNoteNum,
-      assignedTime: curDate.getTime(),
-    })
-    setNewNoteNum(newNoteNum + 1)
-    setNewNotes((prev) => [newNote, ...prev])
-  }
+  const [newNotes, addNewNote, removeNewNote] = useNewNotes()
 
   let content
   if (isLoading) {
-    content = (
-      <ClipLoader color='aqua' size={100} aria-label='Loading Spinner' />
-    )
+    return <ClipLoader color='aqua' size={100} aria-label='Loading Spinner' />
   }
+
   if (isSuccess) {
-    const notes = data.ids.map((id) => data.entities[id])
-    const notesWithNew = sortedNotesWithNewNotes(newNotes, notes)
+    const notesWithNew = sortedNotesFromNormData(newNotes, data)
     content = notesWithNew.map((note) => (
       <Note
         key={note._id ? note._id : note.newNoteNum}
         note={note}
         curDate={curDate}
-        setNewNotes={setNewNotes}
+        removeNewNote={removeNewNote}
       />
     ))
   }
@@ -49,7 +37,7 @@ const Notes = ({ userId, curDate, weekday }) => {
       curDate={curDate}
       weekday={weekday}
       content={content}
-      onAddNewClicked={onAddNewClicked}
+      addNewNote={addNewNote}
     />
   )
 }
