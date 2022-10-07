@@ -10,7 +10,7 @@ import useNewNotes from '../../../hooks/useNewNotes'
 const Notes = ({ userId, curDate }) => {
   const { data, isLoading, isSuccess, isError, error } =
     useGetNoteByUserDateQuery({ userId, ...ymdFromDate(curDate) })
-  const [newNotes, addNewNote, removeNewNotes] = useNewNotes(userId, curDate)
+  const [newNotes, addNewNote, removeNewNote] = useNewNotes(userId, curDate)
 
   let content
   if (isLoading) {
@@ -23,7 +23,7 @@ const Notes = ({ userId, curDate }) => {
         key={note._id ? note._id : note.newNoteNum}
         note={note}
         curDate={curDate}
-        removeNewNotes={removeNewNotes}
+        removeNewNote={removeNewNote}
       />
     ))
   }

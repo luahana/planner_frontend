@@ -30,7 +30,7 @@ const Notes = ({ userId }) => {
         userId={userId}
         note={note}
         curDate={new Date(0)}
-        removeNewNotes={removeNewNotes}
+        removeNewNote={removeNewNote}
       />
     ))
   }
