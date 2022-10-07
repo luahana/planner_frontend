@@ -8,7 +8,7 @@ import EditDateView from './EditDate/EditDateView'
 import { didFromDate } from '../../lib/date'
 import Loading from '../common/Loading'
 
-const Note = ({ view, note, curDate, removeNewNotes }) => {
+const Note = ({ view, note, curDate, removeNewNote }) => {
   const did = didFromDate(curDate)
 
   const [updateNote, { isLoading, isSuccess, isError, error }] =
@@ -42,7 +42,7 @@ const Note = ({ view, note, curDate, removeNewNotes }) => {
 
   const handleCompleted = async () => {
     if (oneLoading) return
-    removeNewNotes(note)
+    removeNewNote(note)
     await updateNote({
       ...note,
       completed: !completed,
@@ -51,7 +51,7 @@ const Note = ({ view, note, curDate, removeNewNotes }) => {
 
   const handleUnassign = async () => {
     if (oneLoading) return
-    removeNewNotes(note)
+    removeNewNote(note)
     await updateNote({
       ...note,
       assigned: false,
@@ -63,7 +63,7 @@ const Note = ({ view, note, curDate, removeNewNotes }) => {
   const handleMove = async (tobeDate) => {
     if (oneLoading) return
     if (curDate.getTime() !== tobeDate.getTime()) {
-      removeNewNotes(note)
+      removeNewNote(note)
       await updateNote({
         ...note,
         assigned: true,
@@ -90,7 +90,7 @@ const Note = ({ view, note, curDate, removeNewNotes }) => {
   const handleSaveNote = async () => {
     if (oneLoading) return
     if (note.title !== title || note.content !== content) {
-      removeNewNotes(note)
+      removeNewNote(note)
       await updateNote({
         ...note,
         title: title,
@@ -116,27 +116,33 @@ const Note = ({ view, note, curDate, removeNewNotes }) => {
         handleEdit={handleEdit}
         handleEditDate={handleEditDate}
         handleUnassign={handleUnassign}
-        removeNewNotes={removeNewNotes}
+        removeNewNote={removeNewNote}
         setOneLoading={setOneLoading}
       />
       <div className={styles.note}>
         <ShowView title={title} content={content} />
         {showEdit && (
-          <EditView
-            title={title}
-            content={content}
-            onTitleChange={(e) => setTitle(e.target.value)}
-            onContentChange={(e) => setContent(e.target.value)}
-            handleSaveNote={handleSaveNote}
-          />
+          <>
+            <div className={styles.modalBlanket} onClick={handleEdit}></div>
+            <EditView
+              title={title}
+              content={content}
+              onTitleChange={(e) => setTitle(e.target.value)}
+              onContentChange={(e) => setContent(e.target.value)}
+              handleSaveNote={handleSaveNote}
+            />
+          </>
         )}
         {showCal && (
-          <EditDateView
-            view={view}
-            curDate={curDate}
-            handleMove={handleMove}
-            handleCopy={handleCopy}
-          />
+          <>
+            <div className={styles.modalBlanket} onClick={handleEditDate}></div>
+            <EditDateView
+              view={view}
+              curDate={curDate}
+              handleMove={handleMove}
+              handleCopy={handleCopy}
+            />
+          </>
         )}
       </div>
     </div>

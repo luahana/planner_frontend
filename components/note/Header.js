@@ -15,7 +15,7 @@ const Header = ({
   handleEdit,
   handleEditDate,
   handleUnassign,
-  removeNewNotes,
+  removeNewNote,
   setOneLoading,
 }) => {
   const [
@@ -33,7 +33,7 @@ const Header = ({
   }, [isDelLoading])
 
   const handleDelete = async () => {
-    if (!removeNewNotes(note)) await deleteNote({ id: note._id, did })
+    if (!removeNewNote(note)) await deleteNote({ id: note._id, did })
   }
 
   return (
