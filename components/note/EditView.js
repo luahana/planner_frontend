@@ -8,7 +8,6 @@ const EditView = ({
   onTitleChange,
   onContentChange,
   handleSaveNote,
-  isLoading,
 }) => {
   return (
     <div className={styles.wrapper}>
@@ -23,19 +22,8 @@ const EditView = ({
         value={content}
         onChange={onContentChange}
       />
-      <div className={styles.saveWrapper}>
-        {isLoading && (
-          <div className={styles.loaderWrapper}>
-            <PulseLoader
-              color='#ff7eb9'
-              size='2rem'
-              aria-label='Loading Spinner'
-            />
-          </div>
-        )}
-        <div className={styles.save} onClick={handleSaveNote}>
-          Save
-        </div>
+      <div className={styles.save} onClick={handleSaveNote}>
+        Save
       </div>
     </div>
   )

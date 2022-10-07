@@ -20,6 +20,11 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
   const [completed, setCompleted] = useState(note.completed)
   const [showEdit, setShowEdit] = useState(false)
   const [showCal, setShowCal] = useState(false)
+  const [oneLoading, setOneLoading] = useState(false)
+
+  useEffect(() => {
+    setOneLoading(isLoading)
+  }, [isLoading])
 
   useEffect(() => {
     setTitle(note.title)
@@ -37,6 +42,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
   }
 
   const handleCompleted = async () => {
+    if (oneLoading) return
     updateNewNotes(note.newNoteNum, setNewNotes)
     await updateNote({
       ...note,
@@ -45,6 +51,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
   }
 
   const handleUnassign = async () => {
+    if (oneLoading) return
     updateNewNotes(note.newNoteNum, setNewNotes)
     await updateNote({
       ...note,
@@ -55,6 +62,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
   }
 
   const handleMove = async (tobeDate) => {
+    if (oneLoading) return
     if (curDate.getTime() !== tobeDate.getTime()) {
       updateNewNotes(note.newNoteNum, setNewNotes)
       await updateNote({
@@ -67,6 +75,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
     setShowCal(false)
   }
   const handleCopy = async (tobeDate) => {
+    if (oneLoading) return
     if (curDate.getTime() !== tobeDate.getTime()) {
       await updateNote({
         ...note,
@@ -80,6 +89,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
   }
 
   const handleSaveNote = async () => {
+    if (oneLoading) return
     if (note.title !== title || note.content !== content) {
       updateNewNotes(note.newNoteNum, setNewNotes)
       await updateNote({
@@ -98,7 +108,7 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
         backgroundColor: note.completed && 'hsl(61, 25%, 81%)',
       }}
     >
-      {isLoading && <Loading size={60} />}
+      {oneLoading && <Loading size={60} />}
       <Header
         view={view}
         note={note}
@@ -110,6 +120,8 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
         setShowEdit={setShowEdit}
         setShowCal={setShowCal}
         setNewNotes={setNewNotes}
+        oneLoading={oneLoading}
+        setOneLoading={setOneLoading}
       />
       <div className={styles.note}>
         <ShowView title={title} content={content} />
@@ -120,7 +132,6 @@ const Note = ({ view, note, curDate, setNewNotes }) => {
             onTitleChange={(e) => setTitle(e.target.value)}
             onContentChange={(e) => setContent(e.target.value)}
             handleSaveNote={handleSaveNote}
-            isLoading={isLoading}
           />
         )}
         {showCal && (

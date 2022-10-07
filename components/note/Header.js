@@ -6,6 +6,7 @@ import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import Features from './Features'
 import { updateNewNotes } from '../../lib/note'
 import styles from './header.module.css'
+import { useEffect } from 'react'
 
 const Header = ({
   view,
@@ -16,6 +17,7 @@ const Header = ({
   handleEditDate,
   handleUnassign,
   setNewNotes,
+  setOneLoading,
 }) => {
   const [
     deleteNote,
@@ -26,6 +28,10 @@ const Header = ({
       error: delerror,
     },
   ] = useDeleteNoteMutation()
+
+  useEffect(() => {
+    setOneLoading(isDelLoading)
+  }, [isDelLoading])
 
   const handleDelete = async () => {
     if (!updateNewNotes(note.newNoteNum, setNewNotes))

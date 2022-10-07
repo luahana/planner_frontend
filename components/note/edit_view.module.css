@@ -34,12 +34,7 @@
   height: 3rem;
 }
 
-.saveWrapper {
-  position: relative;
-}
-
 .loaderWrapper {
-  position: absolute;
   z-index: 200;
   display: flex;
   justify-content: center;
