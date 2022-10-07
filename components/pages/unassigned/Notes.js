@@ -11,10 +11,7 @@ const Notes = ({ userId }) => {
     userId,
   })
 
-  const [newNotes, addNewNote, removeNewNotes] = useNewNotes(
-    userId,
-    new Date(0)
-  )
+  const [newNotes, addNewNote, removeNewNote] = useNewNotes(userId, new Date(0))
 
   let content
   if (isLoading) {
