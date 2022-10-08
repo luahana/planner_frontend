@@ -3,26 +3,11 @@ import DateGrid from './DateGrid'
 import Weekdays from './Weekdays'
 import styles from './calendar.module.css'
 
-const Calendar = ({
-  weekdaysView,
-  view,
-  calDates,
-  setSelectedDids,
-  selectedDids,
-  mid,
-  curDate,
-}) => {
+const Calendar = ({ weekdaysView, view, note, calDates, mid }) => {
   return (
     <div className={styles.wrapper}>
       <Weekdays weekdaysView={weekdaysView} />
-      <DateGrid
-        view={view}
-        calDates={calDates}
-        mid={mid}
-        setSelectedDids={setSelectedDids}
-        selectedDids={selectedDids}
-        curDate={curDate}
-      />
+      <DateGrid view={view} note={note} calDates={calDates} mid={mid} />
     </div>
   )
 }

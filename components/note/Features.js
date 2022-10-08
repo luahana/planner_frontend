@@ -13,17 +13,21 @@ import {
 } from '../../redux/slice/api/notesApiSlice'
 import { didFromDate } from '../../lib/date'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIsLoading, setModalOpen } from '../../redux/slice/notesSlice'
+import {
+  setIsLoading,
+  setModalOpen,
+  selectNote,
+} from '../../redux/slice/notesSlice'
 import { getId } from '../../lib/note'
 
 const Features = ({ view, note, removeNewNote }) => {
   const did = didFromDate(new Date(note.assignedTime))
+
+  const dispatch = useDispatch()
+  const noteState = useSelector((state) => selectNote(state, getId(note)))
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
   const [deleteNote, { isLoading: isDelLoading }] = useDeleteNoteMutation()
-  const dispatch = useDispatch()
-  const noteState = useSelector(
-    (state) => state.notes[note._id ?? note.newNoteNum]
-  )
+
   useEffect(() => {
     dispatch(setIsLoading({ id: getId(note), isLoading }))
   }, [isLoading, isDelLoading])

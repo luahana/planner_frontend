@@ -6,16 +6,15 @@ import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import Features from './Features'
 import styles from './header.module.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIsLoading } from '../../redux/slice/notesSlice'
+import { setIsLoading, selectNote } from '../../redux/slice/notesSlice'
 import { getId } from '../../lib/note'
 
 const Header = ({ view, note, removeNewNote }) => {
-  const [completed, setCompleted] = useState(note.completed)
   const dispatch = useDispatch()
-  const noteState = useSelector(
-    (state) => state.notes[note._id ?? note.newNoteNum]
-  )
+  const noteState = useSelector((state) => selectNote(state, getId(note)))
+  const [completed, setCompleted] = useState(note.completed)
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
+
   useEffect(() => {
     dispatch(setIsLoading({ id: getId(note), isLoading }))
   }, [isLoading])

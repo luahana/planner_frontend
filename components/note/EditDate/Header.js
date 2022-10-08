@@ -13,27 +13,23 @@ import {
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons'
 import { useUpdateNoteMutation } from '../../../redux/slice/api/notesApiSlice'
-import { setIsLoading, setModalOpen } from '../../../redux/slice/notesSlice'
+import {
+  setIsLoading,
+  setModalOpen,
+  selectNote,
+  setSelectedDids,
+} from '../../../redux/slice/notesSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { getId } from '../../../lib/note'
 
-const Header = ({
-  note,
-  curMid,
-  setCurMid,
-  removeNewNote,
-  selectedDids,
-  setSelectedDids,
-}) => {
+const Header = ({ note, curMid, setCurMid, removeNewNote }) => {
   const curDate = new Date(note.assignedTime)
   const curDid = didFromDate(curDate)
   const { year, month } = ymdFromMid(curMid)
 
-  const [updateNote, { isLoading }] = useUpdateNoteMutation()
   const dispatch = useDispatch()
-  const noteState = useSelector(
-    (state) => state.notes[note._id ?? note.newNoteNum]
-  )
+  const noteState = useSelector((state) => selectNote(state, getId(note)))
+  const [updateNote, { isLoading }] = useUpdateNoteMutation()
 
   useEffect(() => {
     dispatch(setIsLoading({ id: getId(note), isLoading }))
@@ -42,7 +38,9 @@ const Header = ({
   const handleMove = async () => {
     if (noteState.isLoading) return
 
-    const didsToMove = selectedDids.filter((did) => did !== '19691231')
+    const didsToMove = noteState.selectedDids.filter(
+      (did) => did !== '19691231'
+    )
     if (didsToMove.length !== 1 || didsToMove[0] === '19691231') return
 
     const tobeDate = dateFromDid(didsToMove[0])
@@ -66,7 +64,9 @@ const Header = ({
   const handleCopy = async () => {
     if (noteState.isLoading) return
 
-    const didsToCopy = selectedDids.filter((did) => did !== '19691231')
+    const didsToCopy = noteState.selectedDids.filter(
+      (did) => did !== '19691231'
+    )
     if (didsToCopy.length === 0) return
 
     const tobeDates = didsToCopy.map((did) => dateFromDid(did))
@@ -110,16 +110,23 @@ const Header = ({
         <div className={styles.btn} onClick={handleCopy}>
           Copy
         </div>
-        {selectedDids.filter((did) => did !== '19691231').length <= 1 && (
+        {noteState.selectedDids.filter((did) => did !== '19691231').length <=
+          1 && (
           <div className={styles.btn} onClick={handleMove}>
             Move
           </div>
         )}
-        {selectedDids.filter((did) => did !== '19691231').length > 1 && (
+        {noteState.selectedDids.filter((did) => did !== '19691231').length >
+          1 && (
           <div
             className={styles.btn}
             onClick={() =>
-              setSelectedDids((dids) => dids.filter((did) => did === curDid))
+              dispatch(
+                setSelectedDids({
+                  id: getId(note),
+                  selectedDids: [],
+                })
+              )
             }
           >
             deselect

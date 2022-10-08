@@ -5,8 +5,8 @@ const notesSlice = createSlice({
   initialState: {},
   reducers: {
     addNote: (state, action) => {
-      const { id, isLoading, isEditOpen, isCalOpen } = action.payload
-      state[id] = { isLoading, isEditOpen, isCalOpen }
+      const { id, ...rest } = action.payload
+      state[id] = { ...rest }
     },
     setIsLoading: (state, action) => {
       const { id, isLoading } = action.payload
@@ -16,11 +16,25 @@ const notesSlice = createSlice({
       const { id, isEditOpen, isCalOpen } = action.payload
       state[id] = { ...state[id], isEditOpen, isCalOpen }
     },
+    setSelectedDids: (state, action) => {
+      const { id, selectedDids } = action.payload
+      state[id] = {
+        ...state[id],
+        selectedDids,
+      }
+    },
   },
 })
 
-export const { addNote, setIsLoading, setModalOpen } = notesSlice.actions
+export const { addNote, setIsLoading, setModalOpen, setSelectedDids } =
+  notesSlice.actions
 
 export default notesSlice.reducer
 
-export const selectCurrentToken = (state) => state.notes.token
+export const selectNote = (state, id) =>
+  state.notes[id] ?? {
+    isLoading: false,
+    isEditOpen: false,
+    isCalOpen: false,
+    selectedDids: [],
+  }

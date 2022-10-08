@@ -10,7 +10,6 @@ import styles from './edit_date_view.module.css'
 const EditDateView = ({ view, note, removeNewNote }) => {
   const curDate = new Date(note.assignedTime)
 
-  const [selectedDids, setSelectedDids] = useState([])
   const [curMid, setCurMid] = useState(midFromDate(curDate))
   const [calDates, setCalDates] = useState(getCalDates(curMid))
 
@@ -31,17 +30,8 @@ const EditDateView = ({ view, note, removeNewNote }) => {
         curMid={curMid}
         setCurMid={setCurMid}
         removeNewNote={removeNewNote}
-        selectedDids={selectedDids}
-        setSelectedDids={setSelectedDids}
       />
-      <Calendar
-        view='editDate'
-        calDates={calDates}
-        setSelectedDids={setSelectedDids}
-        selectedDids={selectedDids}
-        mid={curMid}
-        curDate={curDate}
-      />
+      <Calendar view='editDate' note={note} calDates={calDates} mid={curMid} />
     </div>
   )
 }

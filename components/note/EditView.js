@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import styles from './edit_view.module.css'
 import { useUpdateNoteMutation } from '../../redux/slice/api/notesApiSlice'
-import { setIsLoading, setModalOpen } from '../../redux/slice/notesSlice'
+import {
+  setIsLoading,
+  setModalOpen,
+  selectNote,
+} from '../../redux/slice/notesSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { getId } from '../../lib/note'
 
 const EditView = ({ note, removeNewNote }) => {
+  const dispatch = useDispatch()
+  const noteState = useSelector((state) => selectNote(state, getId(note)))
   const [title, setTitle] = useState(note.title)
   const [content, setContent] = useState(note.content)
-
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
-  const dispatch = useDispatch()
-  const noteState = useSelector(
-    (state) => state.notes[note._id ?? note.newNoteNum]
-  )
+
   useEffect(() => {
     dispatch(setIsLoading({ id: getId(note), isLoading }))
   }, [isLoading])

@@ -7,14 +7,12 @@ import EditDateView from './EditDate/EditDateView'
 import Loading from '../common/Loading'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { addNote, setModalOpen } from '../../redux/slice/notesSlice'
+import { addNote, selectNote, setModalOpen } from '../../redux/slice/notesSlice'
 import { getId } from '../../lib/note'
 
 const Note = ({ view, note, removeNewNote }) => {
   const dispatch = useDispatch()
-  const noteState = useSelector(
-    (state) => state.notes[note._id ?? note.newNoteNum]
-  ) ?? { isLoading: false, isEditOpen: false, isCalOpen: false }
+  const noteState = useSelector((state) => selectNote(state, getId(note)))
 
   useEffect(() => {
     dispatch(
@@ -23,6 +21,7 @@ const Note = ({ view, note, removeNewNote }) => {
         isLoading: false,
         isEditOpen: false,
         isCalOpen: false,
+        selectedDids: [],
       })
     )
   }, [])
@@ -34,6 +33,7 @@ const Note = ({ view, note, removeNewNote }) => {
   return (
     <div className={`${styles.wrapper} ${note.completed && styles.completed}`}>
       {noteState.isLoading && <Loading size={60} />}
+
       <Header view={view} note={note} removeNewNote={removeNewNote} />
       <div className={styles.note}>
         <ShowView note={note} />
