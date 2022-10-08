@@ -13,15 +13,14 @@ import {
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons'
 import { useUpdateNoteMutation } from '../../../redux/slice/api/notesApiSlice'
+import { setIsLoading, setModalOpen } from '../../../redux/slice/notesSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Header = ({
   note,
   curMid,
   setCurMid,
   removeNewNote,
-  oneLoading,
-  setOneLoading,
-  openCal,
   selectedDids,
   setSelectedDids,
 }) => {
@@ -30,13 +29,17 @@ const Header = ({
   const { year, month } = ymdFromMid(curMid)
 
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
+  const dispatch = useDispatch()
+  const noteState = useSelector(
+    (state) => state.notes[note._id ?? note.newNoteNum]
+  )
 
   useEffect(() => {
-    setOneLoading(isLoading)
+    dispatch(setIsLoading({ id: note._id ?? note.newNoteNum, isLoading }))
   }, [isLoading])
 
   const handleMove = async () => {
-    if (oneLoading) return
+    if (noteState.isLoading) return
 
     const didsToMove = selectedDids.filter((did) => did !== '19691231')
     if (didsToMove.length !== 1 || didsToMove[0] === '19691231') return
@@ -51,10 +54,16 @@ const Header = ({
         assignedTime: tobeDate.getTime(),
       })
     }
-    openCal(false)
+    dispatch(
+      setModalOpen({
+        id: note._id ?? note.newNoteNum,
+        isEditOpen: false,
+        isCalOpen: false,
+      })
+    )
   }
   const handleCopy = async () => {
-    if (oneLoading) return
+    if (noteState.isLoading) return
 
     const didsToCopy = selectedDids.filter((did) => did !== '19691231')
     if (didsToCopy.length === 0) return
@@ -71,7 +80,13 @@ const Header = ({
         })
       }
     }
-    openCal(false)
+    dispatch(
+      setModalOpen({
+        id: note._id ?? note.newNoteNum,
+        isEditOpen: false,
+        isCalOpen: false,
+      })
+    )
   }
   return (
     <div className={styles.wrapper}>

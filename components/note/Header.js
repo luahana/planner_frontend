@@ -5,21 +5,18 @@ import { useUpdateNoteMutation } from '../../redux/slice/api/notesApiSlice'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import Features from './Features'
 import styles from './header.module.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { setIsLoading } from '../../redux/slice/notesSlice'
 
-const Header = ({
-  view,
-  note,
-  removeNewNote,
-  openEdit,
-  openCal,
-  oneLoading,
-  setOneLoading,
-}) => {
+const Header = ({ view, note, removeNewNote }) => {
   const [completed, setCompleted] = useState(note.completed)
-
+  const dispatch = useDispatch()
+  const noteState = useSelector(
+    (state) => state.notes[note._id ?? note.newNoteNum]
+  )
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
   useEffect(() => {
-    setOneLoading(isLoading)
+    dispatch(setIsLoading({ id: note._id ?? note.newNoteNum, isLoading }))
   }, [isLoading])
 
   useEffect(() => {
@@ -27,7 +24,7 @@ const Header = ({
   }, [note.completed])
 
   const handleCompleted = async () => {
-    if (oneLoading) return
+    if (noteState.isLoading) return
     removeNewNote(note)
     await updateNote({
       ...note,
@@ -45,15 +42,7 @@ const Header = ({
           )}
         </div>
       </div>
-      <Features
-        view={view}
-        note={note}
-        removeNewNote={removeNewNote}
-        openEdit={openEdit}
-        openCal={openCal}
-        setOneLoading={setOneLoading}
-        oneLoading={oneLoading}
-      />
+      <Features view={view} note={note} removeNewNote={removeNewNote} />
     </div>
   )
 }

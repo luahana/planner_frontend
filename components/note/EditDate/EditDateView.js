@@ -7,14 +7,7 @@ import Header from './Header'
 import Calendar from '../../calendar/Calendar'
 import styles from './edit_date_view.module.css'
 
-const EditDateView = ({
-  view,
-  note,
-  removeNewNote,
-  oneLoading,
-  setOneLoading,
-  openCal,
-}) => {
+const EditDateView = ({ view, note, removeNewNote }) => {
   const curDate = new Date(note.assignedTime)
 
   const [selectedDids, setSelectedDids] = useState([])
@@ -38,9 +31,6 @@ const EditDateView = ({
         curMid={curMid}
         setCurMid={setCurMid}
         removeNewNote={removeNewNote}
-        oneLoading={oneLoading}
-        setOneLoading={setOneLoading}
-        openCal={openCal}
         selectedDids={selectedDids}
         setSelectedDids={setSelectedDids}
       />

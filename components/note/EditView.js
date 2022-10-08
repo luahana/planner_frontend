@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import styles from './edit_view.module.css'
 import { useUpdateNoteMutation } from '../../redux/slice/api/notesApiSlice'
+import { setIsLoading, setModalOpen } from '../../redux/slice/notesSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
-const EditView = ({
-  note,
-  removeNewNote,
-  oneLoading,
-  setOneLoading,
-  openEdit,
-}) => {
+const EditView = ({ note, removeNewNote }) => {
   const [title, setTitle] = useState(note.title)
   const [content, setContent] = useState(note.content)
 
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
-
+  const dispatch = useDispatch()
+  const noteState = useSelector(
+    (state) => state.notes[note._id ?? note.newNoteNum]
+  )
   useEffect(() => {
-    setOneLoading(isLoading)
+    dispatch(setIsLoading({ id: note._id ?? note.newNoteNum, isLoading }))
   }, [isLoading])
 
   useEffect(() => {
@@ -24,7 +23,7 @@ const EditView = ({
   }, [])
 
   const handleSaveNote = async () => {
-    if (oneLoading) return
+    if (noteState.isLoading) return
     if (note.title !== title || note.content !== content) {
       removeNewNote(note)
       await updateNote({
@@ -33,7 +32,13 @@ const EditView = ({
         content: content,
       })
     }
-    openEdit(false)
+    dispatch(
+      setModalOpen({
+        id: note._id ?? note.newNoteNum,
+        isEditOpen: false,
+        isCalOpen: false,
+      })
+    )
   }
   return (
     <div className={styles.wrapper}>

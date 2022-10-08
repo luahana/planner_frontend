@@ -1,52 +1,62 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from './note.module.css'
 import EditView from './EditView'
 import ShowView from './ShowView'
 import Header from './Header'
 import EditDateView from './EditDate/EditDateView'
 import Loading from '../common/Loading'
-import useNoteModal from '../../hooks/useNoteModal'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { addNote, setModalOpen } from '../../redux/slice/notesSlice'
 
 const Note = ({ view, note, removeNewNote }) => {
-  const [isEditOpen, openEdit, isCalOpen, openCal, closeAll] = useNoteModal()
-  const [oneLoading, setOneLoading] = useState(false)
+  const dispatch = useDispatch()
+  const noteState = useSelector(
+    (state) => state.notes[note._id ?? note.newNoteNum]
+  ) ?? { isLoading: false, isEditOpen: false, isCalOpen: false }
+
+  useEffect(() => {
+    dispatch(
+      addNote({
+        id: note._id ?? note.newNoteNum,
+        isLoading: false,
+        isEditOpen: false,
+        isCalOpen: false,
+      })
+    )
+  }, [])
+
+  const handleModal = (isEditOpen, isCalOpen) => {
+    dispatch(
+      setModalOpen({ id: note._id ?? note.newNoteNum, isEditOpen, isCalOpen })
+    )
+  }
 
   return (
     <div className={`${styles.wrapper} ${note.completed && styles.completed}`}>
-      {oneLoading && <Loading size={60} />}
-      <Header
-        view={view}
-        note={note}
-        removeNewNote={removeNewNote}
-        oneLoading={oneLoading}
-        setOneLoading={setOneLoading}
-        openEdit={openEdit}
-        openCal={openCal}
-      />
+      {noteState.isLoading && <Loading size={60} />}
+      <Header view={view} note={note} removeNewNote={removeNewNote} />
       <div className={styles.note}>
         <ShowView note={note} />
-        {isEditOpen && (
+        {noteState.isEditOpen && (
           <>
-            <div className={styles.modalBlanket} onClick={closeAll}></div>
-            <EditView
-              note={note}
-              removeNewNote={removeNewNote}
-              oneLoading={oneLoading}
-              setOneLoading={setOneLoading}
-              openEdit={openEdit}
-            />
+            <div
+              className={styles.modalBlanket}
+              onClick={() => handleModal(false, false)}
+            ></div>
+            <EditView note={note} removeNewNote={removeNewNote} />
           </>
         )}
-        {isCalOpen && (
+        {noteState.isCalOpen && (
           <>
-            <div className={styles.modalBlanket} onClick={closeAll}></div>
+            <div
+              className={styles.modalBlanket}
+              onClick={() => handleModal(false, false)}
+            ></div>
             <EditDateView
               view={view}
               note={note}
               removeNewNote={removeNewNote}
-              oneLoading={oneLoading}
-              setOneLoading={setOneLoading}
-              openCal={openCal}
             />
           </>
         )}

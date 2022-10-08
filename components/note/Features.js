@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faTrash,
@@ -12,21 +12,19 @@ import {
   useUpdateNoteMutation,
 } from '../../redux/slice/api/notesApiSlice'
 import { didFromDate } from '../../lib/date'
+import { useDispatch, useSelector } from 'react-redux'
+import { setIsLoading, setModalOpen } from '../../redux/slice/notesSlice'
 
-const Features = ({
-  view,
-  note,
-  removeNewNote,
-  openEdit,
-  openCal,
-  setOneLoading,
-  oneLoading,
-}) => {
+const Features = ({ view, note, removeNewNote }) => {
   const did = didFromDate(new Date(note.assignedTime))
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
   const [deleteNote, { isLoading: isDelLoading }] = useDeleteNoteMutation()
+  const dispatch = useDispatch()
+  const noteState = useSelector(
+    (state) => state.notes[note._id ?? note.newNoteNum]
+  )
   useEffect(() => {
-    setOneLoading(isLoading)
+    dispatch(setIsLoading({ id: note._id ?? note.newNoteNum, isLoading }))
   }, [isLoading, isDelLoading])
 
   const handleDelete = async () => {
@@ -34,7 +32,7 @@ const Features = ({
   }
 
   const handleUnassign = async () => {
-    if (oneLoading) return
+    if (noteState.isLoading) return
     removeNewNote(note)
     await updateNote({
       ...note,
@@ -43,12 +41,18 @@ const Features = ({
       curDate: note.assignedTime,
     })
   }
+
+  const handleModal = (isEditOpen, isCalOpen) => {
+    dispatch(
+      setModalOpen({ id: note._id ?? note.newNoteNum, isEditOpen, isCalOpen })
+    )
+  }
   return (
     <div className={styles.wrapper}>
-      <div className={styles.feature} onClick={() => openEdit(true)}>
+      <div className={styles.feature} onClick={() => handleModal(true, false)}>
         <FontAwesomeIcon icon={faPenToSquare} />
       </div>
-      <div className={styles.feature} onClick={() => openCal(true)}>
+      <div className={styles.feature} onClick={() => handleModal(false, true)}>
         <FontAwesomeIcon icon={faCalendarDays} />
       </div>
       {view !== 'unassigned' && (
