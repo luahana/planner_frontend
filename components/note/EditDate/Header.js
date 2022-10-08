@@ -15,6 +15,7 @@ import {
 import { useUpdateNoteMutation } from '../../../redux/slice/api/notesApiSlice'
 import { setIsLoading, setModalOpen } from '../../../redux/slice/notesSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { getId } from '../../../lib/note'
 
 const Header = ({
   note,
@@ -35,7 +36,7 @@ const Header = ({
   )
 
   useEffect(() => {
-    dispatch(setIsLoading({ id: note._id ?? note.newNoteNum, isLoading }))
+    dispatch(setIsLoading({ id: getId(note), isLoading }))
   }, [isLoading])
 
   const handleMove = async () => {
@@ -56,7 +57,7 @@ const Header = ({
     }
     dispatch(
       setModalOpen({
-        id: note._id ?? note.newNoteNum,
+        id: getId(note),
         isEditOpen: false,
         isCalOpen: false,
       })
@@ -82,7 +83,7 @@ const Header = ({
     }
     dispatch(
       setModalOpen({
-        id: note._id ?? note.newNoteNum,
+        id: getId(note),
         isEditOpen: false,
         isCalOpen: false,
       })

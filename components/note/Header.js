@@ -7,6 +7,7 @@ import Features from './Features'
 import styles from './header.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsLoading } from '../../redux/slice/notesSlice'
+import { getId } from '../../lib/note'
 
 const Header = ({ view, note, removeNewNote }) => {
   const [completed, setCompleted] = useState(note.completed)
@@ -16,7 +17,7 @@ const Header = ({ view, note, removeNewNote }) => {
   )
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
   useEffect(() => {
-    dispatch(setIsLoading({ id: note._id ?? note.newNoteNum, isLoading }))
+    dispatch(setIsLoading({ id: getId(note), isLoading }))
   }, [isLoading])
 
   useEffect(() => {

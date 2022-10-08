@@ -14,6 +14,7 @@ import {
 import { didFromDate } from '../../lib/date'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsLoading, setModalOpen } from '../../redux/slice/notesSlice'
+import { getId } from '../../lib/note'
 
 const Features = ({ view, note, removeNewNote }) => {
   const did = didFromDate(new Date(note.assignedTime))
@@ -24,7 +25,7 @@ const Features = ({ view, note, removeNewNote }) => {
     (state) => state.notes[note._id ?? note.newNoteNum]
   )
   useEffect(() => {
-    dispatch(setIsLoading({ id: note._id ?? note.newNoteNum, isLoading }))
+    dispatch(setIsLoading({ id: getId(note), isLoading }))
   }, [isLoading, isDelLoading])
 
   const handleDelete = async () => {
@@ -43,9 +44,7 @@ const Features = ({ view, note, removeNewNote }) => {
   }
 
   const handleModal = (isEditOpen, isCalOpen) => {
-    dispatch(
-      setModalOpen({ id: note._id ?? note.newNoteNum, isEditOpen, isCalOpen })
-    )
+    dispatch(setModalOpen({ id: getId(note), isEditOpen, isCalOpen }))
   }
   return (
     <div className={styles.wrapper}>

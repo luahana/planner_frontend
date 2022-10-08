@@ -3,6 +3,7 @@ import styles from './edit_view.module.css'
 import { useUpdateNoteMutation } from '../../redux/slice/api/notesApiSlice'
 import { setIsLoading, setModalOpen } from '../../redux/slice/notesSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { getId } from '../../lib/note'
 
 const EditView = ({ note, removeNewNote }) => {
   const [title, setTitle] = useState(note.title)
@@ -14,7 +15,7 @@ const EditView = ({ note, removeNewNote }) => {
     (state) => state.notes[note._id ?? note.newNoteNum]
   )
   useEffect(() => {
-    dispatch(setIsLoading({ id: note._id ?? note.newNoteNum, isLoading }))
+    dispatch(setIsLoading({ id: getId(note), isLoading }))
   }, [isLoading])
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const EditView = ({ note, removeNewNote }) => {
     }
     dispatch(
       setModalOpen({
-        id: note._id ?? note.newNoteNum,
+        id: getId(note),
         isEditOpen: false,
         isCalOpen: false,
       })

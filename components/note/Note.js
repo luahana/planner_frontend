@@ -8,6 +8,7 @@ import Loading from '../common/Loading'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { addNote, setModalOpen } from '../../redux/slice/notesSlice'
+import { getId } from '../../lib/note'
 
 const Note = ({ view, note, removeNewNote }) => {
   const dispatch = useDispatch()
@@ -18,7 +19,7 @@ const Note = ({ view, note, removeNewNote }) => {
   useEffect(() => {
     dispatch(
       addNote({
-        id: note._id ?? note.newNoteNum,
+        id: getId(note),
         isLoading: false,
         isEditOpen: false,
         isCalOpen: false,
@@ -27,9 +28,7 @@ const Note = ({ view, note, removeNewNote }) => {
   }, [])
 
   const handleModal = (isEditOpen, isCalOpen) => {
-    dispatch(
-      setModalOpen({ id: note._id ?? note.newNoteNum, isEditOpen, isCalOpen })
-    )
+    dispatch(setModalOpen({ id: getId(note), isEditOpen, isCalOpen }))
   }
 
   return (
