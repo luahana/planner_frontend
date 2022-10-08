@@ -26,7 +26,6 @@ const Notes = ({ userId }) => {
         view='unassigned'
         userId={userId}
         note={note}
-        curDate={new Date(0)}
         removeNewNote={removeNewNote}
       />
     ))

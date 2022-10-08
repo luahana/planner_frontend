@@ -8,8 +8,8 @@ import EditDateView from './EditDate/EditDateView'
 import { dateFromDid, didFromDate } from '../../lib/date'
 import Loading from '../common/Loading'
 
-const Note = ({ view, note, curDate, removeNewNote }) => {
-  const did = didFromDate(curDate)
+const Note = ({ view, note, removeNewNote }) => {
+  const did = didFromDate(new Date(note.assignedTime))
 
   const [updateNote, { isLoading, isSuccess, isError, error }] =
     useUpdateNoteMutation()
@@ -56,18 +56,18 @@ const Note = ({ view, note, curDate, removeNewNote }) => {
       ...note,
       assigned: false,
       assignedTime: 0,
-      curDate: curDate.getTime(),
+      curDate: note.assignedTime,
     })
   }
 
   const handleMove = async (tobeDate) => {
     if (oneLoading) return
-    if (curDate.getTime() !== tobeDate.getTime()) {
+    if (note.assignedTime !== tobeDate.getTime()) {
       removeNewNote(note)
       await updateNote({
         ...note,
         assigned: true,
-        curDate: curDate.getTime(),
+        curDate: note.assignedTime,
         assignedTime: tobeDate.getTime(),
       })
     }
@@ -77,11 +77,11 @@ const Note = ({ view, note, curDate, removeNewNote }) => {
     const tobeDates = tobeDids.map((did) => dateFromDid(did))
     if (oneLoading) return
     for (let i = 0; i < tobeDates.length; i++) {
-      if (curDate.getTime() !== tobeDates[i].getTime()) {
+      if (note.assignedTime !== tobeDates[i].getTime()) {
         await updateNote({
           ...note,
           assigned: true,
-          curDate: curDate.getTime(),
+          curDate: note.assignedTime,
           assignedTime: tobeDates[i].getTime(),
           _id: undefined,
         })
@@ -104,12 +104,7 @@ const Note = ({ view, note, curDate, removeNewNote }) => {
   }
 
   return (
-    <div
-      className={styles.wrapper}
-      style={{
-        backgroundColor: note.completed && 'hsl(61, 25%, 81%)',
-      }}
-    >
+    <div className={`${styles.wrapper} ${note.completed && styles.completed}`}>
       {oneLoading && <Loading size={60} />}
       <Header
         view={view}
@@ -141,7 +136,7 @@ const Note = ({ view, note, curDate, removeNewNote }) => {
             <div className={styles.modalBlanket} onClick={handleEditDate}></div>
             <EditDateView
               view={view}
-              curDate={curDate}
+              curDate={new Date(note.assignedTime)}
               handleMove={handleMove}
               handleCopy={handleCopy}
             />

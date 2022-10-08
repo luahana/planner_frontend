@@ -26,7 +26,6 @@ const Notes = ({ userId, curDate, weekday }) => {
       <Note
         key={note._id ? note._id : note.newNoteNum}
         note={note}
-        curDate={curDate}
         removeNewNote={removeNewNote}
       />
     ))

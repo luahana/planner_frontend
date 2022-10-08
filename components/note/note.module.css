@@ -20,3 +20,7 @@
   height: 100vh;
   z-index: 50;
 }
+
+.completed {
+  background-color: hsl(61, 25%, 81%);
+}
