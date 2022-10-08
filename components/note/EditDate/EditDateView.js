@@ -10,7 +10,7 @@ import styles from './edit_date_view.module.css'
 const EditDateView = ({ view, curDate, handleMove, handleCopy }) => {
   const curDid = didFromDate(curDate)
 
-  const [selectedDids, setSelectedDids] = useState([curDid])
+  const [selectedDids, setSelectedDids] = useState([])
   const [curMid, setCurMid] = useState(midFromDate(curDate))
   const [calDates, setCalDates] = useState(getCalDates(curMid))
 
@@ -53,6 +53,7 @@ const EditDateView = ({ view, curDate, handleMove, handleCopy }) => {
         setSelectedDids={setSelectedDids}
         selectedDids={selectedDids}
         mid={curMid}
+        curDate={curDate}
       />
     </div>
   )

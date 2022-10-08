@@ -3,7 +3,14 @@ import EditDateDay from '../note/EditDate/Day'
 import MonthlyDay from '../pages/monthly/Day'
 import styles from './date_grid.module.css'
 
-const DateGrid = ({ view, calDates, selectedDids, setSelectedDids, mid }) => {
+const DateGrid = ({
+  view,
+  calDates,
+  selectedDids,
+  setSelectedDids,
+  mid,
+  curDate,
+}) => {
   return (
     <div className={styles.wrapper}>
       {calDates.map((day) => {
@@ -15,6 +22,7 @@ const DateGrid = ({ view, calDates, selectedDids, setSelectedDids, mid }) => {
               selectedDids={selectedDids}
               setSelectedDids={setSelectedDids}
               mid={mid}
+              curDate={curDate}
             />
           )
         if (view === 'month' || view == 'monthSmall') {

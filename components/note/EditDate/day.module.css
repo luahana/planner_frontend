@@ -10,6 +10,10 @@
   border: 3px double black;
 }
 
+.curDate {
+  background-color: hsl(61, 100%, 81%);
+}
+
 .selectedDate {
   background-color: #7afcff;
 }

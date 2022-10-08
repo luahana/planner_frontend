@@ -1,8 +1,8 @@
 import React from 'react'
-import { didFromDateStr, ymdFromMid } from '../../../lib/date'
+import { didFromDate, didFromDateStr, ymdFromMid } from '../../../lib/date'
 import styles from './day.module.css'
 
-const Day = ({ day, selectedDids, setSelectedDids, mid }) => {
+const Day = ({ day, selectedDids, setSelectedDids, mid, curDate }) => {
   const { month } = ymdFromMid(mid)
   const dt = new Date(day)
 
@@ -17,11 +17,11 @@ const Day = ({ day, selectedDids, setSelectedDids, mid }) => {
   }
   return (
     <div
-      className={`${styles.wrapper} ${
-        dt.toDateString() === new Date().toDateString() && styles.today
-      } ${dt.getMonth() + 1 !== month && styles.otherMonthDay} ${
-        selectedDids.includes(didFromDateStr(day)) && styles.selectedDate
-      }`}
+      className={`${styles.wrapper} 
+        ${dt.toDateString() === new Date().toDateString() && styles.today} 
+        ${dt.getMonth() + 1 !== month && styles.otherMonthDay} 
+        ${didFromDate(curDate) === didFromDateStr(day) && styles.curDate} 
+        ${selectedDids.includes(didFromDateStr(day)) && styles.selectedDate}`}
       key={day}
       onClick={() => handleSelect(day)}
     >

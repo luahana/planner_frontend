@@ -10,6 +10,7 @@ const Calendar = ({
   setSelectedDids,
   selectedDids,
   mid,
+  curDate,
 }) => {
   return (
     <div className={styles.wrapper}>
@@ -20,6 +21,7 @@ const Calendar = ({
         mid={mid}
         setSelectedDids={setSelectedDids}
         selectedDids={selectedDids}
+        curDate={curDate}
       />
     </div>
   )
