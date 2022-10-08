@@ -16,6 +16,10 @@ const notesSlice = createSlice({
       const { id, isEditOpen, isCalOpen } = action.payload
       state[id] = { ...state[id], isEditOpen, isCalOpen }
     },
+    setModalClose: (state, action) => {
+      const { id } = action.payload
+      state[id] = { ...state[id], isEditOpen: false, isCalOpen: false }
+    },
     setSelectedDids: (state, action) => {
       const { id, selectedDids } = action.payload
       state[id] = {
@@ -26,8 +30,13 @@ const notesSlice = createSlice({
   },
 })
 
-export const { addNote, setIsLoading, setModalOpen, setSelectedDids } =
-  notesSlice.actions
+export const {
+  addNote,
+  setIsLoading,
+  setModalOpen,
+  setModalClose,
+  setSelectedDids,
+} = notesSlice.actions
 
 export default notesSlice.reducer
 

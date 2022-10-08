@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { getCalDates } from '../../../lib/calendar'
 import { midFromDate } from '../../../lib/date'
 import { useEffect } from 'react'
-import Header from './Header'
+import Header from './header/Header'
 import Calendar from '../../calendar/Calendar'
 import styles from './edit_date_view.module.css'
 

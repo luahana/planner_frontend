@@ -7,43 +7,33 @@ import { getId } from '../../../lib/note'
 
 const Day = ({ note, day, mid }) => {
   const curDate = new Date(note.assignedTime)
-  const { month } = ymdFromMid(mid)
   const dt = new Date(day)
-  const noteState = useSelector((state) => selectNote(state, getId(note)))
-
+  const did = didFromDateStr(day)
+  const { month } = ymdFromMid(mid)
   const dispatch = useDispatch()
+  const noteState = useSelector((state) => selectNote(state, getId(note)))
+  const selectedDids = noteState.selectedDids
 
-  const handleSelect = (day) => {
-    if (noteState.selectedDids.includes(didFromDateStr(day))) {
-      dispatch(
-        setSelectedDids({
-          id: getId(note),
-          selectedDids: noteState.selectedDids.filter(
-            (did) => did !== didFromDateStr(day)
-          ),
-        })
-      )
-    } else {
-      dispatch(
-        setSelectedDids({
-          id: getId(note),
-          selectedDids: [...noteState.selectedDids, didFromDateStr(day)],
-        })
-      )
+  const handleSelect = () => {
+    let selDids = [...selectedDids, did]
+    if (selectedDids.includes(did)) {
+      selDids = selectedDids.filter((sDid) => sDid !== did)
     }
+    dispatch(
+      setSelectedDids({
+        id: getId(note),
+        selectedDids: selDids,
+      })
+    )
   }
   return (
     <div
       className={`${styles.wrapper} 
-        ${dt.toDateString() === new Date().toDateString() && styles.today} 
+        ${day === new Date().toDateString() && styles.today} 
         ${dt.getMonth() + 1 !== month && styles.otherMonthDay} 
-        ${didFromDate(curDate) === didFromDateStr(day) && styles.curDate} 
-        ${
-          noteState.selectedDids.includes(didFromDateStr(day)) &&
-          styles.selectedDate
-        }`}
-      key={day}
-      onClick={() => handleSelect(day)}
+        ${did === didFromDate(curDate) && styles.curDate} 
+        ${selectedDids.includes(did) && styles.selectedDate}`}
+      onClick={() => handleSelect()}
     >
       <div>{new Date(day).getDate()}</div>
     </div>

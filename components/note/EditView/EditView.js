@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import styles from './edit_view.module.css'
-import { useUpdateNoteMutation } from '../../redux/slice/api/notesApiSlice'
+import { useUpdateNoteMutation } from '../../../redux/slice/api/notesApiSlice'
 import {
   setIsLoading,
-  setModalOpen,
+  setModalClose,
   selectNote,
-} from '../../redux/slice/notesSlice'
+} from '../../../redux/slice/notesSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { getId } from '../../lib/note'
+import { getId } from '../../../lib/note'
 
 const EditView = ({ note, removeNewNote }) => {
   const dispatch = useDispatch()
@@ -29,19 +29,9 @@ const EditView = ({ note, removeNewNote }) => {
     if (noteState.isLoading) return
     if (note.title !== title || note.content !== content) {
       removeNewNote(note)
-      await updateNote({
-        ...note,
-        title: title,
-        content: content,
-      })
+      await updateNote({ ...note, title: title, content: content })
     }
-    dispatch(
-      setModalOpen({
-        id: getId(note),
-        isEditOpen: false,
-        isCalOpen: false,
-      })
-    )
+    dispatch(setModalClose({ id: getId(note) }))
   }
   return (
     <div className={styles.wrapper}>
