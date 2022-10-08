@@ -5,18 +5,16 @@ import { useUpdateNoteMutation } from '../../redux/slice/api/notesApiSlice'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import Features from './Features'
 import styles from './header.module.css'
-import { didFromDate } from '../../lib/date'
 
 const Header = ({
   view,
   note,
+  removeNewNote,
   openEdit,
   openCal,
   oneLoading,
   setOneLoading,
-  removeNewNote,
 }) => {
-  const did = didFromDate(new Date(note.assignedTime))
   const [completed, setCompleted] = useState(note.completed)
 
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
@@ -48,14 +46,13 @@ const Header = ({
         </div>
       </div>
       <Features
-        note={note}
         view={view}
-        did={did}
+        note={note}
+        removeNewNote={removeNewNote}
         openEdit={openEdit}
         openCal={openCal}
         setOneLoading={setOneLoading}
         oneLoading={oneLoading}
-        removeNewNote={removeNewNote}
       />
     </div>
   )

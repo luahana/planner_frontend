@@ -11,17 +11,18 @@ import {
   useDeleteNoteMutation,
   useUpdateNoteMutation,
 } from '../../redux/slice/api/notesApiSlice'
+import { didFromDate } from '../../lib/date'
 
 const Features = ({
-  note,
-  did,
   view,
+  note,
+  removeNewNote,
   openEdit,
   openCal,
   setOneLoading,
   oneLoading,
-  removeNewNote,
 }) => {
+  const did = didFromDate(new Date(note.assignedTime))
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
   const [deleteNote, { isLoading: isDelLoading }] = useDeleteNoteMutation()
   useEffect(() => {

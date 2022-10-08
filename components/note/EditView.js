@@ -4,9 +4,9 @@ import { useUpdateNoteMutation } from '../../redux/slice/api/notesApiSlice'
 
 const EditView = ({
   note,
+  removeNewNote,
   oneLoading,
   setOneLoading,
-  removeNewNote,
   openEdit,
 }) => {
   const [title, setTitle] = useState(note.title)

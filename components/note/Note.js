@@ -17,11 +17,11 @@ const Note = ({ view, note, removeNewNote }) => {
       <Header
         view={view}
         note={note}
+        removeNewNote={removeNewNote}
         oneLoading={oneLoading}
         setOneLoading={setOneLoading}
         openEdit={openEdit}
         openCal={openCal}
-        removeNewNote={removeNewNote}
       />
       <div className={styles.note}>
         <ShowView note={note} />
@@ -30,9 +30,9 @@ const Note = ({ view, note, removeNewNote }) => {
             <div className={styles.modalBlanket} onClick={closeAll}></div>
             <EditView
               note={note}
+              removeNewNote={removeNewNote}
               oneLoading={oneLoading}
               setOneLoading={setOneLoading}
-              removeNewNote={removeNewNote}
               openEdit={openEdit}
             />
           </>
@@ -43,9 +43,9 @@ const Note = ({ view, note, removeNewNote }) => {
             <EditDateView
               view={view}
               note={note}
+              removeNewNote={removeNewNote}
               oneLoading={oneLoading}
               setOneLoading={setOneLoading}
-              removeNewNote={removeNewNote}
               openCal={openCal}
             />
           </>
