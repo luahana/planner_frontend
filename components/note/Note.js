@@ -118,7 +118,7 @@ const Note = ({ view, note, removeNewNote }) => {
         setOneLoading={setOneLoading}
       />
       <div className={styles.note}>
-        <ShowView title={title} content={content} />
+        <ShowView note={note} />
         {showEdit && (
           <>
             <div className={styles.modalBlanket} onClick={handleEdit}></div>

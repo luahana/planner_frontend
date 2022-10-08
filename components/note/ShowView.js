@@ -1,11 +1,11 @@
 import React from 'react'
 import styles from './show_view.module.css'
 
-const ShowView = ({ title, content }) => {
+const ShowView = ({ note }) => {
   return (
     <div className={styles.wrapper}>
-      <div className={styles.title}>{title}</div>
-      <div className={styles.content}>{content}</div>
+      <div className={styles.title}>{note.title}</div>
+      <div className={styles.content}>{note.content}</div>
     </div>
   )
 }
