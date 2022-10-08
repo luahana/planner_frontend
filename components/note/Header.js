@@ -1,41 +1,41 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import { useDeleteNoteMutation } from '../../redux/slice/api/notesApiSlice'
+import { useUpdateNoteMutation } from '../../redux/slice/api/notesApiSlice'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
 import Features from './Features'
 import styles from './header.module.css'
-import { useEffect } from 'react'
+import { didFromDate } from '../../lib/date'
 
 const Header = ({
   view,
   note,
-  did,
-  handleCompleted,
-  handleEdit,
-  handleEditDate,
-  handleUnassign,
-  removeNewNote,
+  openEdit,
+  openCal,
+  oneLoading,
   setOneLoading,
+  removeNewNote,
 }) => {
-  const [
-    deleteNote,
-    {
-      isLoading: isDelLoading,
-      isSuccess: isDelSuccess,
-      isError: isDelError,
-      error: delerror,
-    },
-  ] = useDeleteNoteMutation()
+  const did = didFromDate(new Date(note.assignedTime))
+  const [completed, setCompleted] = useState(note.completed)
+
+  const [updateNote, { isLoading }] = useUpdateNoteMutation()
+  useEffect(() => {
+    setOneLoading(isLoading)
+  }, [isLoading])
 
   useEffect(() => {
-    setOneLoading(isDelLoading)
-  }, [isDelLoading])
+    setCompleted(note.completed)
+  }, [note.completed])
 
-  const handleDelete = async () => {
-    if (!removeNewNote(note)) await deleteNote({ id: note._id, did })
+  const handleCompleted = async () => {
+    if (oneLoading) return
+    removeNewNote(note)
+    await updateNote({
+      ...note,
+      completed: !completed,
+    })
   }
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.completed}>
@@ -48,11 +48,14 @@ const Header = ({
         </div>
       </div>
       <Features
+        note={note}
         view={view}
-        handleEdit={handleEdit}
-        handleEditDate={handleEditDate}
-        handleUnassign={handleUnassign}
-        handleDelete={handleDelete}
+        did={did}
+        openEdit={openEdit}
+        openCal={openCal}
+        setOneLoading={setOneLoading}
+        oneLoading={oneLoading}
+        removeNewNote={removeNewNote}
       />
     </div>
   )

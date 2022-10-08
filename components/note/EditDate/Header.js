@@ -13,8 +13,8 @@ const Header = ({
   curDid,
   curMid,
   setCurMid,
-  onMoveClicked,
-  onCopyClicked,
+  handleMove,
+  handleCopy,
   selectedDids,
   setSelectedDids,
 }) => {
@@ -37,11 +37,11 @@ const Header = ({
         </div>
       </div>
       <div className={styles.buttons}>
-        <div className={styles.btn} onClick={onCopyClicked}>
+        <div className={styles.btn} onClick={handleCopy}>
           Copy
         </div>
         {selectedDids.filter((did) => did !== '19691231').length <= 1 && (
-          <div className={styles.btn} onClick={onMoveClicked}>
+          <div className={styles.btn} onClick={handleMove}>
             Move
           </div>
         )}

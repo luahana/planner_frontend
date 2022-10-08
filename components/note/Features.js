@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faTrash,
@@ -7,20 +7,47 @@ import {
   faArrowTurnUp,
 } from '@fortawesome/free-solid-svg-icons'
 import styles from './features.module.css'
+import {
+  useDeleteNoteMutation,
+  useUpdateNoteMutation,
+} from '../../redux/slice/api/notesApiSlice'
 
 const Features = ({
+  note,
+  did,
   view,
-  handleEdit,
-  handleEditDate,
-  handleUnassign,
-  handleDelete,
+  openEdit,
+  openCal,
+  setOneLoading,
+  oneLoading,
+  removeNewNote,
 }) => {
+  const [updateNote, { isLoading }] = useUpdateNoteMutation()
+  const [deleteNote, { isLoading: isDelLoading }] = useDeleteNoteMutation()
+  useEffect(() => {
+    setOneLoading(isLoading)
+  }, [isLoading, isDelLoading])
+
+  const handleDelete = async () => {
+    if (!removeNewNote(note)) await deleteNote({ id: note._id, did })
+  }
+
+  const handleUnassign = async () => {
+    if (oneLoading) return
+    removeNewNote(note)
+    await updateNote({
+      ...note,
+      assigned: false,
+      assignedTime: 0,
+      curDate: note.assignedTime,
+    })
+  }
   return (
     <div className={styles.wrapper}>
-      <div className={styles.feature} onClick={handleEdit}>
+      <div className={styles.feature} onClick={() => openEdit(true)}>
         <FontAwesomeIcon icon={faPenToSquare} />
       </div>
-      <div className={styles.feature} onClick={handleEditDate}>
+      <div className={styles.feature} onClick={() => openCal(true)}>
         <FontAwesomeIcon icon={faCalendarDays} />
       </div>
       {view !== 'unassigned' && (
