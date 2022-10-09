@@ -17,7 +17,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       query(credentials) {
         return {
           url: '/auth/googlelogin',
-          method: 'get',
+          method: 'GET',
           // body: { ...credentials },
         }
       },
