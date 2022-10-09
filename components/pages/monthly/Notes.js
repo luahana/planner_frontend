@@ -3,8 +3,10 @@ import { useGetNoteByUserDateQuery } from '../../../redux/slice/api/notesApiSlic
 import NotesMonthView from './NotesMonthView'
 import { ymdFromDate } from '../../../lib/date'
 import ClipLoader from 'react-spinners/ClipLoader'
+import useUserAuth from '../../../hooks/useUserAuth'
 
-const Notes = ({ view, userId, curDate }) => {
+const Notes = ({ view, curDate }) => {
+  const userId = useUserAuth()
   const { year, month, date } = ymdFromDate(curDate)
 
   const { data, isLoading, isSuccess, isError, error } =
