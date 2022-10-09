@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials } from '../authSlice'
 
-let apiUrl = 'https://api.simpletodo.org'
+let apiUrl = 'https://api.simpletodo.org/api'
 if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
   apiUrl = 'http://localhost:8080/api'
 }
