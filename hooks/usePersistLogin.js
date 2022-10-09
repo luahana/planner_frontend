@@ -24,8 +24,6 @@ const PersistLogin = (initialPersistValue) => {
         console.log('verifying refresh token')
         try {
           data = await refresh()
-          console.log('data')
-          console.log(data)
           setTrueSuccess(true)
         } catch (err) {
           console.error(err)
