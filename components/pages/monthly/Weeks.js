@@ -9,7 +9,7 @@ const Weeks = ({ year, month, string }) => {
       <div className={styles.empty}></div>
       {widsMonth({ year, month }).map((wid) => (
         <Link key={wid} href={`/weekly/${wid}`}>
-          <div
+          <button
             className={`${styles.week} ${
               string.length === 2 && styles.shortStr
             }`}
@@ -17,7 +17,7 @@ const Weeks = ({ year, month, string }) => {
             {/* <div className={styles.month}>{`${wid.slice(4, 6)}`}</div> */}
             <div className={styles.str}>{string}</div>
             {/* <div className={styles.weekNum}>{`${wid.slice(-1)}`}</div> */}
-          </div>
+          </button>
         </Link>
       ))}
     </div>

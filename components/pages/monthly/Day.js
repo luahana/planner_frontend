@@ -8,21 +8,22 @@ import Link from 'next/link'
 const Day = ({ view, day, mid }) => {
   const { month } = ymdFromMid(mid)
   const dt = new Date(day)
+  const todayStr = new Date().toDateString()
   const dayMonth = dt.getMonth() + 1
 
   return (
     <Link key={day} href={`/daily/${didFromDateStr(day)}`}>
-      <div
+      <button
         className={`${styles.wrapper} 
           ${dayMonth !== month && styles.otherMonthDay} 
-          ${day === new Date().toDateString() && styles.today} 
+          ${day === todayStr && styles.today} 
           ${view === 'monthSmall' && styles.small}`}
         key={day}
       >
         <div className={styles.date}>{dt.getDate()}</div>
         {view === 'month' && <Notes view='month' curDate={dt} />}
         {view === 'monthSmall' && <Notes view='monthSmall' curDate={dt} />}
-      </div>
+      </button>
     </Link>
   )
 }

@@ -6,6 +6,7 @@
   max-width: 7.5rem;
   cursor: pointer;
   justify-self: stretch;
+  background-color: inherit;
 }
 
 .date {
