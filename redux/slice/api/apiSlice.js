@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials } from '../authSlice'
 
-let apiUrl = 'https://planner-7epn.vercel.app/api'
+let apiUrl = 'https://api.simpletodo.org'
 if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
   apiUrl = 'http://localhost:8080/api'
 }
