@@ -20,6 +20,8 @@ const LoginPage = ({ googleClientId }) => {
     const res = await googleLogin({
       googleToken: response.credential,
     })
+    console.log('res')
+    console.log(res)
 
     dispatch(setCredentials({ accessToken: res.data.accessToken }))
 
