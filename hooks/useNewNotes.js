@@ -1,9 +1,12 @@
 import { useState } from 'react'
+import { didFromDate } from '../lib/date'
 import { getNewNote } from '../lib/note'
 
 const useNewNotes = (userId, curDate) => {
   const [newNotes, setNewNotes] = useState([])
-  const [newNoteNum, setNewNoteNum] = useState(1)
+  const [newNoteNum, setNewNoteNum] = useState(
+    parseInt(didFromDate(curDate).toString() + 1)
+  )
 
   const addNewNote = (
     newNote = getNewNote({

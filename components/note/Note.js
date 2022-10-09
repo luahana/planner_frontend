@@ -22,7 +22,7 @@ const Note = ({ view, note, removeNewNote }) => {
       addNote({
         id: getId(note),
         isLoading: false,
-        isEditOpen: false,
+        isEditOpen: note.newNoteNum ? true : false,
         isCalOpen: false,
         selectedDids: [],
       })
