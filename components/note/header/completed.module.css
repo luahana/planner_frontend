@@ -1,14 +1,7 @@
 .wrapper {
   display: flex;
-  padding-left: 1rem;
-  align-items: center;
-
-  width: 40%;
-}
-
-.pointer {
-  cursor: pointer;
-  width: 20%;
-  display: flex;
+  margin-left: 1rem;
   justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }

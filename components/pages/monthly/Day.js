@@ -14,11 +14,10 @@ const Day = ({ view, day, mid }) => {
   return (
     <Link key={day} href={`/daily/${didFromDateStr(day)}`}>
       <div
-        className={`${styles.wrapper} ${
-          dayMonth !== month && styles.otherMonthDay
-        } ${day === new Date().toDateString() && styles.today} ${
-          view === 'monthSmall' && styles.small
-        }`}
+        className={`${styles.wrapper} 
+          ${dayMonth !== month && styles.otherMonthDay} 
+          ${day === new Date().toDateString() && styles.today} 
+          ${view === 'monthSmall' && styles.small}`}
         key={day}
       >
         <div className={styles.date}>{dt.getDate()}</div>

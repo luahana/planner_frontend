@@ -4,6 +4,7 @@
   border-top: 1px outset white;
   border-bottom: 1px outset white;
   color: black;
+  line-height: 125%;
 }
 
 .completed {
@@ -11,7 +12,8 @@
 }
 
 .more {
-  text-align: right;
   padding-right: 0.5rem;
-  color: black;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }

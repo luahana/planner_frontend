@@ -2,9 +2,10 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   width: 100%;
+  height: 3vh;
 }
 
 .weekday {
-  margin: 0.5rem;
+  margin: 1%;
   text-align: center;
 }

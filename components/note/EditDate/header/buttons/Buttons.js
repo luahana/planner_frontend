@@ -12,7 +12,7 @@ const Buttons = ({ note, removeNewNote }) => {
   const selectedDids = noteState.selectedDids
 
   return (
-    <div className={styles.buttons}>
+    <div className={styles.wrapper}>
       <Copy note={note} removeNewNote={removeNewNote} />
       {selectedDids.filter((did) => did !== '19691231').length <= 1 && (
         <Move note={note} removeNewNote={removeNewNote} />

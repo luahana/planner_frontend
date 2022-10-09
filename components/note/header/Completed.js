@@ -32,14 +32,12 @@ const Completed = ({ note, removeNewNote }) => {
   }
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.pointer} onClick={handleCompleted}>
-        {note?.completed ? (
-          <FontAwesomeIcon icon={faCheck} />
-        ) : (
-          <FontAwesomeIcon icon={faCircle} />
-        )}
-      </div>
+    <div className={styles.wrapper} onClick={handleCompleted}>
+      {note?.completed ? (
+        <FontAwesomeIcon icon={faCheck} />
+      ) : (
+        <FontAwesomeIcon icon={faCircle} />
+      )}
     </div>
   )
 }

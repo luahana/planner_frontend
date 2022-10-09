@@ -3,18 +3,3 @@
   padding: 0.5rem;
   padding-top: 1rem;
 }
-
-.completed {
-  display: flex;
-  padding-left: 1rem;
-  align-items: center;
-
-  width: 40%;
-}
-
-.completedPointer {
-  cursor: pointer;
-  width: 20%;
-  display: flex;
-  justify-content: center;
-}

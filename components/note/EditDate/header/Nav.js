@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './header.module.css'
+import styles from './nav.module.css'
 import { calcMid } from '../../../../lib/calendar'
 import { ymdFromMid, addZero } from '../../../../lib/date'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

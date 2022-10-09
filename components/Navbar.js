@@ -22,12 +22,10 @@ const Navbar = () => {
   }, [isSuccess])
 
   const open = () => {
-    // document.body.style.overflowY = 'hidden'
     setIsOpen(!isOpen)
   }
 
   const close = () => {
-    // document.body.style.overflowY = 'auto'
     setIsOpen(false)
   }
   const onLogoutClicked = () => {
@@ -50,11 +48,6 @@ const Navbar = () => {
         <ul className={styles.menuUl}>
           {user_id && (
             <>
-              {/* <Link href='/dash'>
-                <li className={styles.pointer} onClick={close}>
-                  <a>Dashboard</a>
-                </li>
-              </Link> */}
               <Link href={`/daily/${did}`}>
                 <li className={styles.pointer} onClick={close}>
                   <a>Today</a>
@@ -77,13 +70,6 @@ const Navbar = () => {
               </Link>
             </>
           )}
-          {isAdmin && (
-            <li className={styles.pointer} onClick={close}>
-              <Link href='/admin'>
-                <a>Admin</a>
-              </Link>
-            </li>
-          )}
         </ul>
         {user_id && (
           <div
@@ -95,8 +81,6 @@ const Navbar = () => {
         )}
       </div>
       <nav className={styles.nav}>
-        {isLoading && <p>Logging Out...</p>}
-        {isError && <p>Error: {error.message}</p>}
         <Link href='/'>
           <div className={styles.pointer}>
             <a>SimpleToDo</a>
@@ -112,11 +96,6 @@ const Navbar = () => {
           <ul>
             {user_id && (
               <>
-                {/* <li>
-                  <Link href='/dash'>
-                    <a>Dashboard</a>
-                  </Link>
-                </li> */}
                 <li>
                   <Link href={`/daily/${did}`}>
                     <a>Today</a>
@@ -137,13 +116,6 @@ const Navbar = () => {
                     <a>Unassigned</a>
                   </Link>
                 </li>
-                {isAdmin && (
-                  <li>
-                    <Link href='/admin'>
-                      <a>Admin</a>
-                    </Link>
-                  </li>
-                )}
                 <li>
                   <div className={styles.pointer} onClick={onLogoutClicked}>
                     log out
