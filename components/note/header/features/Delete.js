@@ -25,9 +25,9 @@ const Delete = ({ note, removeNewNote }) => {
     if (!removeNewNote(note)) await deleteNote({ id: note._id, did })
   }
   return (
-    <div className={styles.wrapper} onClick={handleDelete}>
+    <button className={styles.wrapper} onClick={handleDelete}>
       <FontAwesomeIcon icon={faTrash} />
-    </div>
+    </button>
   )
 }
 

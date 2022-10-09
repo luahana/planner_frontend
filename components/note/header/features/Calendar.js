@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './edit.module.css'
+import styles from './calendar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarDays } from '@fortawesome/free-solid-svg-icons'
 import { getId } from '../../../../lib/note'
@@ -13,9 +13,9 @@ const Calendar = ({ note }) => {
   }
 
   return (
-    <div className={styles.wrapper} onClick={() => handleModal(false, true)}>
+    <button className={styles.wrapper} onClick={() => handleModal(false, true)}>
       <FontAwesomeIcon icon={faCalendarDays} />
-    </div>
+    </button>
   )
 }
 

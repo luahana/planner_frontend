@@ -13,9 +13,9 @@ const Edit = ({ note }) => {
   }
 
   return (
-    <div className={styles.wrapper} onClick={() => handleModal(true, false)}>
+    <button className={styles.wrapper} onClick={() => handleModal(true, false)}>
       <FontAwesomeIcon icon={faPenToSquare} />
-    </div>
+    </button>
   )
 }
 

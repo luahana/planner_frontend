@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styles from './edit_view.module.css'
 import { useUpdateNoteMutation } from '../../../redux/slice/api/notesApiSlice'
 import {
@@ -14,6 +14,7 @@ const EditView = ({ note, removeNewNote }) => {
   const noteState = useSelector((state) => selectNote(state, getId(note)))
   const [title, setTitle] = useState(note.title)
   const [content, setContent] = useState(note.content)
+  const titleRef = useRef()
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const EditView = ({ note, removeNewNote }) => {
   useEffect(() => {
     setTitle(note.title)
     setContent(note.content)
+    titleRef.current.focus()
   }, [])
 
   const handleSaveNote = async () => {
@@ -38,6 +40,7 @@ const EditView = ({ note, removeNewNote }) => {
       <input
         className={styles.title}
         type='text'
+        ref={titleRef}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
@@ -46,9 +49,9 @@ const EditView = ({ note, removeNewNote }) => {
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
-      <div className={styles.save} onClick={handleSaveNote}>
+      <button className={styles.save} onClick={handleSaveNote}>
         Save
-      </div>
+      </button>
     </div>
   )
 }

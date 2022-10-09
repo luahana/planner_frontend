@@ -4,7 +4,11 @@ import ShowView from './ShowView'
 import Header from './header/Header'
 import Loading from '../common/Loading'
 import { useDispatch, useSelector } from 'react-redux'
-import { addNote, selectNote } from '../../redux/slice/notesSlice'
+import {
+  addNote,
+  selectNote,
+  setModalClose,
+} from '../../redux/slice/notesSlice'
 import { getId } from '../../lib/note'
 import EditViewModal from './EditView/EditViewModal'
 import EditDateViewModal from './EditDate/EditDateViewModal'
@@ -23,6 +27,20 @@ const Note = ({ view, note, removeNewNote }) => {
         selectedDids: [],
       })
     )
+  }, [])
+
+  const escFunction = (event) => {
+    if (event.key === 'Escape') {
+      dispatch(setModalClose({ id: note._id }))
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', escFunction, false)
+
+    return () => {
+      document.removeEventListener('keydown', escFunction, false)
+    }
   }, [])
 
   return (

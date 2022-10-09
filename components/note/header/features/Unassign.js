@@ -27,9 +27,9 @@ const Unassign = ({ note, removeNewNote }) => {
     })
   }
   return (
-    <div className={styles.wrapper} onClick={handleUnassign}>
+    <button className={styles.wrapper} onClick={handleUnassign}>
       <FontAwesomeIcon icon={faArrowTurnUp} />
-    </div>
+    </button>
   )
 }
 

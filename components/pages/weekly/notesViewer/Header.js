@@ -24,9 +24,9 @@ const Header = ({ weekday, curDate, addNewNote }) => {
       <div>
         {matches ? MONTH[month] : MONTH[month].slice(0, 3)} {date}
       </div>
-      <div className={styles.addNew} onClick={() => addNewNote()}>
+      <button className={styles.addNew} onClick={() => addNewNote()}>
         <FontAwesomeIcon icon={faPlus} />
-      </div>
+      </button>
     </div>
   )
 }

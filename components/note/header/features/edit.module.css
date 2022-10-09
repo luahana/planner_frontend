@@ -1,4 +1,5 @@
 .wrapper {
   text-align: center;
   cursor: pointer;
+  background-color: inherit;
 }

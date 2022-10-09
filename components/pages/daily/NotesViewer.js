@@ -7,9 +7,9 @@ const NotesViewer = ({ content, addNewNote }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <div className={styles.addNew} onClick={() => addNewNote()}>
+        <button className={styles.addNew} onClick={() => addNewNote()}>
           <FontAwesomeIcon icon={faPlus} />
-        </div>
+        </button>
       </div>
       <div className={styles.main}>{content}</div>
     </div>

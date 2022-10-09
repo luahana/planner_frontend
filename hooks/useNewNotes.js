@@ -14,6 +14,7 @@ const useNewNotes = (userId, curDate) => {
   ) => {
     setNewNoteNum(newNoteNum + 1)
     setNewNotes((prev) => [newNote, ...prev])
+    return newNoteNum
   }
 
   const removeNewNote = ({ newNoteNum }) => {
