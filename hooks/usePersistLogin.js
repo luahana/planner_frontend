@@ -11,8 +11,10 @@ const PersistLogin = (initialPersistValue) => {
   const effectRan = useRef(false)
   const [trueSuccess, setTrueSuccess] = useState(false)
 
-  const [refresh, { isUninitialized, isLoading, isSuccess, isError, error }] =
-    useRefreshMutation()
+  const [
+    refresh,
+    { data, isUninitialized, isLoading, isSuccess, isError, error },
+  ] = useRefreshMutation()
 
   useEffect(() => {
     if (effectRan.current === true || process.env.NODE_ENV !== 'development') {
@@ -21,7 +23,9 @@ const PersistLogin = (initialPersistValue) => {
       const verifyRefreshToken = async () => {
         console.log('verifying refresh token')
         try {
-          await refresh()
+          data = await refresh()
+          console.log('data')
+          console.log(data)
           setTrueSuccess(true)
         } catch (err) {
           console.error(err)
