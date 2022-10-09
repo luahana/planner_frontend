@@ -12,7 +12,7 @@ const Notes = ({ view, userId, curDate }) => {
 
   let content
   if (isLoading)
-    content = <ClipLoader color='aqua' size={50} aria-label='Loading Spinner' />
+    content = <ClipLoader color='aqua' aria-label='Loading Spinner' />
   if (isSuccess) {
     const notes = data.ids.map((id) => data.entities[id])
     if (view === 'month')
