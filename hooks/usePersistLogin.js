@@ -53,13 +53,7 @@ const PersistLogin = (initialPersistValue) => {
         {isError && <p>{page}</p>}
         {(!persist ||
           (isSuccess && trueSuccess) ||
-          (token && isUninitialized)) && (
-          <>
-            <>{`persist ${persist}`}</>
-            <>{`token ${token}`}</>
-            {page}
-          </>
-        )}
+          (token && isUninitialized)) && <>{page}</>}
       </>
     )
   }
