@@ -6,13 +6,15 @@ const SmallView = ({ notes }) => {
     (acc, cur) => (cur.completed ? acc + 1 : acc),
     0
   )
-  const numInCompleted = notes.length - numCompleted
+  const numIncompleted = notes.length - numCompleted
   return (
     <>
-      {numCompleted > 0 && <div className={styles.note}>{numCompleted}</div>}
-      {numInCompleted > 0 && (
+      {numIncompleted > 0 && (
+        <div className={styles.note}>{numIncompleted}</div>
+      )}
+      {numCompleted > 0 && (
         <div className={`${styles.note} ${styles.completed}`}>
-          {numInCompleted}
+          {numCompleted}
         </div>
       )}
     </>

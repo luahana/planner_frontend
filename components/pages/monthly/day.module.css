@@ -7,9 +7,12 @@
   cursor: pointer;
   justify-self: stretch;
   background-color: inherit;
+  display: flex;
+  flex-direction: column;
 }
 
 .date {
+  width: 100%;
   text-align: right;
   padding: 0.3rem 0.5rem 0 0;
 }

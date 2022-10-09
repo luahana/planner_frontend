@@ -4,6 +4,9 @@
   border-top: 1px outset white;
   border-bottom: 1px outset white;
   color: black;
+  width: 100%;
+  text-align: left;
+  line-height: 125%;
 }
 
 .completed {
