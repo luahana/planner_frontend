@@ -10,7 +10,7 @@ import styles from './completed.module.css'
 
 type Props = {
   note: Note
-  removeNewNote: (newNote: Note) => number
+  removeNewNote: (newNote: Note) => string
 }
 
 const Completed = ({ note, removeNewNote }: Props) => {

@@ -6,7 +6,7 @@ type Props = {
   curDate: Date
   weekday: number
   content: React.ReactNode
-  addNewNote: () => number
+  addNewNote: () => string
 }
 
 const NotesViewer = ({ curDate, weekday, content, addNewNote }: Props) => {

@@ -30,7 +30,7 @@ const Notes = ({ userId, curDate, weekday }: Props) => {
     const notesWithNew = sortedNotesFromNormData(newNotes, data)
     content = notesWithNew.map((note) => (
       <Note
-        key={note._id ? note._id : note.newNoteNum}
+        key={note._id ? note._id : note.newNoteId}
         note={note}
         removeNewNote={removeNewNote}
       />

@@ -5,27 +5,27 @@ import Note, { defaultNote } from '../lib/note'
 
 const useNewNotes = (userId: string, curDate: Date) => {
   const [newNotes, setNewNotes] = useState<Note[]>([])
-  const [newNoteNum, setNewNoteNum] = useState<number>(
-    parseInt(didFromDate(curDate).toString() + 1)
+  const [newNoteId, setNewNoteId] = useState<string>(
+    parseInt(didFromDate(curDate).toString() + 1).toString()
   )
   const note: Note = {
     ...defaultNote,
     user: userId,
-    newNoteNum,
+    newNoteId,
     assignedTime: curDate.getTime(),
   }
-  const addNewNote = (): number => {
-    setNewNoteNum(newNoteNum + 1)
+  const addNewNote = (): string => {
+    setNewNoteId((parseInt(newNoteId) + 1).toString())
     setNewNotes((prev) => [getNewNote(note), ...prev])
-    return newNoteNum
+    return newNoteId
   }
 
-  const removeNewNote = ({ newNoteNum }: Note): number => {
-    if (newNoteNum) {
-      setNewNotes((prev) => prev.filter((n) => n.newNoteNum !== newNoteNum))
-      return newNoteNum
+  const removeNewNote = ({ newNoteId }: Note): string => {
+    if (newNoteId) {
+      setNewNotes((prev) => prev.filter((n) => n.newNoteId !== newNoteId))
+      return newNoteId
     }
-    return 0
+    return ''
   }
 
   return [newNotes, addNewNote, removeNewNote] as const

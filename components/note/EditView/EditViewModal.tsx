@@ -8,7 +8,7 @@ import Note from '../../../lib/note'
 
 type Props = {
   note: Note
-  removeNewNote: (newNote: Note) => number
+  removeNewNote: (newNote: Note) => string
 }
 
 const EditViewModal = ({ note, removeNewNote }: Props) => {

@@ -17,7 +17,7 @@ import Note from '../../lib/note'
 type Props = {
   view?: string
   note: Note
-  removeNewNote: (note: Note) => number
+  removeNewNote: (note: Note) => string
 }
 
 const Note = ({ view, note, removeNewNote }: Props) => {
@@ -29,7 +29,7 @@ const Note = ({ view, note, removeNewNote }: Props) => {
       addNote({
         id: getId(note),
         isLoading: false,
-        isEditOpen: note.newNoteNum ? true : false,
+        isEditOpen: note.newNoteId ? true : false,
         isCalOpen: false,
         selectedDids: [],
       })

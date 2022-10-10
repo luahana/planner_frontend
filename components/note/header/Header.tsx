@@ -6,7 +6,7 @@ import Note from '../../../lib/note'
 type Props = {
   view?: string
   note: Note
-  removeNewNote: (note: Note) => number
+  removeNewNote: (note: Note) => string
 }
 
 const Header = ({ view, note, removeNewNote }: Props) => {

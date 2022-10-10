@@ -1,6 +1,6 @@
 export default interface Note {
   _id?: string
-  newNoteNum?: number
+  newNoteId?: string
   user: string
   title: string
   content: string
@@ -42,9 +42,9 @@ export const getNote = ({
   sets,
 })
 
-export const getNewNote = ({ user, newNoteNum, assignedTime }: Note) => {
+export const getNewNote = ({ user, newNoteId, assignedTime }: Note) => {
   const note = getNote({ user, assignedTime })
-  note.newNoteNum = newNoteNum
+  note.newNoteId = newNoteId
   if (assignedTime === 0) note.assigned = false
   return note
 }
@@ -71,15 +71,6 @@ const notesSortedByCompleted = (notes) => {
     })
 }
 
-export const updateNewNotes = (noteNum: number, setNewNotes) => {
-  if (noteNum) {
-    setNewNotes((prev: Note[]) => {
-      return prev.filter((n: Note) => n.newNoteNum !== noteNum)
-    })
-    return noteNum
-  }
-}
-
-export const getId = (note: Note) => {
-  return note._id ?? note.newNoteNum
+export const getId = (note: Note): string => {
+  return note._id ?? note.newNoteId
 }

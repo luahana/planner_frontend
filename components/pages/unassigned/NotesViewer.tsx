@@ -5,7 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   content: React.ReactNode
-  addNewNote: () => number
+  addNewNote: () => string
 }
 
 const NotesViewer = ({ content, addNewNote }: Props) => {

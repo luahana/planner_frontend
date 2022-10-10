@@ -9,7 +9,7 @@ import { device } from '../../../../config/deviceBreakpoint'
 type Props = {
   weekday: number
   curDate: Date
-  addNewNote: () => number
+  addNewNote: () => string
 }
 
 const Header = ({ weekday, curDate, addNewNote }: Props) => {
