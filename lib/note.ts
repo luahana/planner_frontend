@@ -62,7 +62,7 @@ const notesFromNormData = (data: {
 
 export const sortedNotesFromNormData = (
   newNotes: Note[] = [],
-  data: { ids: number[]; entities: Note[] }
+  data
 ): Note[] => {
   const notes: Note[] = notesFromNormData(data)
   return [...newNotes, ...notesSortedByCompleted(notes)]
