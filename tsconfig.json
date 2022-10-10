@@ -19,7 +19,14 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "hooks/usePersistLogin.js"
+    "hooks/usePersistLogin.js",
+    "hooks/useAuth.js",
+    "hooks/useAuth.js",
+    "components/pages/LoginPage.js",
+    "components/pages/LoginPage.js",
+    "components/pages/LoginPage.js",
+    "components/Navbar.js",
+    "components/pages/daily/NotesViewer.js"
   ],
   "exclude": ["node_modules"]
 }
