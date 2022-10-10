@@ -8,6 +8,7 @@ export default interface Note {
   assigned: boolean
   assignedTime: number
   curDate: Date
+  createdAt: Date
   sets: boolean[]
 }
 
@@ -19,6 +20,7 @@ export const defaultNote: Note = {
   assigned: true,
   assignedTime: new Date().getTime(),
   curDate: new Date(0),
+  createdAt: new Date(),
   sets: [],
 }
 
@@ -30,6 +32,7 @@ export const getNote = ({
   assigned = true,
   assignedTime = new Date().getTime(),
   curDate = new Date(0),
+  createdAt = new Date(),
   sets = [],
 }): Note => ({
   user,
@@ -39,26 +42,33 @@ export const getNote = ({
   assigned,
   assignedTime,
   curDate,
+  createdAt,
   sets,
 })
 
-export const getNewNote = ({ user, newNoteId, assignedTime }: Note) => {
-  const note = getNote({ user, assignedTime })
+export const getNewNote = ({ user, newNoteId, assignedTime }: Note): Note => {
+  const note: Note = getNote({ user, assignedTime })
   note.newNoteId = newNoteId
   if (assignedTime === 0) note.assigned = false
   return note
 }
 
-const objFromNormData = (data) => {
+const notesFromNormData = (data: {
+  ids: number[]
+  entities: Note[]
+}): Note[] => {
   return data.ids.map((id: number) => data.entities[id])
 }
 
-export const sortedNotesFromNormData = (newNotes: Note[] = [], data) => {
-  const obj = objFromNormData(data)
-  return [...newNotes, ...notesSortedByCompleted(obj)]
+export const sortedNotesFromNormData = (
+  newNotes: Note[] = [],
+  data: { ids: number[]; entities: Note[] }
+): Note[] => {
+  const notes: Note[] = notesFromNormData(data)
+  return [...newNotes, ...notesSortedByCompleted(notes)]
 }
 
-const notesSortedByCompleted = (notes) => {
+const notesSortedByCompleted = (notes: Note[]) => {
   return notes
     .sort(
       (a, b) =>
