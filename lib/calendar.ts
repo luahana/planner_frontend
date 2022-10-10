@@ -22,7 +22,7 @@ export const weekArrByWid = (wid: string) => {
   return weekArrByWidObj(ymwFromWid(wid))
 }
 
-export const numOfWeekInMonth = ({ year, month }: ymd) => {
+export const numOfWeekInMonth = ({ year, month }: ymd): number => {
   const dtMonth = month - 1
   let date: number
   for (let i = 1; i <= 7; i++) {
@@ -37,15 +37,14 @@ export const numOfWeekInMonth = ({ year, month }: ymd) => {
   return week
 }
 
-export const widsMonth = ({ year, month }: ymd) => {
+export const widsMonth = ({ year, month }: ymd): string[] => {
   const weekArraysMonthArr = getWeekArraysMonthArr({ year, month })
-  return weekArraysMonthArr.map((arr) => {
-    const dt = new Date(arr[0])
-    return calcWeekId(ymdFromDate(dt))
-  })
+  return weekArraysMonthArr.map((arr) =>
+    calcWeekId(ymdFromDate(new Date(arr[0])))
+  )
 }
 
-const getWeekArraysMonthArr = ({ year, month }: ymd) => {
+const getWeekArraysMonthArr = ({ year, month }: ymd): string[] => {
   const monthArr: string[] = getCalDates(midFromYmd({ year, month }))
 
   const weekArrays = []
@@ -55,7 +54,7 @@ const getWeekArraysMonthArr = ({ year, month }: ymd) => {
   return weekArrays
 }
 
-export const calcWeekId = ({ year, month, date }: ymd) => {
+export const calcWeekId = ({ year, month, date }: ymd): string => {
   const dtMonth: number = month - 1
   const weekArraysMonthArr: string[] = getWeekArraysMonthArr({ year, month })
 
@@ -79,7 +78,7 @@ export const calcWeekId = ({ year, month, date }: ymd) => {
     )
   }
 
-  const week = weekArraysMonthArr.reduce((acc, cur, i) => {
+  const week: number = weekArraysMonthArr.reduce((acc, cur, i) => {
     if (cur.includes(new Date(year, dtMonth, date).toDateString())) return i
     return acc
   }, 0)
@@ -88,7 +87,7 @@ export const calcWeekId = ({ year, month, date }: ymd) => {
 }
 
 export const getCalDates = (mid: string) => {
-  const { year: y, month: m } = ymdFromMid(mid)
+  const { year: y, month: m }: ymd = ymdFromMid(mid)
 
   const dt: Date = new Date(y, m - 1, 1)
   const month: number = dt.getMonth()
@@ -162,7 +161,7 @@ export const getDayOfPrevWeek = (dateString: string) => {
     dt.getDate() - 1
   )
   if (dt.getMonth() === 0) {
-    const { year, month, date } = getSunday({
+    const { year, month, date }: ymd = getSunday({
       year: dt.getFullYear(),
       month: dt.getMonth() + 1,
       date: dt.getDate() - 1,
@@ -184,12 +183,12 @@ export const getDayOfNextWeek = (dateString: string) => {
 }
 
 export const calcMid = (mid: string, adder: number) => {
-  const year = parseInt(mid.slice(0, 4))
-  const month = parseInt(mid.slice(-2))
-  const resMonth = month + adder
+  const year: number = parseInt(mid.slice(0, 4))
+  const month: number = parseInt(mid.slice(-2))
+  const resMonth: number = month + adder
   if (resMonth <= 12 && resMonth >= 1)
     return year.toString() + addZero(resMonth.toString())
-  let addYear = Math.floor(resMonth / 12)
+  let addYear: number = Math.floor(resMonth / 12)
   if (resMonth <= 0) addYear -= 1
   let remainderMonth = resMonth % 12
   if (remainderMonth < 1) remainderMonth += 12
@@ -198,11 +197,11 @@ export const calcMid = (mid: string, adder: number) => {
 }
 
 export const calcDid = (did: string, adder: number) => {
-  const year = parseInt(did.slice(0, 4))
-  const dtMonth = parseInt(did.slice(4, 6)) - 1
-  const date = parseInt(did.slice(-2))
-  const resDate = date + adder
-  const resDt = new Date(year, dtMonth, resDate)
+  const year: number = parseInt(did.slice(0, 4))
+  const dtMonth: number = parseInt(did.slice(4, 6)) - 1
+  const date: number = parseInt(did.slice(-2))
+  const resDate: number = date + adder
+  const resDt: Date = new Date(year, dtMonth, resDate)
 
   return (
     resDt.getFullYear() +
