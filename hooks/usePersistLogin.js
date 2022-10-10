@@ -23,7 +23,7 @@ const PersistLogin = (initialPersistValue) => {
       const verifyRefreshToken = async () => {
         console.log('verifying refresh token')
         try {
-          data = await refresh()
+          await refresh()
           setTrueSuccess(true)
         } catch (err) {
           console.error(err)
@@ -33,7 +33,9 @@ const PersistLogin = (initialPersistValue) => {
       if (!token && persist) verifyRefreshToken()
     }
 
-    return () => (effectRan.current = true)
+    return () => {
+      effectRan.current = true
+    }
   }, [])
 
   const result = function (page) {
