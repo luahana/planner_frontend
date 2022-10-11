@@ -23,15 +23,12 @@ const WideView = ({ notes }: Props) => {
       {displayNotes.map((note) => {
         if (note.completed)
           return (
-            <div
-              className={`${styles.note} ${styles.completed}`}
-              key={note._id}
-            >
+            <div className={`${styles.note} ${styles.completed}`} key={note.id}>
               <NoteTitle note={note} />
             </div>
           )
         return (
-          <div className={styles.note} key={note._id}>
+          <div className={styles.note} key={note.id}>
             <NoteTitle note={note} />
           </div>
         )

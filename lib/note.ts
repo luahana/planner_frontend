@@ -1,4 +1,5 @@
 export default interface Note {
+  id?: string
   _id?: string
   newNoteId?: string
   user: string

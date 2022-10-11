@@ -28,7 +28,7 @@ const Delete = ({ note, removeNewNote }: Props) => {
 
   const handleDelete = async () => {
     if (noteState.isLoading) return
-    if (!removeNewNote(note)) await deleteNote({ id: note._id, did })
+    if (!removeNewNote(note)) await deleteNote({ id: note.id, did })
   }
   return (
     <button className={styles.wrapper} onClick={handleDelete}>

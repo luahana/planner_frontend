@@ -26,7 +26,7 @@ const Notes = ({ userId }: Props) => {
     const notesWithNew = sortedNotesFromNormData(newNotes, data)
     content = notesWithNew.map((note) => (
       <Note
-        key={note._id ? note._id : note.newNoteId}
+        key={note.id ? note.id : note.newNoteId}
         view='unassigned'
         note={note}
         removeNewNote={removeNewNote}

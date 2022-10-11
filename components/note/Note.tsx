@@ -39,7 +39,7 @@ const Note = ({ view, note, removeNewNote }: Props) => {
 
   const escFunction = (event) => {
     if (event.key === 'Escape') {
-      dispatch(setModalClose({ id: note._id }))
+      dispatch(setModalClose({ id: note.id }))
     }
   }
 

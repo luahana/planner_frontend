@@ -39,7 +39,7 @@ const Copy = ({ note }: Props) => {
           assigned: true,
           curDate: note.assignedTime,
           assignedTime: tobeDates[i].getTime(),
-          _id: undefined,
+          id: undefined,
         })
       }
     }
