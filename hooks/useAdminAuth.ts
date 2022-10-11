@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router'
-import React from 'react'
 import useAuth from './useAuth'
 
-const useAdminAuth = () => {
+const useAdminAuth = (): string => {
   const router = useRouter()
   const { user_id, isAdmin } = useAuth()
 

@@ -2,8 +2,11 @@ import Head from 'next/head'
 import styles from '../styles/Index.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
+type Props = {
+  initialPersistValue: boolean
+}
 
-export default function Home({ initialPersistValue }) {
+export default function Home({ initialPersistValue }: Props) {
   return (
     <div className={styles.wrapper}>
       <Head>

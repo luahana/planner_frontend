@@ -6,7 +6,7 @@ import {
   setModalClose,
   selectNote,
 } from '../../../redux/slice/notesSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks'
 import { getId } from '../../../lib/note'
 import Note from '../../../lib/note'
 
@@ -16,8 +16,8 @@ type Props = {
 }
 
 const EditView = ({ note, removeNewNote }: Props) => {
-  const dispatch = useDispatch()
-  const noteState = useSelector((state) => selectNote(state, getId(note)))
+  const dispatch = useAppDispatch()
+  const noteState = useAppSelector((state) => selectNote(state, getId(note)))
   const [title, setTitle] = useState<string>(note.title)
   const [content, setContent] = useState<string>(note.content)
   const titleRef = useRef<HTMLInputElement>(null)

@@ -1,7 +1,7 @@
 import { addZero, ymd } from './date'
 import { midFromYmd, ymdFromMid, ymwFromWid, ymdFromDate } from './date'
 
-export const WEEKDAYS = [
+export const WEEKDAYS: string[] = [
   'Sunday',
   'Monday',
   'Tuesday',

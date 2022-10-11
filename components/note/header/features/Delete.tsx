@@ -1,7 +1,7 @@
 import React from 'react'
 import { setIsLoading, selectNote } from '../../../../redux/slice/notesSlice'
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../../../../redux/hooks'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import styles from './delete.module.css'
@@ -15,11 +15,11 @@ type Props = {
   removeNewNote: (newNote: Note) => number
 }
 
-const Delete = ({ note, removeNewNote }) => {
+const Delete = ({ note, removeNewNote }: Props) => {
   const did = didFromDate(new Date(note.assignedTime))
 
-  const dispatch = useDispatch()
-  const noteState = useSelector((state) => selectNote(state, getId(note)))
+  const dispatch = useAppDispatch()
+  const noteState = useAppSelector((state) => selectNote(state, getId(note)))
   const [deleteNote, { isLoading }] = useDeleteNoteMutation()
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { RootState } from '../store'
 
 const notesSlice = createSlice({
   name: 'notes',
@@ -40,7 +41,7 @@ export const {
 
 export default notesSlice.reducer
 
-export const selectNote = (state, id) =>
+export const selectNote = (state: RootState, id) =>
   state.notes[id] ?? {
     isLoading: false,
     isEditOpen: false,

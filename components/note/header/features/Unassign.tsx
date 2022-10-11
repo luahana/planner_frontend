@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { setIsLoading, selectNote } from '../../../../redux/slice/notesSlice'
 import { getId } from '../../../../lib/note'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../../../../redux/hooks'
 import { useUpdateNoteMutation } from '../../../../redux/slice/api/notesApiSlice'
 import styles from './unassign.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -14,8 +14,8 @@ type Props = {
 }
 
 const Unassign = ({ note, removeNewNote }: Props) => {
-  const dispatch = useDispatch()
-  const noteState = useSelector((state) => selectNote(state, getId(note)))
+  const dispatch = useAppDispatch()
+  const noteState = useAppSelector((state) => selectNote(state, getId(note)))
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
 
   useEffect(() => {

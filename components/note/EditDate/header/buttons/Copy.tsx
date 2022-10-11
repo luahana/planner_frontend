@@ -7,17 +7,17 @@ import {
   setModalClose,
   selectNote,
 } from '../../../../../redux/slice/notesSlice'
-import { useDispatch, useSelector } from 'react-redux'
 import { getId } from '../../../../../lib/note'
 import Note from '../../../../../lib/note'
+import { useAppSelector, useAppDispatch } from '../../../../../redux/hooks'
 
 type Props = {
   note: Note
 }
 
 const Copy = ({ note }: Props) => {
-  const dispatch = useDispatch()
-  const noteState = useSelector((state) => selectNote(state, getId(note)))
+  const dispatch = useAppDispatch()
+  const noteState = useAppSelector((state) => selectNote(state, getId(note)))
   const selectedDids = noteState.selectedDids
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
 

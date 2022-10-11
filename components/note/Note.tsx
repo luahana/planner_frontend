@@ -3,7 +3,7 @@ import styles from './note.module.css'
 import ShowView from './ShowView'
 import Header from './header/Header'
 import Loading from '../common/Loading'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../../redux/hooks'
 import {
   addNote,
   selectNote,
@@ -13,6 +13,7 @@ import { getId } from '../../lib/note'
 import EditViewModal from './EditView/EditViewModal'
 import EditDateViewModal from './EditDate/EditDateViewModal'
 import Note from '../../lib/note'
+import { AppDispatch } from '../../redux/store'
 
 type Props = {
   view?: string
@@ -21,8 +22,8 @@ type Props = {
 }
 
 const Note = ({ view, note, removeNewNote }: Props) => {
-  const dispatch = useDispatch()
-  const noteState = useSelector((state) => selectNote(state, getId(note)))
+  const dispatch: AppDispatch = useAppDispatch()
+  const noteState = useAppSelector((state) => selectNote(state, getId(note)))
 
   useEffect(() => {
     dispatch(

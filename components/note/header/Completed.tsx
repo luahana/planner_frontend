@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { faCircle } from '@fortawesome/free-regular-svg-icons'
@@ -14,8 +14,8 @@ type Props = {
 }
 
 const Completed = ({ note, removeNewNote }: Props) => {
-  const dispatch = useDispatch()
-  const noteState = useSelector((state) => selectNote(state, getId(note)))
+  const dispatch = useAppDispatch()
+  const noteState = useAppSelector((state) => selectNote(state, getId(note)))
   const [completed, setCompleted] = useState<boolean>(note.completed)
   const [updateNote, { isLoading }] = useUpdateNoteMutation()
 

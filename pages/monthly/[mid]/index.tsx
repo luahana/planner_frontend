@@ -3,10 +3,14 @@ import usePersistLogin from '../../../hooks/usePersistLogin'
 import MonthlyPage from '../../../components/pages/monthly/MonthlyPage'
 import { useRouter } from 'next/router'
 
-const Monthly = ({ initialPersistValue }) => {
+type Props = {
+  initialPersistValue: boolean
+}
+
+const Monthly = ({ initialPersistValue }: Props) => {
   const persistLogin = usePersistLogin(initialPersistValue)
   const router = useRouter()
-  const { mid } = router.query
+  const mid = router.query.mid as string
 
   return <>{persistLogin(<MonthlyPage mid={mid} />)}</>
 }

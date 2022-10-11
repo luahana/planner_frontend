@@ -1,11 +1,11 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { didFromDate, didFromDateStr, ymdFromMid } from '../../../lib/date'
 import styles from './day.module.css'
 import { setSelectedDids, selectNote } from '../../../redux/slice/notesSlice'
 import { getId } from '../../../lib/note'
 import Note from '../../../lib/note'
 import { ymd } from '../../../lib/date'
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks'
 
 type Props = {
   note: Note
@@ -18,8 +18,8 @@ const Day = ({ note, day, mid }: Props) => {
   const dt: Date = new Date(day)
   const did: string = didFromDateStr(day)
   const { month }: ymd = ymdFromMid(mid)
-  const dispatch = useDispatch()
-  const noteState = useSelector((state) => selectNote(state, getId(note)))
+  const dispatch = useAppDispatch()
+  const noteState = useAppSelector((state) => selectNote(state, getId(note)))
   const selectedDids = noteState.selectedDids
 
   const handleSelect = () => {

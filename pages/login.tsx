@@ -1,12 +1,13 @@
 import LoginPage from '../components/pages/LoginPage'
-import { useRouter } from 'next/router'
 import usePersist from '../hooks/usePersist'
 import { useEffect } from 'react'
 
-const Login = ({ googleClientId }) => {
+type Props = {
+  googleClientId: string
+}
+
+const Login = ({ googleClientId }: Props) => {
   const [persist, setPersist] = usePersist(true)
-  const router = useRouter()
-  const { wid } = router.query
   useEffect(() => {
     setPersist(true)
   }, [])

@@ -1,12 +1,12 @@
 import React from 'react'
 import styles from './buttons.module.css'
 import { selectNote } from '../../../../../redux/slice/notesSlice'
-import { useSelector } from 'react-redux'
 import { getId } from '../../../../../lib/note'
 import Move from './Move'
 import Copy from './Copy'
 import Deselect from './Deselect'
 import Note from '../../../../../lib/note'
+import { useAppSelector } from '../../../../../redux/hooks'
 
 type Props = {
   note: Note
@@ -14,7 +14,7 @@ type Props = {
 }
 
 const Buttons = ({ note, removeNewNote }: Props) => {
-  const noteState = useSelector((state) => selectNote(state, getId(note)))
+  const noteState = useAppSelector((state) => selectNote(state, getId(note)))
   const selectedDids: string[] = noteState.selectedDids
 
   return (

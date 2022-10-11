@@ -1,6 +1,7 @@
 import { createEntityAdapter } from '@reduxjs/toolkit'
 import { didFromDateStr, didFromDate, didFromYmd } from '../../../lib/date'
 import { apiSlice } from './apiSlice'
+import Note from '../../../lib/note'
 
 const notesAdapter = createEntityAdapter({})
 
@@ -15,9 +16,9 @@ export const notesApiSlice = apiSlice.injectEndpoints({
           return response.status === 200 && !result.isError
         },
       }),
-      transformResponse: (responseData) => {
+      transformResponse: (responseData: Note[]) => {
         const loadedNotes = responseData.map((note) => {
-          note.id = note._id
+          note._id = note._id
           return note
         })
         return notesAdapter.setAll(initialState, loadedNotes)
@@ -47,9 +48,9 @@ export const notesApiSlice = apiSlice.injectEndpoints({
           url: `/notes/${userId}/${fromTime}/${toTime}`,
         }
       },
-      transformResponse: (responseData) => {
+      transformResponse: (responseData: Note[]) => {
         const loadedNotes = responseData.map((note) => {
-          note.id = note._id
+          note._id = note._id
           return note
         })
         return notesAdapter.setAll(initialState, loadedNotes)
@@ -69,9 +70,9 @@ export const notesApiSlice = apiSlice.injectEndpoints({
           url: `/notes/${userId}/unassigned`,
         }
       },
-      transformResponse: (responseData) => {
+      transformResponse: (responseData: Note[]) => {
         const loadedNotes = responseData.map((note) => {
-          note.id = note._id
+          note._id = note._id
           return note
         })
         return notesAdapter.setAll(initialState, loadedNotes)

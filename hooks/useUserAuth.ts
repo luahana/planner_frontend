@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router'
-import React from 'react'
 import useAuth from './useAuth'
 
-const useUserAuth = () => {
+const useUserAuth = (): string => {
   const router = useRouter()
   const { user_id } = useAuth()
   if (!user_id) {

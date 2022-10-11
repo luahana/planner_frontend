@@ -5,11 +5,12 @@ import { useRefreshMutation } from '../redux/slice/api/authApiSlice'
 import usePersist from './usePersist'
 import ClipLoader from 'react-spinners/ClipLoader'
 
-const PersistLogin = (initialPersistValue) => {
+const PersistLogin = (initialPersistValue: boolean) => {
   const [persist] = usePersist(initialPersistValue)
+
   const token = useSelector(selectCurrentToken)
   const effectRan = useRef(false)
-  const [trueSuccess, setTrueSuccess] = useState(false)
+  const [trueSuccess, setTrueSuccess] = useState<boolean>(false)
 
   const [
     refresh,
@@ -38,7 +39,7 @@ const PersistLogin = (initialPersistValue) => {
     }
   }, [])
 
-  const result = function (page) {
+  const result = function (page: React.ReactNode) {
     return (
       <>
         {isLoading && (

@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials } from '../authSlice'
+import { RootState } from '../../store'
 
 let apiUrl = 'https://api.simpletodo.org/api'
 if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
@@ -10,7 +11,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: apiUrl,
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
-    const token = getState().auth.token
+    const token = (getState() as RootState).auth.token
 
     if (token) {
       headers.set('authorization', `bearer ${token}`)
@@ -31,7 +32,13 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     console.log('sending refresh token')
 
     // send refresh token to get new access token
-    const refreshResult = await baseQuery('/auth/refresh', api, extraOptions)
+    const refreshResult: any = await baseQuery(
+      '/auth/refresh',
+      api,
+      extraOptions
+    )
+    console.log('refreshResult')
+    console.log(refreshResult)
 
     if (refreshResult?.data) {
       // store the new token

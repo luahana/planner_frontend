@@ -2,7 +2,11 @@ import { parseCookies } from '../lib/parseCookies'
 import usePersistLogin from '../hooks/usePersistLogin'
 import UnassignedPage from '../components/pages/unassigned/UnassignedPage'
 
-const Unassigned = ({ initialPersistValue }) => {
+type Props = {
+  initialPersistValue: boolean
+}
+
+const Unassigned = ({ initialPersistValue }: Props) => {
   const persistLogin = usePersistLogin(initialPersistValue)
 
   return <>{persistLogin(<UnassignedPage />)}</>
