@@ -37,7 +37,14 @@ const EditView = ({ note, removeNewNote }: Props) => {
     if (noteState.isLoading) return
     if (note.title !== title || note.content !== content) {
       removeNewNote(note)
-      if (!note.assigned) note.assignedTime = 0
+      if (!note.assigned) {
+        await updateNote({
+          ...note,
+          title: title,
+          content: content,
+          assignedTime: 0,
+        })
+      }
       await updateNote({ ...note, title: title, content: content })
     }
     dispatch(setModalClose({ id: getId(note) }))
