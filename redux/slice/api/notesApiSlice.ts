@@ -116,7 +116,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
           url: '/notes',
           method: 'PUT',
           body: {
-            id,
+            _id: id,
             user,
             title,
             content,
